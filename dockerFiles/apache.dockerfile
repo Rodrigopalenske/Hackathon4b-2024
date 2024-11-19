@@ -8,5 +8,8 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-install gd pdo pdo_mysql zip \
     && a2enmod rewrite
 
+# Definir o ServerName para evitar o erro do Apache
+RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
+
 # Configuração do Apache
 COPY dockerFiles/etc/apache/vhost.conf /etc/apache2/sites-available/000-default.conf

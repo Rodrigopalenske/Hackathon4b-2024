@@ -1,3 +1,5 @@
+version: '3.8'
+
 networks:
   laravel_enviroment:
 
@@ -95,7 +97,6 @@ services:
       - php
     networks:
       - laravel_enviroment
-    command: ["install"]
 
   artisan:
     build:
@@ -103,10 +104,9 @@ services:
       dockerfile: dockerfiles/php.dockerfile
     volumes:
       - ./api-laravel:/var/www/html
-    entrypoint: ["php", "/var/www/html/artisan"]
+    entrypoint: ["/usr/local/bin/wait-for-it.sh", "mysql:3306", "--", "php", "/var/www/html/artisan", "migrate:refresh"]
     networks:
       - laravel_enviroment
-    command: ["migrate:refresh"]
 
   scheduler:
     build:
@@ -128,5 +128,3 @@ services:
       - 8025:8025
     networks:
       - laravel_enviroment
-
-  
