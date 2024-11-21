@@ -143,7 +143,7 @@ export default function Usuarios() {
             Pesquisar
           </button>
         </div>
-
+        <div className='tabelaResp'>
         {/* Tabela de Usuários */}
         <table className="tabela">
           <thead>
@@ -172,6 +172,7 @@ export default function Usuarios() {
             ))}
           </tbody>
         </table>
+        </div>
       </div>
 
       {/* Modal de confirmação de exclusão */}

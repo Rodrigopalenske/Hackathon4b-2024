@@ -1,45 +1,57 @@
-// src/app/page.tsx
-'use client'; // Adicione isso no topo do arquivo para marcar como componente do lado do cliente
+'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import './dashboard.css'; // Estilos centralizados
 
 export default function Home() {
   const router = useRouter();
+  const [showNotifications, setShowNotifications] = useState(false);
+  const [notifications] = useState([
+    { id: 1, message: 'Bem-vindo à plataforma!' },
+    { id: 2, message: 'Atualização do sistema disponível.' },
+    { id: 3, message: 'Novo recurso de segurança ativado.' },
+  ]);
 
-  // Simulação de verificação de autenticação (substitua com a lógica real)
-  const isAuthenticated = typeof window !== "undefined" && localStorage.getItem("auth_token");
+  // Simulação de autenticação (substitua com a lógica real)
+  const isAuthenticated = typeof window !== 'undefined' && localStorage.getItem('auth_token');
 
   useEffect(() => {
     if (!isAuthenticated) {
-      // Se não estiver autenticado, redireciona para a página de login
-      router.push('/login');
+      router.push('/login'); // Redireciona para login se não estiver autenticado
     }
   }, [isAuthenticated, router]);
 
+  const toggleNotifications = () => {
+    setShowNotifications(!showNotifications);
+  };
+
   return (
-    <div style={styles.container}>
-      <h1 style={styles.title}>Página Inicial</h1>
+    <div className="dashboard-container">
+      <h1 className="dashboard-title">Página Inicial</h1>
       <p>Bem-vindo à página inicial! Você está autenticado e pode acessar o conteúdo.</p>
+
+      {/* Botão de notificações com ícone */}
+      <button className="notification-button" onClick={toggleNotifications}>
+        <span className="notification-icon">🔔</span> {/* Ícone de sino */}
+      </button>
+
+      {/* Lista de notificações */}
+      {showNotifications && (
+        <div className="notification-box">
+          {notifications.length > 0 ? (
+            <ul className="notification-list">
+              {notifications.map((notification) => (
+                <li key={notification.id} className="notification-item">
+                  {notification.message}
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="notification-empty">Nenhuma notificação no momento.</p>
+          )}
+        </div>
+      )}
     </div>
   );
 }
-
-// Estilos para a página
-const styles: { [key: string]: React.CSSProperties } = {
-  container: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: '100vh',
-    background: 'linear-gradient(135deg, #00aaff, #0070f3)', // Gradiente de azul
-  },
-  title: {
-    fontSize: '2.2rem',
-    color: '#fff',
-    textAlign: 'center',
-    marginBottom: '1.5rem',
-    fontWeight: '600',
-  },
-};
