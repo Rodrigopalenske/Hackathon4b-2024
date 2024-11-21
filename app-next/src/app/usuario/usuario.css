@@ -1,0 +1,219 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #f7f7f7;
+  }
+  
+  .card {
+    background-color: #fff;
+    padding: 3rem;
+    width: 100%;
+    max-width: 900px;
+    border-radius: 15px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    transform: translateY(-10px);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
+  }
+  
+  .titulo {
+    font-size: 2.5rem;
+    color: #0070f3;
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+  }
+  
+  .formulario {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .input {
+    padding: 1rem;
+    font-size: 1.1rem;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    outline: none;
+    color: #333;
+    background-color: #f9f9f9;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+  }
+  
+  .botao {
+    padding: 1rem;
+    font-size: 1.1rem;
+    color: #fff;
+    background-color: #0070f3;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .erro {
+    color: #ff0000;
+    text-align: center;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+  }
+  
+  .tabela {
+    margin-top: 2rem;
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  th, td {
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+
+  }
+  
+  
+  
+  
+  .tabelaTrEven {
+    background-color: #f9f9f9;
+  }
+  
+  .tabelaTrOdd {
+    background-color: #e9ecef;
+  }
+  
+  .tabelaAcaoBtn {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  .botaoEditar {
+    background-color: #0070f3; /* Azul */
+    color: #fff;
+    margin-right: 10px;
+  }
+  
+  .botaoDeletar {
+    background-color: #dc3545;
+    color: #fff;
+    
+  }
+  
+  .tabelaAcaoBtn:hover {
+    transform: scale(1.05);
+  }
+  
+  .acoesColuna {
+    gap: 1rem;
+    
+  }
+  
+  /* Modal de Confirmação */
+  .modalBackdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+  }
+  
+  .modalContainer {
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    max-width: 400px;
+    width: 100%;
+  }
+  
+  .modalContainer h2 {
+    font-size: 1.5rem;
+    color: #333;
+  }
+  
+  .modalContainer p {
+    font-size: 1.1rem;
+    margin: 1rem 0;
+  }
+  
+  .modalActions {
+    display: flex;
+    justify-content: space-evenly;
+    gap: 1rem;
+  }
+  
+  .modalButton {
+    padding: 0.8rem 1.5rem;
+    font-size: 1.1rem;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+  
+  .cancelarBtn {
+    background-color: #0070f3;
+    color: #fff;
+  }
+  
+  .confirmarBtn {
+    background-color: #dc3545;
+    color: #fff;
+  }
+  
+  .modalButton:hover {
+    transform: scale(1.05);
+  }
+
+  .alinhamentoTd {
+    text-align: center;
+
+  }
+ /* Estilo do campo de pesquisa */
+.pesquisaContainer {
+    margin-bottom: 1rem; /* Espaço entre a pesquisa e a tabela */
+    display: flex;
+    justify-content: center; /* Centraliza horizontalmente */
+    align-items: center; /* Alinha verticalmente */
+    gap: 10px;
+  }
+  
+  .pesquisaContainer .input {
+    padding: 0.8rem;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    outline: none;
+    color: #333;
+    background-color: #f9f9f9;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+    width: 250px; /* Largura do campo de pesquisa */
+  }
+  
+  .pesquisaBtn {
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .pesquisaBtn:hover {
+    background-color: #0056b3;
+  }
+  
