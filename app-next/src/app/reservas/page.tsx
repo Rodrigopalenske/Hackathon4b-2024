@@ -3,6 +3,9 @@
 import { useState, useEffect } from "react";
 import Calendar from "react-calendar";
 import "./reserva.css";
+import { SidebarProvider } from "@/components/ui/sidebar";
+import { Sidebar } from "@/components/Menu/Sidebar";
+import Header from "@/components/Menu/Header";
 
 export default function ReservasPage() {
   const [dataSelecionada, setDataSelecionada] = useState<Date | null>(null);
@@ -76,109 +79,122 @@ export default function ReservasPage() {
   };
 
   return (
+    <div>
+      <SidebarProvider>
+        <div className="hidden md:flex min-w-[300px] border-r min-h-screen">
+          <Sidebar />
+        </div>
+        <main className="grid w-full h-full">
+          <Header />
+
     <div className="container">
-  <h1 className="titulo">Reservar Ambiente</h1>
+      <h1 className="titulo">Reservar Ambiente</h1>
 
-  {/* Calendário */}
-  <div className="calendario-container">
-    <div className="calendario">
-      {isClient && (
-        <Calendar
-          onChange={handleDiaSelecionado}
-          value={dataSelecionada}
-          minDate={new Date()} // Data mínima: hoje
-          maxDate={new Date(new Date().setFullYear(new Date().getFullYear() + 1))} // Data máxima: um ano a partir de hoje
-        />
-      )}
-    </div>
-  </div>
-
-  {/* Exibir o formulário apenas se uma data for selecionada */}
-  {dataSelecionada && (
-    <div className="formulario-detalhes">
-      {/* Formulário de reserva */}
-      <div className="card formulario">
-        <h2>Formulário de Reserva</h2>
-
-        <form onSubmit={handleSubmit}>
-          <label>
-            Usuário:
-            <select
-              name="usuarioId"
-              className="input padronizado"
-              value={formulario.usuarioId}
-              onChange={handleChange}
-            >
-              <option value="">Selecione um Usuário</option>
-              {usuarios.map((usuario) => (
-                <option key={usuario.id} value={usuario.id}>
-                  {usuario.nome}
-                </option>
-              ))}
-            </select>
-          </label>
-
-          <label>
-            Ambiente:
-            <select
-              name="ambienteId"
-              className="input padronizado"
-              value={formulario.ambienteId}
-              onChange={handleChange}
-            >
-              <option value="">Selecione um Ambiente</option>
-              {ambientesDisponiveis.map((ambiente) => (
-                <option key={ambiente.id} value={ambiente.id}>
-                  {ambiente.nome}
-                </option>
-              ))}
-            </select>
-          </label>
-
-          <label>
-            Horário Início:
-            <input
-              type="time"
-              name="horarioInicio"
-              className="input padronizado"
-              value={formulario.horarioInicio}
-              onChange={handleChange}
-              required
+      {/* Calendário */}
+      <div className="calendario-container">
+        <div className="calendario">
+          {isClient && (
+            <Calendar
+              onChange={handleDiaSelecionado}
+              value={dataSelecionada}
+              minDate={new Date()} // Data mínima: hoje
+              maxDate={new Date(new Date().setFullYear(new Date().getFullYear() + 1))} // Data máxima: um ano a partir de hoje
             />
-          </label>
-
-          <label>
-            Horário Fim:
-            <input
-              type="time"
-              name="horarioFim"
-              className="input padronizado"
-              value={formulario.horarioFim}
-              onChange={handleChange}
-              required
-            />
-          </label>
-
-          <button type="submit" className="botao padronizado">
-            Criar Reserva
-          </button>
-        </form>
+          )}
+        </div>
       </div>
 
-      {/* Detalhes do ambiente */}
-      {ambienteSelecionado && (
-        <div className="detalhes-ambiente">
-          <h3>Detalhes do Ambiente</h3>
-          <p><strong>Nome:</strong> {ambienteSelecionado.nome}</p>
-          <p><strong>Capacidade:</strong> {ambienteSelecionado.capacidade}</p>
-          <p><strong>Equipamentos:</strong> {ambienteSelecionado.equipamentos}</p>
-          <p><strong>Turno:</strong> {ambienteSelecionado.turno}</p>
-          <p><strong>Localização:</strong> {ambienteSelecionado.localizacao}</p>
-          <p><strong>Tipo:</strong> {ambienteSelecionado.tipo}</p>
+      {/* Exibir o formulário apenas se uma data for selecionada */}
+      {dataSelecionada && (
+        <div className="formulario-detalhes">
+          {/* Formulário de reserva */}
+          <div className="card formulario">
+            <h2>Formulário de Reserva</h2>
+
+            <form onSubmit={handleSubmit}>
+              <label>
+                Usuário:
+                <select
+                  name="usuarioId"
+                  className="input padronizado"
+                  value={formulario.usuarioId}
+                  onChange={handleChange}
+                >
+                  <option value="">Selecione um Usuário</option>
+                  {usuarios.map((usuario) => (
+                    <option key={usuario.id} value={usuario.id}>
+                      {usuario.nome}
+                    </option>
+                  ))}
+                </select>
+              </label>
+
+              <label>
+                Ambiente:
+                <select
+                  name="ambienteId"
+                  className="input padronizado"
+                  value={formulario.ambienteId}
+                  onChange={handleChange}
+                >
+                  <option value="">Selecione um Ambiente</option>
+                  {ambientesDisponiveis.map((ambiente) => (
+                    <option key={ambiente.id} value={ambiente.id}>
+                      {ambiente.nome}
+                    </option>
+                  ))}
+                </select>
+              </label>
+
+              <label>
+                Horário Início:
+                <input
+                  type="time"
+                  name="horarioInicio"
+                  className="input padronizado"
+                  value={formulario.horarioInicio}
+                  onChange={handleChange}
+                  required
+                />
+              </label>
+
+              <label>
+                Horário Fim:
+                <input
+                  type="time"
+                  name="horarioFim"
+                  className="input padronizado"
+                  value={formulario.horarioFim}
+                  onChange={handleChange}
+                  required
+                />
+              </label>
+
+              <button type="submit" className="botao padronizado">
+                Criar Reserva
+              </button>
+            </form>
+          </div>
+
+          {/* Detalhes do ambiente */}
+          {ambienteSelecionado && (
+            <div className="detalhes-ambiente">
+              <h3>Detalhes do Ambiente</h3>
+              <p><strong>Nome:</strong> {ambienteSelecionado.nome}</p>
+              <p><strong>Capacidade:</strong> {ambienteSelecionado.capacidade}</p>
+              <p><strong>Equipamentos:</strong> {ambienteSelecionado.equipamentos}</p>
+              <p><strong>Turno:</strong> {ambienteSelecionado.turno}</p>
+              <p><strong>Localização:</strong> {ambienteSelecionado.localizacao}</p>
+              <p><strong>Tipo:</strong> {ambienteSelecionado.tipo}</p>
+            </div>
+          )}
         </div>
       )}
     </div>
-  )}
+    </main>
+
+</SidebarProvider >
 </div>
+
   );
 }

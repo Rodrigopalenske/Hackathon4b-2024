@@ -1,5 +1,5 @@
 "use client";
-import { CalendarDays, LayoutDashboard, LibraryBig, Map } from "lucide-react";
+import { CalendarDays, LayoutDashboard, LibraryBig, Map, User } from "lucide-react";
 import {
     Command,
     CommandGroup,
@@ -8,6 +8,7 @@ import {
   } from "@/components/ui/command"
 import Link from "next/link";
 import { NavBarLink } from "./style";
+import { link } from "fs";
 
 export const Sidebar = () => {
     
@@ -39,6 +40,11 @@ export const Sidebar = () => {
                     link: '/relatorio',
                     icon: <LibraryBig />,
                     text: 'Relatórios de uso'
+                },
+                {
+                  link: '/usuario',
+                  icon: <User />,
+                  text: 'Usuario'
                 }
             ]
                
