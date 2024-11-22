@@ -1,7 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import api from '@/utils/api';
 
 
 export default function Login() {
@@ -10,17 +11,46 @@ export default function Login() {
   const [erro, setErro] = useState<string | null>(null);
   const router = useRouter();
 
+  useEffect(() => {
+    if (localStorage.getItem('auth_token')) {
+      router.push('/dashboard')
+    }
+  }, []);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    const response = await api.post('/login', {
+        'email': email,
+        'senha': senha
+    })
+    .then((response) => {
+      console.log(response)
+      const token = response.data.token;
+      const usuarioNome = response.data.usuario['nome'];
+      const usuarioEmail = response.data.usuario['email'];
+      const usuarioCargo = response.data.usuario['cargo'];
+      setErro(null)
+      setSenha('')
+      localStorage.setItem('auth_token', token);
+      localStorage.setItem('nome', usuarioNome);
+      localStorage.setItem('email', usuarioEmail);
+      localStorage.setItem('cargo', usuarioCargo);
 
+      router.push('/usuario')
+    })
+    .catch((error) => {
+      setSenha('')
+      setErro(error.response.data.mensagem)
+    })
+    
     // Simulação de login (substitua por lógica real de login)
-    if (email === 'admin@gmail.com' && senha === '123456') {
+    /* if (email === 'admin@gmail.com' && senha === '123456') {
       // Armazenando um token fictício para simulação de autenticação
       localStorage.setItem('auth_token', 'some_token');
       router.push('/dashboard'); // Redireciona para a página inicial após o login
     } else {
       setErro('Credenciais inválidas.');
-    }
+    } */
   };
 
   return (
