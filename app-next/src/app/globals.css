@@ -1,5 +1,160 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Global */
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+:root{
+  --fundo: #fff;
+  --azulPadrao: #0070f3;
+  --textos: #000000;
+}
+h1.titulo, h2.subtitulo{
+  z-index: 1;
+  margin-top: 20px;
+  font-size: 2em;
+  text-align: center;
+  color: var(--azulPadrao);
+}
+h2.subtitulo{
+  font-size: 1.6em;
+}
+h2{
+  font-size: 1.4em !important;
+}
+hr.linha{
+  width: 50%;
+  margin: auto;
+  margin-bottom: 35px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.245);
+}
+
+
+/* SideBar */
+.fundoSideBar{
+  background-color: var(--azulPadrao);
+  color: #fff;
+}
+.itemSideBar, .sairHeader{
+  transition: background-color 0.2s, color 0.2s;
+}
+.itemSideBar:hover{
+  background-color: rgba(0, 0, 0, 0.1) !important;
+  color: rgba(255, 255, 255, 0.650) !important;
+}
+.linkSideBar{
+  color: #fff;
+  text-decoration: none;
+}
+
+/* Header */
+.header{
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.345);
+}
+.botaoHeader {
+  color: var(--azulPadrao);
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.245);
+}
+.itemMenuHeader{
+  display: block;
+  width: 100%;
+  text-align: center;
+}
+.itemMenuHeader:hover{
+  color: #f00 !important;
+  background-color: rgba(124, 120, 120, 0.10) !important;
+}
+.botaoNav, .botaoNavAltSenha{
+  display: inline-flex;
+  position: relative;
+  align-items: center;
+  color: #f00;
+}
+.botaoNavAltSenha{
+  color: var(--azulPadrao);
+}
+.botaoNavAltSenha:hover{
+  color: var(--azulPadrao) !important;
+}
+
+
+/* Dashboard */
+.ambiente{
+  border: 1px solid;
+  border-radius: 4px;
+  padding: 10px;
+  margin: 30px 10px;
+}
+.botaoAmbiente{
+  width: 100%;
+  display: inline-block;
+}
+.botaoAmbiente:hover{
+  color: var(--azulPadrao);
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
+}
+.arrow {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  padding-bottom: 20px;
+}
+.ambiente h2{
+  font-size: 2em;
+  padding: 10px;
+  margin: 0;
+  display: inline-block;
+}
+.ambiente span{
+  font-size: 1.1em;
+  font-weight: bold;
+}
+.ambiente p{
+  font-size: 1em;
+  margin-bottom: 10px;
+  padding: 0;
+}
+.collapse {
+  max-height: 0; 
+  overflow: hidden;
+  transition: max-height 0.35s ease, opacity 0.35s ease; /* Transição para max-height e opacity */
+  opacity: 0;  /* Inicia invisível */
+}
+.collapse.show {
+  overflow-y: auto;
+  max-height: 500px; /* Ou um valor suficiente para o conteúdo */
+  visibility: visible !important;
+  opacity: 1;  /* Torna visível ao expandir */
+}
+
+/* Notificação */
+.notificacao, .notificacaoSuccess, .notificacaoError{
+  background-color: #fff;
+  color: #000;
+  justify-content: center;
+  align-items: center;
+  width: 30%;
+  position: fixed;
+  z-index: 100;
+  right: 10px;
+  bottom: 10px;
+  transition: 0.5s;
+}
+.notificacaoSuccess{
+  background-color: #00b700;
+  color: #fff;
+  width: 25%;
+}
+.notificacaoError{
+  background-color: #c61212;
+  color: #fff;
+}
+
+
 /* Estilos gerais do layout */
-.container {
+/* .container {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -8,7 +163,6 @@
   background-color: #f7f7f7;
   padding: 0 2rem;
 }
-
 .card {
   background-color: #fff;
   padding: 3rem;
@@ -20,32 +174,28 @@
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   text-align: center;
 }
-
 .titulo {
   font-size: 2.5rem;
-  color: #0070f3 !important; /* Força a cor do título */
+  color: #0070f3 !important;
   margin-bottom: 1.5rem;
   font-weight: 700;
   text-align: center;
 }
-
-.formulario {
+ .formulario {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
 }
-
 .input {
   padding: 1rem;
   font-size: 1.1rem;
   border-radius: 8px;
   border: 1px solid #ddd;
   outline: none;
-  color: #333 !important; /* Força a cor do texto nos inputs */
+  color: #333 !important; 
   background-color: #f9f9f9;
   transition: border-color 0.3s ease, background-color 0.3s ease;
 }
-
 .botao {
   padding: 1rem;
   font-size: 1.1rem;
@@ -56,64 +206,60 @@
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
-
 .erro {
-  color: #ff0000 !important; /* Força a cor da mensagem de erro */
+  color: #ff0000 !important; 
   text-align: center;
   margin-bottom: 1rem;
   font-size: 1rem;
 }
-
 .esqueceuSenha {
   display: block;
   margin-top: 1rem;
   font-size: 1rem;
-  color: #0070f3 !important; /* Força a cor do link */
+  color: #0070f3 !important; 
   text-decoration: none;
   transition: color 0.3s ease;
 }
-
 .esqueceuSenha:hover {
-  color: #005bb5 !important; /* Cor mais escura ao passar o mouse */
-}
+  color: #005bb5 !important; 
+} */
+
 
 /* Estilo da tabela */
-.tabela {
+/* .tabela {
   margin-top: 2rem;
   width: 100%;
   border-collapse: collapse;
-  background-color: #fff !important; /* Fundo branco para a tabela */
-  font-family: sans-serif; /* Força a fonte padrão do sistema (sem fontes personalizadas) */
-}
+  background-color: #fff !important; 
+  font-family: sans-serif;
+} */
+
 
 /* Aplicando cores e estilo para os textos da tabela */
-.tabela th, .tabela td {
+/* .tabela th, .tabela td {
   border: 1px solid #ddd;
   padding: 0.8rem;
   text-align: center;
-  color: #000 !important; /* Força o texto das células a ser preto */
-  font-family: sans-serif; /* Garante que a tabela use sans-serif */
+  color: #000 !important; 
+  font-family: sans-serif; 
 }
-
 .tabela th {
-  background-color: #0070f3 !important; /* Cor azul para o cabeçalho da tabela */
-  color: white !important;  /* Força a cor do texto do cabeçalho para branco */
+  background-color: #0070f3 !important; 
+  color: white !important;  
 }
-
 .tabela tr:nth-child(even) {
-  background-color: #f9f9f9 !important;  /* Cor de fundo alternada para as linhas */
+  background-color: #f9f9f9 !important;  
 }
-
 .tabela tr:hover {
-  background-color: #f1f1f1 !important; /* Efeito de hover nas linhas */
-}
+  background-color: #f1f1f1 !important; 
+} */
+
 
 /* Estilo das ações dentro da tabela (Editar, Deletar) */
-.tabela .acoes {
+/* .tabela .acoes {
   display: flex;
   gap: 1rem;
 }
-
 .tabela .acoes button {
   font-size: 1rem;
   padding: 0.5rem;
@@ -122,42 +268,36 @@
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.2s ease;
 }
-
 .tabela .acoes .botao-editar {
   background-color: #ffc107;
   color: #fff;
 }
-
 .tabela .acoes .botao-deletar {
   background-color: #dc3545;
   color: #fff;
 }
-
 .tabela .acoes button:hover {
   transform: scale(1.05);
-}
+} */
+
 
 /* Responsividade */
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
   .container {
     padding: 0 1rem;
   }
-
   .card {
     padding: 2rem;
     width: 100%;
     max-width: 100%;
   }
-
   .titulo {
     font-size: 2rem;
   }
-
   .input {
     font-size: 1rem;
     padding: 0.9rem;
   }
-
   .botao {
     font-size: 1rem;
     padding: 0.9rem;
@@ -170,18 +310,15 @@
     width: 100%;
     max-width: 100%;
   }
-
   .titulo {
     font-size: 1.5rem;
   }
-
   .input {
     font-size: 0.9rem;
     padding: 0.8rem;
   }
-
   .botao {
     font-size: 1rem;
     padding: 0.8rem;
   }
-}
+}  */
