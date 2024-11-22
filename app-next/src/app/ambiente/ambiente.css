@@ -1,0 +1,334 @@
+/* Estilos Gerais */
+.container {
+    padding: 20px;
+    background: #f4f4f9;
+    justify-content: center;
+}
+.cardAmbiente {
+    background-color: white;
+    padding: 15px; /* Reduz o padding */
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 700px; /* Reduz a largura do card */
+    margin: 20px auto;
+    box-sizing: border-box;
+}
+.titulo {
+    text-align: center;
+    font-size: 1.8rem; /* Tamanho reduzido */
+    margin-bottom: 15px; /* Menor espaçamento */
+    color: #333;
+}
+.formulario {
+    display: flex;
+    flex-direction: column;
+    gap: 12px; /* Reduz o espaçamento */
+    width: 100%;
+}
+.input, .inputSelect {
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    width: 100%;
+    box-sizing: border-box;
+}
+.inputSelect {
+    width: 100%; /* Garante que o select use 100% da largura */
+}
+.botao {
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: opacity 0.2s ease;
+    background-color: #007bff;
+    color: white;
+}
+.botao:hover {
+    background-color: #0056b3;
+    opacity: 0.9;
+}
+.horarioContainer {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+    margin: 0 auto;
+}
+.inputHorario {
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    width: 48%;
+}
+label {
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 6px;
+    font-weight: 600;
+}
+
+/* Container e Botão de Pesquisa */
+.pesquisaContainer {
+    display: flex;
+    justify-content: center; /* Centraliza os itens no container */
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+    width: 100%;
+    max-width: 600px; /* Define uma largura máxima para a pesquisa */
+    margin: 0 auto; /* Centraliza o container */
+}
+.pesquisaInput {
+    max-width: 400px; /* Limita a largura máxima do campo */
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+.pesquisaBtn {
+    margin-left: 10px;
+    padding: 8px 12px;
+    font-size: 1rem;
+    background-color: #007bff;
+    color: white;
+    border-radius: 5px;
+}
+.pesquisaBtn:hover {
+    background-color: #0056b3;
+    color: #fff;
+}
+
+.adicionarBtn {
+    padding: 8px 12px;
+    background-color: rgb(21, 206, 12);
+    color: #fff;
+}
+.adicionarBtn:hover {
+    background-color: rgba(38, 144, 32, 0.815);
+    color: #fff;
+}
+
+/* Tabela */
+.tabela {
+    overflow-x: auto;
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    border-collapse: collapse;
+    background-color: #fff !important; 
+}
+.tabela th,
+.tabela td {
+    border: 1px solid #ddd;
+    margin-bottom: 3px;
+    padding: 8px 10px; 
+    text-align: center;
+    font-size: 1rem;
+}
+.tabelaTrEven {
+    background-color: #f9f9f9;
+}
+.tabelaTrOdd {
+    background-color: #fff;
+}
+.acoesColuna {
+    display: inline-grid;
+    justify-content: center;
+}
+.botaoEditar,
+.botaoExcluir {
+    font-size: 0.9rem;
+    border-radius: 6px;
+    margin: 10px 0 0 0;
+    padding: 10px;
+    margin: 10px 5px;
+}
+.botaoEditar, .botaoAdicionar, .botaoExcluir, .botaoEditar:hover, .botaoAdicionar:hover, .botaoExcluir:hover{
+    color: #fff;
+    text-decoration: none;
+}
+.botaoEditar {
+    background-color: #0070f3;
+    transition: background-color 0.3s ease;
+}
+.botaoEditar:hover {
+    background-color: #005bb5;
+}
+.botaoExcluir {
+    background-color: #dc3545;
+    transition: opacity 0.2s ease;
+}
+.botaoExcluir:hover {
+    background-color: #c82333;
+    opacity: 0.9;
+}
+
+/* Modal de Confirmação */
+.modalBackdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.3s ease;
+    z-index: 9999; /* Garante que o modal fique acima de outros elementos */
+}
+.modalContainer {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    width: 300px;
+    animation: slideIn 0.3s ease;
+}
+.modalContainer h4 {
+    font-size: 1.2rem;
+    margin-bottom: 20px; /* Espaçamento entre o texto e os botões */
+    color: #333;
+}
+.modalActions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+.modalButton {
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: opacity 0.2s ease;
+}
+.cancelarBtn {
+    background-color: #f44336;
+    color: white;
+}
+.confirmarBtn {
+    background-color: #4CAF50;
+    color: white;
+}
+.modalButton:hover {
+    opacity: 0.9;
+}
+
+/* Animações de entrada */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+@keyframes slideIn {
+    0% {
+        transform: translateY(-30px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+/* Media Queries para Responsividade */
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+
+    .card {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .formulario {
+        width: 100%;
+        padding: 0 10px;
+    }
+
+    .input,
+    .botao,
+    .pesquisaContainer input,
+    .pesquisaContainer button {
+        max-width: 100%;
+    }
+
+    .tabela {
+        font-size: 0.9rem;
+    }
+
+    .tabela th,
+    .tabela td {
+        padding: 8px 10px;
+    }
+
+    .inputSelect {
+        width: 100%;
+    }
+
+    .horarioContainer {
+        flex-direction: column;
+    }
+
+    .inputHorario {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}
+
+/* Título da tabela */
+.tituloTabela {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    color: #0070f3;
+    text-align: center;
+    padding: 10px 0;
+}
+
+/* Ajuste para a tabela e o layout de pesquisa */
+.tabelaContainer {
+    width: 100%;
+    margin-top: 20px;
+}
+
+/* Modal de Confirmação */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999; /* Garante que o modal fique acima de outros elementos */
+    animation: fadeIn 0.3s ease;
+}
+.modalConteudo {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    width: 300px;
+    box-sizing: border-box;
+    animation: slideIn 0.3s ease;
+}
+.modalConteudo h4 {
+    font-size: 1.2rem;
+    margin-bottom: 20px; /* Espaçamento entre o texto e os botões */
+    color: #333;
+}
+.modalActions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+
+

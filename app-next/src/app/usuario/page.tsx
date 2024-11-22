@@ -3,6 +3,9 @@ import './usuario.css';
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { SidebarProvider } from '@/components/ui/sidebar';
+import Header from '@/components/Menu/Header';
+import { Sidebar } from '@/components/Menu/Sidebar';
 import api from '@/utils/api';
 import PrivateRoute from '@/components/PrivateRoute';
 
@@ -172,102 +175,112 @@ export default function Usuarios() {
   };
 
   return (
-    // Para permissões e validação de token
     <PrivateRoute requiredPermissions={['admin']}>
-      <div className="container">
-        <div className="card">
-          <h1 className="titulo">{editando ? 'Editar Usuário' : 'Cadastrar Novo Usuário'}</h1>
-          <form onSubmit={handleSubmit} className="formulario">
-            {erro && <p className="erro">{erro}</p>}
-            <input
-              type="text"
-              placeholder="Nome"
-              value={nome}
-              onChange={(e) => setNome(e.target.value)}
-              className="input"
-            />
-            <input
-              type="email"
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="input"
-            />
-            <select
-              value={cargo}
-              onChange={(e) => setCargo(e.target.value)}
-              className="input"
-            >
-              <option value="">Selecione o Cargo</option>
-              <option value="professor">Professor</option>
-              <option value="admin">Admin</option>
-            </select>
-            <button type="submit" className="botao">
-              {editando ? 'Salvar Alterações' : 'Cadastrar'}
-            </button>
-          </form>
-
-          <h2 className="titulo">Usuários Cadastrados</h2>
-
-          {/* Campo de Pesquisa - Agora centrado */}
-          <div className="pesquisaContainer">
-            <input
-              type="text"
-              placeholder="Pesquisar por email ou cargo..."
-              value={pesquisa}
-              onChange={(e) => setPesquisa(e.target.value)}
-              className="input pesquisaInput"
-            />
-            <button onClick={() => setPesquisa(pesquisa)} className="pesquisaBtn">
-              Pesquisar
-            </button>
+      <div>
+        <SidebarProvider>
+          <div className="hidden md:flex min-w-[300px] border-r min-h-screen">
+            <Sidebar />
           </div>
+          <main className="grid w-full h-full">
+            <Header />
 
-          {/* Tabela de Usuários */}
-          <table className="tabela">
-            <thead>
-              <tr>
-                <th>Nome</th>
-                <th>Email</th>
-                <th>Cargo</th>
-                <th>Ações</th>
-              </tr>
-            </thead>
-            <tbody>
-              {usuariosFiltrados.map((usuario, index) => (
-                <tr key={usuario.id} className={index % 2 === 0 ? 'tabelaTrEven' : 'tabelaTrOdd'}>
-                  <td>{usuario.name}</td>
-                  <td>{usuario.email}</td>
-                  <td>{usuario.cargo}</td>
-                  <td className="acoesColuna">
-                    <div className="alinhamentoTd">
-                      <button onClick={() => handleEdit(usuario)} className="tabelaAcaoBtn botaoEditar">
-                        Editar
-                      </button>
-                      <button onClick={() => handleDelete(usuario)} className="tabelaAcaoBtn botaoDeletar">
-                        Deletar
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+            <div className="container">
+              <div className="card">
+                <h1 className="titulo">{editando ? 'Editar Usuário' : 'Cadastrar Novo Usuário'}</h1>
+                <form onSubmit={handleSubmit} className="formulario">
+                  {erro && <p className="erro">{erro}</p>}
+                  <input
+                    type="email"
+                    placeholder="Email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="input"
+                  />
+                  <input
+                    type="password"
+                    placeholder="Senha"
+                    value={senha}
+                    onChange={(e) => setSenha(e.target.value)}
+                    className="input"
+                  />
+                  <select
+                    value={cargo}
+                    onChange={(e) => setCargo(e.target.value)}
+                    className="input"
+                  >
+                    <option value="">Selecione o Cargo</option>
+                    <option value="user">Usuário</option>
+                    <option value="admin">Admin</option>
+                  </select>
+                  <button type="submit" className="botao">
+                    {editando ? 'Salvar Alterações' : 'Cadastrar'}
+                  </button>
+                </form>
 
-        {/* Modal de confirmação de exclusão */}
-        {showModal && (
-          <div className="modalBackdrop">
-            <div className="modalContainer">
-              <h2>Tem certeza que deseja excluir?</h2>
-              <p>Essa ação não pode ser desfeita.</p>
-              <div className="modalActions">
-                <button onClick={cancelDelete} className="modalButton cancelarBtn">Cancelar</button>
-                <button onClick={confirmDelete} className="modalButton confirmarBtn">Excluir</button>
+                <h2 className="titulo">Usuários Cadastrados</h2>
+
+                {/* Campo de Pesquisa - Agora centrado */}
+                <div className="pesquisaContainer">
+                  <input
+                    type="text"
+                    placeholder="Pesquisar por email ou cargo..."
+                    value={pesquisa}
+                    onChange={(e) => setPesquisa(e.target.value)}
+                    className="input pesquisaInput"
+                  />
+                  <button onClick={() => setPesquisa(pesquisa)} className="pesquisaBtn">
+                    Pesquisar
+                  </button>
+                </div>
+                <div className='tabelaResp'>
+                  {/* Tabela de Usuários */}
+                  <table className="tabela">
+                    <thead>
+                      <tr>
+                        <th>Email</th>
+                        <th>Cargo</th>
+                        <th>Ações</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {usuariosFiltrados.map((usuario, index) => (
+                        <tr key={usuario.id} className={index % 2 === 0 ? 'tabelaTrEven' : 'tabelaTrOdd'}>
+                          <td>{usuario.email}</td>
+                          <td>{usuario.cargo}</td>
+                          <td className="acoesColuna">
+                            <div className="alinhamentoTd">
+                              <button onClick={() => handleEdit(usuario)} className="tabelaAcaoBtn botaoEditar">
+                                Editar
+                              </button>
+                              <button onClick={() => handleDelete(usuario)} className="tabelaAcaoBtn botaoDeletar">
+                                Deletar
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
               </div>
+
+              {/* Modal de confirmação de exclusão */}
+              {showModal && (
+                <div className="modalBackdrop">
+                  <div className="modalContainer">
+                    <h2>Tem certeza que deseja excluir?</h2>
+                    <p>Essa ação não pode ser desfeita.</p>
+                    <div className="modalActions">
+                      <button onClick={cancelDelete} className="modalButton cancelarBtn">Cancelar</button>
+                      <button onClick={confirmDelete} className="modalButton confirmarBtn">Excluir</button>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
-          </div>
-        )}
+          </main>
+
+        </SidebarProvider >
       </div>
     </PrivateRoute>
   );

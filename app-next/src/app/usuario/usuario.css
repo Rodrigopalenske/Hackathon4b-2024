@@ -97,12 +97,13 @@
     background-color: #0070f3; /* Azul */
     color: #fff;
     margin-right: 10px;
+    margin: 1px;
   }
   
   .botaoDeletar {
     background-color: #dc3545;
     color: #fff;
-    
+    margin: 1px;
   }
   
   .tabelaAcaoBtn:hover {
@@ -181,39 +182,63 @@
     text-align: center;
 
   }
- /* Estilo do campo de pesquisa */
+/* Estilo do container de pesquisa */
 .pesquisaContainer {
-    margin-bottom: 1rem; /* Espaço entre a pesquisa e a tabela */
-    display: flex;
-    justify-content: center; /* Centraliza horizontalmente */
-    align-items: center; /* Alinha verticalmente */
-    gap: 10px;
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap; /* Permite que os itens quebrem linha se necessário */
+}
+
+.pesquisaContainer .input {
+  padding: 0.8rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  outline: none;
+  color: #333;
+  background-color: #f9f9f9;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+  width: 250px; /* Largura padrão */
+  margin: 1px;
+}
+
+.pesquisaBtn {
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin: 1px;
+}
+
+.pesquisaBtn:hover {
+  background-color: #0056b3;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .pesquisaContainer {
+    flex-direction: column; /* Empilha os itens */
+    gap: 5px; /* Menor espaçamento entre os elementos */
   }
-  
+
   .pesquisaContainer .input {
-    padding: 0.8rem;
-    font-size: 1rem;
-    border-radius: 8px;
-    border: 1px solid #ddd;
-    outline: none;
-    color: #333;
-    background-color: #f9f9f9;
-    transition: border-color 0.3s ease, background-color 0.3s ease;
-    width: 250px; /* Largura do campo de pesquisa */
+    width: 100%; /* O campo ocupa toda a largura disponível */
+    max-width: 300px; /* Define um limite máximo */
   }
-  
+
   .pesquisaBtn {
-    padding: 0.8rem 1.5rem;
-    font-size: 1rem;
-    border: none;
-    background-color: #007bff;
-    color: white;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+    width: 100%; /* O botão ocupa toda a largura disponível */
+    max-width: 300px; /* Define um limite máximo */
   }
-  
-  .pesquisaBtn:hover {
-    background-color: #0056b3;
+}
+
+  .tabelaResp {
+    overflow-x: scroll;
   }
-  
