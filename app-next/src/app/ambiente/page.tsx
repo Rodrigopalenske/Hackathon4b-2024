@@ -20,7 +20,7 @@ export default function Ambientes() {
   const [diasDisponiveis, setDiasDisponiveis] = useState<string[]>([]);
   const [turno, setTurno] = useState('');
 
-
+// Simulação de dados dos ambiente (substitua por requisições à API)
   useEffect(() => {
     const ambientesSimulados = [
       { id: 1, nome: 'Sala de Reuniões A', capacidade: '10', equipamentos: 'Projetor, TV', turno: 'Manhã', localizacao: 'Bloco A', tipo: 'Sala', status: 'Disponível', diasDisponiveis: ['segunda', 'quarta', 'sexta'] },
@@ -141,6 +141,7 @@ export default function Ambientes() {
     });
   }, [pesquisa, ambientes]);
 
+  
   return (
     <div className="container">
       <div className="card">
