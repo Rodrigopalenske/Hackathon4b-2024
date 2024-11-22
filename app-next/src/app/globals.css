@@ -59,11 +59,17 @@ hr.linha{
   color: rgba(255, 0, 0, 0.615) !important;
   background-color: rgba(124, 120, 120, 0.10) !important;
 }
-.botaoNav{
+.botaoNav, .botaoNavAltSenha{
   display: inline-flex;
   position: relative;
   align-items: center;
   color: #f00;
+}
+.botaoNavAltSenha{
+  color: var(--azulPadrao);
+}
+.botaoNavAltSenha:hover{
+  color: rgba(0, 113, 243, 0.700) !important;
 }
 
 

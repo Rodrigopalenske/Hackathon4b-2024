@@ -1,6 +1,6 @@
 "use client";
 
-import { BellIcon, LogOut, User } from "lucide-react";
+import { BellIcon, KeyRound, LogOut, User } from "lucide-react";
 import { Button } from "../ui/button";
 import {
   DropdownMenu,
@@ -123,6 +123,12 @@ export default function Header() {
             <DropdownMenuSeparator />
             <DropdownMenuItem className="w-100 d-inline-block text-center">Usuario</DropdownMenuItem>
             <DropdownMenuSeparator />
+            <DropdownMenuItem className="itemMenuHeader">
+              <NavBarLink href={'/senha'} className="botaoNavAltSenha">
+                <KeyRound className="mr-2 w-4 h-4 align-items-center text-center"/>
+                Alterar senha
+              </NavBarLink>
+            </DropdownMenuItem>
             <DropdownMenuItem className="itemMenuHeader">
               <NavBarLink href={'/logout'} className="botaoNav">
                 <LogOut className="mr-2 w-4 h-4 align-items-center text-center"/>
