@@ -210,7 +210,7 @@ export default function Ambientes() {
 
           <section>
             <div className="inline-block pl-3 w-100 align-item-center">
-            {/* Pesquisa por ambiente */}
+              {/* Pesquisa por ambiente */}
               <input
                 type="text"
                 placeholder="Pesquisar"
@@ -224,10 +224,16 @@ export default function Ambientes() {
               </button>
 
               {/* Adicionar novo ambiente */}
-              <button className="adicionarBtn btn float-end mr-3" onClick={handlePesquisar}>
-              <NavBarLink href={'/ambiente/adicionar'} className="botaoAdicionar">
-                Adicionar ambiente
-              </NavBarLink>
+              <button
+                className="adicionarBtn btn float-end mr-3"
+                onClick={handlePesquisar}
+              >
+                <NavBarLink
+                  href={"/ambiente/adicionar"}
+                  className="botaoAdicionar"
+                >
+                  Adicionar ambiente
+                </NavBarLink>
               </button>
             </div>
 
@@ -295,8 +301,23 @@ export default function Ambientes() {
                     </div>
                   </div>
                 </div>
-             </div>
+              </div>
             ))}
+
+            {/* Modal para exclusão */}
+            {showModal && (
+              <div className="modal">
+                <div className="modalConteudo">
+                  <h4>Tem certeza de que deseja excluir este ambiente?</h4>
+                  <button className="botaoExcluir" onClick={handleExcluir}>
+                    Sim, Excluir
+                  </button>
+                  <button className="botao" onClick={() => setShowModal(false)}>
+                    Cancelar
+                  </button>
+                </div>
+              </div>
+            )}
           </section>
         </main>
       </SidebarProvider>
