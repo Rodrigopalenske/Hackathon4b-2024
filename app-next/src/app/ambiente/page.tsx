@@ -23,7 +23,12 @@ export default function Ambientes() {
   const [showModal, setShowModal] = useState<boolean>(false);
   const [ambienteExcluir, setAmbienteExcluir] = useState<any | null>(null);
   const [diasDisponiveis, setDiasDisponiveis] = useState<string[]>([]);
+
   const [turno, setTurno] = useState("");
+
+
+
+// Simulação de dados dos ambiente (substitua por requisições à API)
 
   useEffect(() => {
     const ambientesSimulados = [
@@ -197,6 +202,7 @@ export default function Ambientes() {
     });
   }, [pesquisa, ambientes]);
 
+  
   return (
     <div>
       <SidebarProvider>
