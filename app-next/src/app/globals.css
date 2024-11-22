@@ -25,6 +25,7 @@ hr.linha{
   border-bottom: 1px solid rgba(0, 0, 0, 0.245);
 }
 
+
 /* SideBar */
 .fundoSideBar{
   background-color: var(--azulPadrao);
@@ -74,7 +75,6 @@ hr.linha{
 
 
 /* Dashboard */
-
 .ambiente{
   border: 1px solid;
   border-radius: 4px;
@@ -146,4 +146,175 @@ hr.linha{
 .notificacaoError{
   background-color: #c61212;
   color: #fff;
+}
+
+
+/* Estilos gerais do layout */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #f7f7f7;
+  padding: 0 2rem;
+}
+.card {
+  background-color: #fff;
+  padding: 3rem;
+  width: 100%;
+  max-width: 420px;
+  border-radius: 15px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  transform: translateY(-10px);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-align: center;
+}
+.titulo {
+  font-size: 2.5rem;
+  color: #0070f3 !important; /* Força a cor do título */
+  margin-bottom: 1.5rem;
+  font-weight: 700;
+  text-align: center;
+}
+.formulario {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.input {
+  padding: 1rem;
+  font-size: 1.1rem;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  outline: none;
+  color: #333 !important; /* Força a cor do texto nos inputs */
+  background-color: #f9f9f9;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+.botao {
+  padding: 1rem;
+  font-size: 1.1rem;
+  color: #fff;
+  background-color: #0070f3;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.erro {
+  color: #ff0000 !important; /* Força a cor da mensagem de erro */
+  text-align: center;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+}
+.esqueceuSenha {
+  display: block;
+  margin-top: 1rem;
+  font-size: 1rem;
+  color: #0070f3 !important; /* Força a cor do link */
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+.esqueceuSenha:hover {
+  color: #005bb5 !important; /* Cor mais escura ao passar o mouse */
+}
+
+
+/* Estilo da tabela */
+.tabela {
+  margin-top: 2rem;
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff !important; /* Fundo branco para a tabela */
+  font-family: sans-serif; /* Força a fonte padrão do sistema (sem fontes personalizadas) */
+}
+
+
+/* Aplicando cores e estilo para os textos da tabela */
+.tabela th, .tabela td {
+  border: 1px solid #ddd;
+  padding: 0.8rem;
+  text-align: center;
+  color: #000 !important; /* Força o texto das células a ser preto */
+  font-family: sans-serif; /* Garante que a tabela use sans-serif */
+}
+.tabela th {
+  background-color: #0070f3 !important; /* Cor azul para o cabeçalho da tabela */
+  color: white !important;  /* Força a cor do texto do cabeçalho para branco */
+}
+.tabela tr:nth-child(even) {
+  background-color: #f9f9f9 !important;  /* Cor de fundo alternada para as linhas */
+}
+.tabela tr:hover {
+  background-color: #f1f1f1 !important; /* Efeito de hover nas linhas */
+}
+
+
+/* Estilo das ações dentro da tabela (Editar, Deletar) */
+.tabela .acoes {
+  display: flex;
+  gap: 1rem;
+}
+.tabela .acoes button {
+  font-size: 1rem;
+  padding: 0.5rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+.tabela .acoes .botao-editar {
+  background-color: #ffc107;
+  color: #fff;
+}
+.tabela .acoes .botao-deletar {
+  background-color: #dc3545;
+  color: #fff;
+}
+.tabela .acoes button:hover {
+  transform: scale(1.05);
+}
+
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .container {
+    padding: 0 1rem;
+  }
+  .card {
+    padding: 2rem;
+    width: 100%;
+    max-width: 100%;
+  }
+  .titulo {
+    font-size: 2rem;
+  }
+  .input {
+    font-size: 1rem;
+    padding: 0.9rem;
+  }
+  .botao {
+    font-size: 1rem;
+    padding: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .card {
+    padding: 1.5rem;
+    width: 100%;
+    max-width: 100%;
+  }
+  .titulo {
+    font-size: 1.5rem;
+  }
+  .input {
+    font-size: 0.9rem;
+    padding: 0.8rem;
+  }
+  .botao {
+    font-size: 1rem;
+    padding: 0.8rem;
+  }
 }

@@ -1,5 +1,8 @@
 "use client";
 
+
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { IAmbiente } from "@/interfaces/ambiente";
 import axios from "axios";
 import { ChevronDown } from "lucide-react";
@@ -13,6 +16,24 @@ interface IReqAmbiente {
   data: Array<IAmbiente>;
 }
 export default function Dashboard() {
+
+  const router = useRouter();
+  const [showNotifications, setShowNotifications] = useState(false);
+  const [notifications] = useState([
+    { id: 1, message: 'Bem-vindo à plataforma!' },
+    { id: 2, message: 'Atualização do sistema disponível.' },
+    { id: 3, message: 'Novo recurso de segurança ativado.' },
+  ]);
+
+  // Simulação de autenticação (substitua com a lógica real)
+  const isAuthenticated = typeof window !== 'undefined' && localStorage.getItem('auth_token');
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      router.push('/login'); // Redireciona para login se não estiver autenticado
+    }
+  }, [isAuthenticated, router]);
+
   // Requisição da API para guardar os produtos e inseri-los
   // const {data}: IAmbiente = await axios.get()
 
