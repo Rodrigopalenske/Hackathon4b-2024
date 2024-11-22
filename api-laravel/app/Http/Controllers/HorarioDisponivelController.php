@@ -39,9 +39,9 @@ class HorarioDisponivelController extends Controller
             'horario_inicio' => 'required|time',
             'horario_fim' => 'required|time',
         ], [
-            'horario_inicio.rquired' => 'Adicione uma hora de início para todos os dias da semana',
+            'horario_inicio.required' => 'Adicione uma hora de início para todos os dias da semana',
             'horario_inicio.time' => 'O campo de horario de início deve ser um horário válido',
-            'horario_fim.rquired' => 'Adicione uma hora de fim para todos os dias da semana',
+            'horario_fim.required' => 'Adicione uma hora de fim para todos os dias da semana',
             'horario_fim.time' => 'O campo de horario de fim deve ser um horário válido',
         ]);
         if ($validacao->fails()) {
@@ -63,8 +63,8 @@ class HorarioDisponivelController extends Controller
             ], 201);
         } catch (Exception $e) {
             return response()->json([
-                'erros' => $validacao->errors(),
-                'mensagem' => "Credênciais inválidas"
+                'erros' => 'Erro inesperado',
+                'mensagem' => "Erro inesperado"
             ], 400);
         }
     }
