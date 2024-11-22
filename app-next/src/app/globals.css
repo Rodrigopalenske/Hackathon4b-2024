@@ -11,12 +11,18 @@ body {
   --azulPadrao: #0070f3;
   --textos: #000000;
 }
-h1.titulo{
+h1.titulo, h2.subtitulo{
   z-index: 1;
   margin-top: 20px;
   font-size: 2em;
   text-align: center;
   color: var(--azulPadrao);
+}
+h2.subtitulo{
+  font-size: 1.6em;
+}
+h2{
+  font-size: 1.4em !important;
 }
 hr.linha{
   width: 50%;
@@ -57,7 +63,7 @@ hr.linha{
   text-align: center;
 }
 .itemMenuHeader:hover{
-  color: rgba(255, 0, 0, 0.615) !important;
+  color: #f00 !important;
   background-color: rgba(124, 120, 120, 0.10) !important;
 }
 .botaoNav, .botaoNavAltSenha{
@@ -70,7 +76,7 @@ hr.linha{
   color: var(--azulPadrao);
 }
 .botaoNavAltSenha:hover{
-  color: rgba(0, 113, 243, 0.700) !important;
+  color: var(--azulPadrao) !important;
 }
 
 
@@ -84,7 +90,6 @@ hr.linha{
 .botaoAmbiente{
   width: 100%;
   display: inline-block;
-  grid-template-columns: 2;
 }
 .botaoAmbiente:hover{
   color: var(--azulPadrao);
@@ -124,7 +129,6 @@ hr.linha{
   opacity: 1;  /* Torna visível ao expandir */
 }
 
-
 /* Notificação */
 .notificacao, .notificacaoSuccess, .notificacaoError{
   background-color: #fff;
@@ -150,7 +154,7 @@ hr.linha{
 
 
 /* Estilos gerais do layout */
-.container {
+/* .container {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -172,12 +176,12 @@ hr.linha{
 }
 .titulo {
   font-size: 2.5rem;
-  color: #0070f3 !important; /* Força a cor do título */
+  color: #0070f3 !important;
   margin-bottom: 1.5rem;
   font-weight: 700;
   text-align: center;
 }
-.formulario {
+ .formulario {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
@@ -188,7 +192,7 @@ hr.linha{
   border-radius: 8px;
   border: 1px solid #ddd;
   outline: none;
-  color: #333 !important; /* Força a cor do texto nos inputs */
+  color: #333 !important; 
   background-color: #f9f9f9;
   transition: border-color 0.3s ease, background-color 0.3s ease;
 }
@@ -203,7 +207,7 @@ hr.linha{
   transition: background-color 0.3s ease;
 }
 .erro {
-  color: #ff0000 !important; /* Força a cor da mensagem de erro */
+  color: #ff0000 !important; 
   text-align: center;
   margin-bottom: 1rem;
   font-size: 1rem;
@@ -212,47 +216,47 @@ hr.linha{
   display: block;
   margin-top: 1rem;
   font-size: 1rem;
-  color: #0070f3 !important; /* Força a cor do link */
+  color: #0070f3 !important; 
   text-decoration: none;
   transition: color 0.3s ease;
 }
 .esqueceuSenha:hover {
-  color: #005bb5 !important; /* Cor mais escura ao passar o mouse */
-}
+  color: #005bb5 !important; 
+} */
 
 
 /* Estilo da tabela */
-.tabela {
+/* .tabela {
   margin-top: 2rem;
   width: 100%;
   border-collapse: collapse;
-  background-color: #fff !important; /* Fundo branco para a tabela */
-  font-family: sans-serif; /* Força a fonte padrão do sistema (sem fontes personalizadas) */
-}
+  background-color: #fff !important; 
+  font-family: sans-serif;
+} */
 
 
 /* Aplicando cores e estilo para os textos da tabela */
-.tabela th, .tabela td {
+/* .tabela th, .tabela td {
   border: 1px solid #ddd;
   padding: 0.8rem;
   text-align: center;
-  color: #000 !important; /* Força o texto das células a ser preto */
-  font-family: sans-serif; /* Garante que a tabela use sans-serif */
+  color: #000 !important; 
+  font-family: sans-serif; 
 }
 .tabela th {
-  background-color: #0070f3 !important; /* Cor azul para o cabeçalho da tabela */
-  color: white !important;  /* Força a cor do texto do cabeçalho para branco */
+  background-color: #0070f3 !important; 
+  color: white !important;  
 }
 .tabela tr:nth-child(even) {
-  background-color: #f9f9f9 !important;  /* Cor de fundo alternada para as linhas */
+  background-color: #f9f9f9 !important;  
 }
 .tabela tr:hover {
-  background-color: #f1f1f1 !important; /* Efeito de hover nas linhas */
-}
+  background-color: #f1f1f1 !important; 
+} */
 
 
 /* Estilo das ações dentro da tabela (Editar, Deletar) */
-.tabela .acoes {
+/* .tabela .acoes {
   display: flex;
   gap: 1rem;
 }
@@ -274,11 +278,11 @@ hr.linha{
 }
 .tabela .acoes button:hover {
   transform: scale(1.05);
-}
+} */
 
 
 /* Responsividade */
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
   .container {
     padding: 0 1rem;
   }
@@ -317,4 +321,4 @@ hr.linha{
     font-size: 1rem;
     padding: 0.8rem;
   }
-}
+}  */

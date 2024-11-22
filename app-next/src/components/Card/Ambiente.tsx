@@ -29,7 +29,7 @@ export const Ambiente = (props: IAmbiente) => {
           <span>Tipo de ambiente:</span>
           <p>{props.tipo}</p>
           <span>Descrição:</span>
-          <p>{props.descricao}</p>
+          <p>{props.equipamentos}</p>
           <span>Localidade:</span>
           <p>{props.localizacao}</p>
           <span>Disponibilidade:</span>

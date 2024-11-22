@@ -2,11 +2,9 @@
 .container {
     padding: 20px;
     background: #f4f4f9;
-    display: flex;
     justify-content: center;
 }
-
-.card {
+.cardAmbiente {
     background-color: white;
     padding: 15px; /* Reduz o padding */
     border-radius: 8px;
@@ -16,21 +14,18 @@
     margin: 20px auto;
     box-sizing: border-box;
 }
-
 .titulo {
     text-align: center;
     font-size: 1.8rem; /* Tamanho reduzido */
     margin-bottom: 15px; /* Menor espaçamento */
     color: #333;
 }
-
 .formulario {
     display: flex;
     flex-direction: column;
     gap: 12px; /* Reduz o espaçamento */
     width: 100%;
 }
-
 .input, .inputSelect {
     padding: 10px;
     font-size: 1rem;
@@ -39,11 +34,9 @@
     width: 100%;
     box-sizing: border-box;
 }
-
 .inputSelect {
     width: 100%; /* Garante que o select use 100% da largura */
 }
-
 .botao {
     padding: 10px 20px;
     border-radius: 5px;
@@ -53,20 +46,16 @@
     background-color: #007bff;
     color: white;
 }
-
 .botao:hover {
     background-color: #0056b3;
     opacity: 0.9;
 }
-
-
 .horarioContainer {
     display: flex;
     gap: 10px;
     width: 100%;
     margin: 0 auto;
 }
-
 .inputHorario {
     padding: 10px;
     font-size: 1rem;
@@ -74,7 +63,6 @@
     border-radius: 6px;
     width: 48%;
 }
-
 label {
     font-size: 1rem;
     color: #333;
@@ -93,85 +81,85 @@ label {
     max-width: 600px; /* Define uma largura máxima para a pesquisa */
     margin: 0 auto; /* Centraliza o container */
 }
-
 .pesquisaInput {
     max-width: 400px; /* Limita a largura máxima do campo */
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 5px;
 }
-
 .pesquisaBtn {
+    margin-left: 10px;
     padding: 8px 12px;
     font-size: 1rem;
     background-color: #007bff;
     color: white;
-    border: none;
     border-radius: 5px;
-    cursor: pointer;
 }
-
 .pesquisaBtn:hover {
     background-color: #0056b3;
+    color: #fff;
+}
+
+.adicionarBtn {
+    padding: 8px 12px;
+    background-color: rgb(21, 206, 12);
+    color: #fff;
+}
+.adicionarBtn:hover {
+    background-color: rgba(38, 144, 32, 0.815);
+    color: #fff;
 }
 
 /* Tabela */
 .tabela {
+    overflow-x: auto;
     width: 100%;
     border-collapse: collapse;
     margin-top: 15px;
+    border-collapse: collapse;
+    background-color: #fff !important; 
 }
-
 .tabela th,
 .tabela td {
-    padding: 8px 10px; /* Ajusta o padding das células */
-    text-align: left;
+    border: 1px solid #ddd;
+    margin-bottom: 3px;
+    padding: 8px 10px; 
+    text-align: center;
     font-size: 1rem;
 }
-
 .tabelaTrEven {
     background-color: #f9f9f9;
 }
-
 .tabelaTrOdd {
     background-color: #fff;
 }
-
 .acoesColuna {
-    display: flex;
-    justify-content: space-around;
+    display: inline-grid;
+    justify-content: center;
 }
-
 .botaoEditar,
 .botaoExcluir {
-    padding: 8px 12px;
     font-size: 0.9rem;
-    cursor: pointer;
     border-radius: 6px;
+    margin: 10px 0 0 0;
+    padding: 10px;
+    margin: 10px 5px;
 }
-
+.botaoEditar, .botaoAdicionar, .botaoExcluir, .botaoEditar:hover, .botaoAdicionar:hover, .botaoExcluir:hover{
+    color: #fff;
+    text-decoration: none;
+}
 .botaoEditar {
     background-color: #0070f3;
-    color: white;
     transition: background-color 0.3s ease;
 }
-
 .botaoEditar:hover {
     background-color: #005bb5;
 }
-
-
-
 .botaoExcluir {
-    padding: 10px 20px;
-    border-radius: 5px;
     background-color: #dc3545;
-    color: white;
-    cursor: pointer;
-    font-size: 16px;
     transition: opacity 0.2s ease;
 }
-
 .botaoExcluir:hover {
     background-color: #c82333;
     opacity: 0.9;
@@ -191,7 +179,6 @@ label {
     animation: fadeIn 0.3s ease;
     z-index: 9999; /* Garante que o modal fique acima de outros elementos */
 }
-
 .modalContainer {
     background-color: white;
     padding: 20px;
@@ -200,19 +187,16 @@ label {
     width: 300px;
     animation: slideIn 0.3s ease;
 }
-
 .modalContainer h4 {
     font-size: 1.2rem;
     margin-bottom: 20px; /* Espaçamento entre o texto e os botões */
     color: #333;
 }
-
 .modalActions {
     display: flex;
     justify-content: space-between;
     margin-top: 20px;
 }
-
 .modalButton {
     padding: 10px 20px;
     border-radius: 5px;
@@ -220,17 +204,14 @@ label {
     font-size: 16px;
     transition: opacity 0.2s ease;
 }
-
 .cancelarBtn {
     background-color: #f44336;
     color: white;
 }
-
 .confirmarBtn {
     background-color: #4CAF50;
     color: white;
 }
-
 .modalButton:hover {
     opacity: 0.9;
 }
@@ -244,7 +225,6 @@ label {
         opacity: 1;
     }
 }
-
 @keyframes slideIn {
     0% {
         transform: translateY(-30px);
@@ -330,7 +310,6 @@ label {
     z-index: 9999; /* Garante que o modal fique acima de outros elementos */
     animation: fadeIn 0.3s ease;
 }
-
 .modalConteudo {
     background-color: white;
     padding: 20px;
@@ -340,13 +319,11 @@ label {
     box-sizing: border-box;
     animation: slideIn 0.3s ease;
 }
-
 .modalConteudo h4 {
     font-size: 1.2rem;
     margin-bottom: 20px; /* Espaçamento entre o texto e os botões */
     color: #333;
 }
-
 .modalActions {
     display: flex;
     justify-content: space-between;

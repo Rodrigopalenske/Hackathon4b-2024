@@ -1,8 +1,7 @@
 "use client";
 
-
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { IAmbiente } from "@/interfaces/ambiente";
 import axios from "axios";
 import { ChevronDown } from "lucide-react";
@@ -16,21 +15,21 @@ interface IReqAmbiente {
   data: Array<IAmbiente>;
 }
 export default function Dashboard() {
-
   const router = useRouter();
   const [showNotifications, setShowNotifications] = useState(false);
   const [notifications] = useState([
-    { id: 1, message: 'Bem-vindo à plataforma!' },
-    { id: 2, message: 'Atualização do sistema disponível.' },
-    { id: 3, message: 'Novo recurso de segurança ativado.' },
+    { id: 1, message: "Bem-vindo à plataforma!" },
+    { id: 2, message: "Atualização do sistema disponível." },
+    { id: 3, message: "Novo recurso de segurança ativado." },
   ]);
 
   // Simulação de autenticação (substitua com a lógica real)
-  const isAuthenticated = typeof window !== 'undefined' && localStorage.getItem('auth_token');
+  const isAuthenticated =
+    typeof window !== "undefined" && localStorage.getItem("auth_token");
 
   useEffect(() => {
     if (!isAuthenticated) {
-      router.push('/login'); // Redireciona para login se não estiver autenticado
+      router.push("/"); // Redireciona para login se não estiver autenticado
     }
   }, [isAuthenticated, router]);
 
@@ -59,7 +58,6 @@ export default function Dashboard() {
               nome={ambiente.nome}
               capacidade={ambiente.capacidade}
               tipo={ambiente.tipo}
-              descricao={ambiente.descricao}
               localizacao={ambiente.localizacao}
               disponibilidade={ambiente.disponibilidade}
             />
@@ -83,28 +81,46 @@ export default function Dashboard() {
               </button>
               <div className="collapse" id="ambiente1">
                 <div className="card card-body">
-                  <span>Disponibilidade:</span>
-                  <p>Lorem ipsum dolor sit amet</p>
-                  <span>Tipo de ambiente:</span>
-                  <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Assumenda aliquid
-                  </p>
-                  <span>Capacidade:</span>
-                  <p>Lorem ipsum dolor sit amet consectetur</p>
-                  <span>Descrição:</span>
-                  <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Assumenda aliquid architecto rem dolor excepturi veritatis
-                    autem amet doloremque? Enim voluptatibus voluptate nemo
-                    illum eaque qui dolorum dolores vitae ipsa! Harum!
-                  </p>
-                  <span>Localidade:</span>
-                  <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Assumenda aliquid architecto rem dolor excepturi veritatis
-                    autem
-                  </p>
+                  <div className="row">
+                    <div className="col">
+                      <span>Disponibilidade:</span>
+                      <p>Lorem ipsum dolor sit amet</p>
+                      <span>Tipo de ambiente:</span>
+                      <p>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Assumenda aliquid
+                      </p>
+                      <span>Dias das semana disponíveis:</span>
+                      <p>Lorem ipsum dolor sit amet consectetur</p>
+                      <span>Dias das semana indisponiveis:</span>
+                      <p>Lorem ipsum dolor sit amet consectetur</p>
+                      <span>Capacidade:</span>
+                      <p>Lorem ipsum dolor sit amet consectetur</p>
+                      <span>Equipamentos:</span>
+                      <p>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Assumenda aliquid architecto rem dolor excepturi
+                        veritatis autem amet doloremque? Enim voluptatibus
+                        voluptate nemo illum eaque qui dolorum dolores vitae
+                        ipsa! Harum!
+                      </p>
+                    </div>
+                    <div className="col">
+                      <span>Localidade:</span>
+                      <p>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda aliquid architecto rem dolor excepturi veritatis autem
+                      </p>
+                      <span>Horário:</span>
+                      <p>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda 
+                      </p>
+                      <span>Ambientes disponíveis:</span>
+                      <p>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda 
+                      </p>
+                      
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -135,7 +151,7 @@ export default function Dashboard() {
                   </p>
                   <span>Capacidade:</span>
                   <p>Lorem ipsum dolor sit amet consectetur</p>
-                  <span>Descrição:</span>
+                  <span>Equipamentos:</span>
                   <p>
                     Lorem ipsum dolor sit amet consectetur adipisicing elit.
                     Assumenda aliquid architecto rem dolor excepturi veritatis
