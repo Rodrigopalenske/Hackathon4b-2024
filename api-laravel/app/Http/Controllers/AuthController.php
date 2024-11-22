@@ -23,6 +23,20 @@ class AuthController extends Controller
         ], 200);
     }
 
+    public function show(string $id)
+    {
+        $usuario = User::find($id);
+        if (!$usuario) {
+            return response()->json([
+                'usuario' => null,
+                'mensagem' => 'Usuário não encontrado'
+            ], 200);
+        }
+        return response()->json([
+            'usuario' => $usuario
+        ], 200);
+    }
+
     public function register(Request $request)
     {
         $validacao = Validator::make($request->all(), [

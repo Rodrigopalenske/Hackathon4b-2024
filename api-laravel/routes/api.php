@@ -36,7 +36,9 @@ Route::middleware(['auth:sanctum', 'api'])->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/register', [AuthController::class, 'register']);
     Route::post('/admin/usuario/update/{id}', [AuthController::class, 'adminUpdate'])->middleware('admin');
-    Route::delete('admin/usuario/destroy/{id}', [AuthController::class, 'destroy'])->middleware('admin');
+    Route::delete('/admin/usuario/destroy/{id}', [AuthController::class, 'destroy'])->middleware('admin');
+
+    Route::get('/notificaco', [AuthController::class, 'index'])->name('notificacao.index');
 
     Route::get('/usuarios', [AuthController::class, 'index']);
     Route::get('/user', [AuthController::class, 'user']);
