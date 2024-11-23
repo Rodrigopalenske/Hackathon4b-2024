@@ -96,16 +96,13 @@ export default function Dashboard() {
                       <p>Lorem ipsum dolor sit amet consectetur</p>
                       <span>Capacidade:</span>
                       <p>Lorem ipsum dolor sit amet consectetur</p>
+                    </div>
+                    <div className="col">
                       <span>Equipamentos:</span>
                       <p>
                         Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Assumenda aliquid architecto rem dolor excepturi
-                        veritatis autem amet doloremque? Enim voluptatibus
-                        voluptate nemo illum eaque qui dolorum dolores vitae
-                        ipsa! Harum!
+                        Assumenda aliquid architecto rem
                       </p>
-                    </div>
-                    <div className="col">
                       <span>Localidade:</span>
                       <p>
                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda aliquid architecto rem dolor excepturi veritatis autem
@@ -142,28 +139,43 @@ export default function Dashboard() {
               </button>
               <div className="collapse" id="ambiente2">
                 <div className="card card-body">
-                  <span>Disponibilidade:</span>
-                  <p>Lorem ipsum dolor sit amet</p>
-                  <span>Tipo de ambiente:</span>
-                  <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Assumenda aliquid
-                  </p>
-                  <span>Capacidade:</span>
-                  <p>Lorem ipsum dolor sit amet consectetur</p>
-                  <span>Equipamentos:</span>
-                  <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Assumenda aliquid architecto rem dolor excepturi veritatis
-                    autem amet doloremque? Enim voluptatibus voluptate nemo
-                    illum eaque qui dolorum dolores vitae ipsa! Harum!
-                  </p>
-                  <span>Localidade:</span>
-                  <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Assumenda aliquid architecto rem dolor excepturi veritatis
-                    autem
-                  </p>
+                  <div className="row">
+                    <div className="col">
+                      <span>Disponibilidade:</span>
+                      <p>Lorem ipsum dolor sit amet</p>
+                      <span>Tipo de ambiente:</span>
+                      <p>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Assumenda aliquid
+                      </p>
+                      <span>Dias das semana disponíveis:</span>
+                      <p>Lorem ipsum dolor sit amet consectetur</p>
+                      <span>Dias das semana indisponiveis:</span>
+                      <p>Lorem ipsum dolor sit amet consectetur</p>
+                      <span>Capacidade:</span>
+                      <p>Lorem ipsum dolor sit amet consectetur</p>
+                    </div>
+                    <div className="col">
+                      <span>Equipamentos:</span>
+                      <p>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Assumenda aliquid architecto rem
+                      </p>
+                      <span>Localidade:</span>
+                      <p>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda aliquid architecto rem dolor excepturi veritatis autem
+                      </p>
+                      <span>Horário:</span>
+                      <p>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda 
+                      </p>
+                      <span>Ambientes disponíveis:</span>
+                      <p>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda 
+                      </p>
+                      
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

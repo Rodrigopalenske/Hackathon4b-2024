@@ -3,12 +3,15 @@
 import Header from "@/components/Menu/Header";
 import { Sidebar } from "@/components/Menu/Sidebar";
 import { SidebarProvider } from "@/components/ui/sidebar";
-import "../ambiente.css";
 import { useAmbienteHandlers } from "../../../hooks/useAmbienteHandlers";
+import "../ambiente.css";
 import { NavBarLink } from "@/components/Menu/style";
-import { useState } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react"
+import { IAmbiente } from "@/interfaces/ambiente";
 
-export default function Ambientes() {
+
+export default function Ambientes({ params }: { params: { id: string } }) {
   const {
     nome,
     setNome,
@@ -22,7 +25,6 @@ export default function Ambientes() {
     setTurno,
     tipo,
     setTipo,
-    status,
     setStatus,
     handleSubmit,
     diasDisponiveis,
@@ -30,18 +32,24 @@ export default function Ambientes() {
     handleDiaChange,
   } = useAmbienteHandlers();
 
-  const [mensagem, setMensagem] = useState<string | null>(null);
+  // Armazena a lista de produtos
+  // const [ambiente, setAmbiente] = useState<Array<IAmbiente>>([])
 
-  const onSubmitHandler = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const sucesso = await handleSubmit(e);
-    if (sucesso) {
-      setMensagem("Ambiente cadastrado com sucesso!");
-    } else {
-      setMensagem("Ocorreu um erro. Verifique os campos e tente novamente.");
-    }
-    setTimeout(() => setMensagem(null), 3000); // Limpa a mensagem após 3 segundos
-  };
+  // useEffect(() => {
+  //   // Busca ambiente pelo ID da categoria da URL
+  //   axios.get(process.env.NEXT_PUBLIC_API_URL + "/ambiente/",
+  //   {
+  //       params: { id: params.id}
+  //   })
+  //       .then((res) => {
+  //           // Atualiza o array produtos na resposta
+  //           setAmbiente(res.data)
+  //       })
+  //       .catch((err) => {
+  //           console.error("Erro ao buscar ambiente:", err)
+  //       })
+  // }, [params.id])
+
 
   return (
     <div>
@@ -60,13 +68,13 @@ export default function Ambientes() {
               </NavBarLink>
           </div>
 
-          <h1 className="titulo">Adicionando ambiente</h1>
+          <h1 className="titulo">Editando ambiente</h1>
           <hr className="linha" />
 
           <section>
             <div className="container">
               <div className="cardAmbiente">
-                <form className="formulario" onSubmit={onSubmitHandler}>
+                <form className="formulario" onSubmit={handleSubmit}>
                   <input
                     className="input"
                     type="text"
@@ -76,9 +84,8 @@ export default function Ambientes() {
                   />
                   <input
                     className="input"
-                    type="number"
+                    type="text"
                     placeholder="Capacidade"
-                    min={"5"}
                     value={capacidade}
                     onChange={(e) => setCapacidade(e.target.value)}
                   />
@@ -175,18 +182,10 @@ export default function Ambientes() {
                   </div>
 
                   <button type="submit" className="btn btn-success">
-                    Cadastrar Ambiente
+                    Salvar Ambiente
                   </button>
 
-                  {mensagem && (
-                    <div
-                      className={`alert ${
-                        erro ? "alert-danger" : "alert-success"
-                      }`}
-                    >
-                      {mensagem}
-                    </div>
-                  )}
+                  {erro && <p className="erro">{erro}</p>}
                 </form>
               </div>
             </div>
