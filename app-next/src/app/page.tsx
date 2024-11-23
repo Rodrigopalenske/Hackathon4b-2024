@@ -60,7 +60,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     alignItems: 'center',
     justifyContent: 'center',
     height: '100vh',
-    backgroundColor: '#f7f7f7', // Fundo claro
+    backgroundColor: '#f7f7f7', 
   },
   card: {
     backgroundColor: '#fff',
@@ -68,17 +68,17 @@ const styles: { [key: string]: React.CSSProperties } = {
     width: '100%',
     maxWidth: '420px',
     borderRadius: '15px',
-    boxShadow: '0 20px 40px rgba(0, 0, 0, 0.1)', // Sombra forte para dar a impressão de flutuação
-    transform: 'translateY(-10px)', // Levanta o cartão um pouco
-    transition: 'transform 0.3s ease, box-shadow 0.3s ease', // Transição suave para hover
-    textAlign: 'center', // Garantir que o texto no card esteja centralizado
+    boxShadow: '0 20px 40px rgba(0, 0, 0, 0.1)', 
+    transform: 'translateY(-10px)', 
+    transition: 'transform 0.3s ease, box-shadow 0.3s ease', 
+    textAlign: 'center', 
   },
   titulo: {
     fontSize: '2.5rem',
     color: '#0070f3',
     marginBottom: '1.5rem',
     fontWeight: '700',
-    textAlign: 'center', // Garantir que o título esteja centralizado
+    textAlign: 'center', 
   },
   formulario: {
     display: 'flex',
@@ -91,13 +91,13 @@ const styles: { [key: string]: React.CSSProperties } = {
     borderRadius: '8px',
     border: '1px solid #ddd',
     outline: 'none',
-    color: '#333', // Cor do texto dentro do campo de entrada
-    backgroundColor: '#f9f9f9', // Cor de fundo do campo de entrada
+    color: '#333', 
+    backgroundColor: '#f9f9f9', 
     transition: 'border-color 0.3s ease, background-color 0.3s ease',
   },
   inputFocus: {
-    borderColor: '#0070f3', // Cor do foco no campo de entrada
-    backgroundColor: '#eaf4ff', // Mudança de cor de fundo quando em foco
+    borderColor: '#0070f3', 
+    backgroundColor: '#eaf4ff', 
   },
   botao: {
     padding: '1rem',
@@ -110,7 +110,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     transition: 'background-color 0.3s ease',
   },
   botaoHover: {
-    backgroundColor: '#005bb5', // Cor mais escura no hover
+    backgroundColor: '#005bb5', 
   },
   erro: {
     color: '#ff0000',
@@ -127,6 +127,6 @@ const styles: { [key: string]: React.CSSProperties } = {
     transition: 'color 0.3s ease',
   },
   esqueceuSenhaHover: {
-    color: '#005bb5', // Cor mais escura ao passar o mouse
+    color: '#005bb5', 
   },
 };
