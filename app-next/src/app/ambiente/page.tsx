@@ -64,8 +64,6 @@ export default function Ambientes() {
                 className="btn btn-success float-end mr-3"
                 onClick={handlePesquisar}
               >
-                  
-                 
                   Adicionar ambiente
               </button>
                 </NavBarLink>
