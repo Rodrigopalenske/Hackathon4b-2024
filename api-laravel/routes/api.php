@@ -4,6 +4,7 @@ use App\Http\Controllers\AmbienteController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DiaDisponivelController;
 use App\Http\Controllers\DiaHorarioDisponivelController;
+use App\Http\Controllers\NotificacaoController;
 use App\Models\DiaIndisponivel;
 use App\Models\HorarioDisponivel;
 use App\Models\User;
@@ -36,9 +37,7 @@ Route::middleware(['auth:sanctum', 'api'])->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/register', [AuthController::class, 'register']);
     Route::post('/admin/usuario/update/{id}', [AuthController::class, 'adminUpdate'])->middleware('admin');
-    Route::delete('/admin/usuario/destroy/{id}', [AuthController::class, 'destroy'])->middleware('admin');
-
-    Route::get('/notificaco', [AuthController::class, 'index'])->name('notificacao.index');
+    Route::delete('admin/usuario/destroy/{id}', [AuthController::class, 'destroy'])->middleware('admin');
 
     Route::get('/usuarios', [AuthController::class, 'index']);
     Route::get('/user', [AuthController::class, 'user']);
@@ -60,8 +59,14 @@ Route::middleware(['auth:sanctum', 'api'])->group(function () {
     Route::get('/admin/horario-disponivel/ambiente/{id}', [HorarioDisponivel::class, 'index'])->name('horarioDisponivel.index')->middleware('admin');
     Route::get('/admin/horario-disponivel/{id}', [HorarioDisponivel::class, 'show'])->name('horarioDisponivel.show')->middleware('admin');
     Route::post('/admin/horario-disponivel/{ambienteId}', [HorarioDisponivel::class, 'store'])->name('horarioDisponivel.store')->middleware('admin');
-
+   
     Route::get('/admin/dia-indisponivel/{id}', [DiaIndisponivel::class, 'show'])->name('diaIndisponivel.show')->middleware('admin');
     Route::post('/admin/dia-indisponivel/{ambienteId}', [DiaIndisponivel::class, 'store'])->name('diaIndisponivel.store')->middleware('admin');
     Route::post('/admin/dia-indisponivel', [DiaIndisponivel::class, 'valida'])->name('diaIndisponivel.valida')->middleware('admin');
+
+    //notificacao
+
+    Route::get('/notificacao/{reservaId}', [NotificacaoController::class,'index'])->name('notificacao.index');
+    Route::post('/notificacao', [NotificacaoController::class,'store'])->name('notificacao.store');
+    Route::post('/notificacao/{id}', [NotificacaoController::class,'update'])->name('notificacao.update');
 });
