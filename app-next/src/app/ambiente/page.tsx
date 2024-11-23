@@ -205,7 +205,7 @@ export default function Ambientes() {
 
   
   return (
-    <PrivateRoute requiredPermissions={['admin', 'professor']}>
+    <PrivateRoute requiredPermissions={['admin']}>
       <div>
         <SidebarProvider>
           <div className="hidden md:flex min-w-[300px] border-r min-h-screen">

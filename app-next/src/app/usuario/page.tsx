@@ -48,22 +48,25 @@ export default function Usuarios() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (editando && usuarioEditado) {
-      await api.post('/admin/usuario/update/' + usuarioEditado.id, {
+      await api.post('/admin/usuario/update/'+ usuarioEditado.id, {
         'nome': nome,
         'email': email,
         'cargo': cargo
       })
       .then((response) => {
         // Valida se o registro foi bem-sucedido (status 201 ou mensagem esperada)
-        if (response.status === 201) {
+        if (response.status === 200) {
+          
           console.log('Usuário editado com sucesso:', response.data);
-    
+          setEmail('');
+          setNome('');
+          setCargo('');
           // Obtém a lista de usuários atualizada
           return api.get('/usuarios');
         } else {
-          setErro('Erro inesperado no registro')
-          console.log('Erro inesperado no registro:', response.data);
-          throw new Error('Registro não foi concluído.');
+          setErro(response.data.mensagem)
+          console.log('Erro:', response.data);
+          throw new Error('Edição não foi concluída.');
         }
       })
       .then((response) => {
@@ -83,8 +86,6 @@ export default function Usuarios() {
         console.error('Erro inesperado:', error);
       });
     } else {
-      // Criar novo usuário (substitua pela lógica de API)
-      if (email && senha && cargo) {
         // Criar novo usuário (substitua pela lógica de API)
       if (email && nome && cargo) {
         setErro('')
@@ -96,12 +97,15 @@ export default function Usuarios() {
         .then((response) => {
           // Valida se o registro foi bem-sucedido (status 201 ou mensagem esperada)
           if (response.status === 201) {
-            console.log('Usuário registrado com sucesso:', response.data);
+            setEmail('');
+            setNome('');
+            setCargo('');
+            console.log('Usuário registrado com sucesso:', response.data.mensagem);
       
             // Obtém a lista de usuários atualizada
             return api.get('/usuarios');
           } else {
-            console.log('Erro inesperado no registro:', response.data);
+            console.log('Erro inesperado no registro:', response.data.mensagem);
             throw new Error('Registro não foi concluído.');
           }
         })
@@ -122,10 +126,6 @@ export default function Usuarios() {
         setErro('Todos os campos são obrigatórios.');
       }
     }
-
-    setEmail('');
-    setNome('');
-    setCargo('');
   };
 
   const handleEdit = (usuario: any) => {
@@ -141,7 +141,7 @@ export default function Usuarios() {
     setShowModal(true); // Abre o modal
   };
 
-  const confirmDelete = () => {
+  const confirmDelete = async () => {
     if (usuarioExcluir) {
       try {
         // Faz a requisição para deletar apenas o usuário selecionado
@@ -201,7 +201,7 @@ export default function Usuarios() {
                     className="input"
                   >
                     <option value="">Selecione o Cargo</option>
-                    <option value="user">Usuário</option>
+                    <option value="professor">Professor</option>
                     <option value="admin">Admin</option>
                   </select>
                   <button type="submit" className="botao">
@@ -229,6 +229,7 @@ export default function Usuarios() {
                   <table className="tabela">
                     <thead>
                       <tr>
+                        <th>Nome</th>
                         <th>Email</th>
                         <th>Cargo</th>
                         <th>Ações</th>
@@ -237,6 +238,7 @@ export default function Usuarios() {
                     <tbody>
                       {usuariosFiltrados.map((usuario, index) => (
                         <tr key={usuario.id} className={index % 2 === 0 ? 'tabelaTrEven' : 'tabelaTrOdd'}>
+                          <td>{usuario.name}</td>
                           <td>{usuario.email}</td>
                           <td>{usuario.cargo}</td>
                           <td className="acoesColuna">
@@ -274,5 +276,6 @@ export default function Usuarios() {
 
         </SidebarProvider >
       </div>
+    </PrivateRoute>
   );
 }

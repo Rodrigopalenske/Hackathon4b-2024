@@ -71,14 +71,26 @@ export default function ReservasPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await api.post('/reserva', {
-      'ambiente_id': ambienteSelecionado,
-      'data': dataSelecionada,
-      'horario_inicio': formulario.horarioInicio,
-      'horario_fim': formulario.horarioFim,
-      'status': 1,
-  })
-    alert("Reserva criada com sucesso!");
+    console.log(ambienteSelecionado)
+    if (ambienteSelecionado) {
+      await api.post('/reserva', {
+        'ambiente_id': ambienteSelecionado,
+        'data': dataSelecionada,
+        'horario_inicio': formulario.horarioInicio,
+        'horario_fim': formulario.horarioFim,
+        'status': 1,
+    })
+    .then((resposta) => {
+      console.log(resposta)
+      alert("Reserva criada com sucesso!");
+    })
+    .catch((error) => {
+      console.log(error)
+    })
+    } else {
+      alert("Preencha todos os campos");
+    }
+    
   };
 
   return (
@@ -126,7 +138,7 @@ export default function ReservasPage() {
                           value={formulario.ambienteId}
                           onChange={handleChange}
                         >
-                          <option value="">Selecione um Ambiente</option>
+                          <option disabled value="">Selecione um Ambiente</option>
                           {ambientesDisponiveis.map((ambiente) => (
                             <option key={ambiente.id} value={ambiente.id}>
                               {ambiente.nome}
@@ -147,6 +159,7 @@ export default function ReservasPage() {
                           value={formulario.horarioInicio}
                           onChange={handleChange}
                           required
+                          disabled={!formulario.ambienteId}
                         />
                       </div>
 
@@ -160,6 +173,7 @@ export default function ReservasPage() {
                           value={formulario.horarioFim}
                           onChange={handleChange}
                           required
+                          disabled={!formulario.ambienteId}
                         />
                       </div>
                     </div>

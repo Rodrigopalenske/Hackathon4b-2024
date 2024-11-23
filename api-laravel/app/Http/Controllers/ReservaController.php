@@ -40,11 +40,16 @@ class ReservaController extends Controller
      */
     public function store(Request $request)
     {
-        $user = Auth::user();
+        try {
+            $user = Auth::user();
 
-        $usuarioId = $user->id;
-        
-        $ambienteId = $request->ambiente_id['id'];
+            $usuarioId = $user->id;
+        } catch (Exception $e) {
+            return response()->json([
+                'mensagem' => 'Erro inesperado'
+            ], 500);
+        }
+
 
         //precisa de ambiente para funcionar
         /* if (!$usuarioId || !$ambienteId) {
@@ -59,11 +64,13 @@ class ReservaController extends Controller
         ], 400); */
 
         $validate = Validator::make($request->all(), [
+            'ambiente_id' => 'required',
             'data' => 'required|date',
             'horario_inicio' => 'required|time',
             'horario_fim' => 'required|time',
             'status' => 'required|boolean'
         ], [
+            "ambiente_id.required" => 'O campo de ambiente é obrigatório',
             "data.required" => 'O campo data é obrigatório',
             "data.date" => 'O campo data deve ser uma data',
             "horario_inicio.required" => 'O campo horário de início deve ser preenchido',
@@ -81,6 +88,7 @@ class ReservaController extends Controller
             ], 400);
         }
         try {
+            $ambienteId = $request->ambiente_id['id'];
             $data = Carbon::parse($request->data)->format('Y-m-d');
             $horarioInicio = Carbon::createFromFormat('H:i', $request->horario_inicio)->format('H:i');
             $horarioFim = Carbon::createFromFormat('H:i', $request->horario_fim)->format('H:i');
