@@ -6,6 +6,7 @@ import { Sidebar } from "@/components/Menu/Sidebar";
 import Header from "@/components/Menu/Header";
 import { ChevronDown, Plus } from "lucide-react";
 import { NavBarLink } from "@/components/Menu/style";
+import PrivateRoute from "@/components/PrivateRoute";
 
 export default function Ambientes() {
   const [nome, setNome] = useState("");
@@ -204,108 +205,110 @@ export default function Ambientes() {
 
   
   return (
-    <div>
-      <SidebarProvider>
-        <div className="hidden md:flex min-w-[300px] border-r min-h-screen">
-          <Sidebar />
-        </div>
-        <main className="grid w-full h-full">
-          <Header />
-          <h1 className="titulo">Cadastro de Ambientes</h1>
-          <hr className="linha" />
+    <PrivateRoute requiredPermissions={['admin', 'professor']}>
+      <div>
+        <SidebarProvider>
+          <div className="hidden md:flex min-w-[300px] border-r min-h-screen">
+            <Sidebar />
+          </div>
+          <main className="grid w-full h-full">
+            <Header />
+            <h1 className="titulo">Cadastro de Ambientes</h1>
+            <hr className="linha" />
 
-          <section>
-            <div className="inline-block pl-3 w-100 align-item-center">
-            {/* Pesquisa por ambiente */}
-              <input
-                type="text"
-                placeholder="Pesquisar"
-                value={pesquisa}
-                onChange={(e) => setPesquisa(e.target.value)}
-                onKeyDown={handleKeyDown}
-                className="pesquisaInput w-100"
-              />
-              <button className="pesquisaBtn btn" onClick={handlePesquisar}>
-                Pesquisar
-              </button>
-
-              {/* Adicionar novo ambiente */}
-              <button className="adicionarBtn btn float-end mr-3" onClick={handlePesquisar}>
-              <NavBarLink href={'/ambiente/adicionar'} className="botaoAdicionar">
-                Adicionar ambiente
-              </NavBarLink>
-              </button>
-            </div>
-
-            {/* ambiente */}
-            {ambientesFiltradosMemo.map((ambiente) => (
-              <div key={ambiente.id} className="ambiente">
-                <button
-                  className="botaoAmbiente"
-                  type="button"
-                  data-bs-toggle="collapse"
-                  data-bs-target={`#ambiente${ambiente.id}`}
-                  aria-expanded="false"
-                  aria-controls={`ambiente${ambiente.id}`}
-                >
-                  <h2>{ambiente.nome}</h2>
-                  <span className="arrow">
-                    <ChevronDown />
-                  </span>
+            <section>
+              <div className="inline-block pl-3 w-100 align-item-center">
+              {/* Pesquisa por ambiente */}
+                <input
+                  type="text"
+                  placeholder="Pesquisar"
+                  value={pesquisa}
+                  onChange={(e) => setPesquisa(e.target.value)}
+                  onKeyDown={handleKeyDown}
+                  className="pesquisaInput w-100"
+                />
+                <button className="pesquisaBtn btn" onClick={handlePesquisar}>
+                  Pesquisar
                 </button>
 
-                <div className="collapse" id={"ambiente" + ambiente.id}>
-                  <div className="row">
-                    <div className="col">
-                      <button
-                        className="botaoEditar btn float-end"
-                        onClick={() => handleEditar(ambiente)}
-                      >
-                        Editar
-                      </button>
-                      <button
-                        className="botaoExcluir btn float-end"
-                        onClick={() => {
-                          setAmbienteExcluir(ambiente);
-                          setShowModal(true);
-                        }}
-                      >
-                        Excluir
-                      </button>
-                    </div>
-                  </div>
-                  <div className="card card-body">
+                {/* Adicionar novo ambiente */}
+                <button className="adicionarBtn btn float-end mr-3" onClick={handlePesquisar}>
+                <NavBarLink href={'/ambiente/adicionar'} className="botaoAdicionar">
+                  Adicionar ambiente
+                </NavBarLink>
+                </button>
+              </div>
+
+              {/* ambiente */}
+              {ambientesFiltradosMemo.map((ambiente) => (
+                <div key={ambiente.id} className="ambiente">
+                  <button
+                    className="botaoAmbiente"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target={`#ambiente${ambiente.id}`}
+                    aria-expanded="false"
+                    aria-controls={`ambiente${ambiente.id}`}
+                  >
+                    <h2>{ambiente.nome}</h2>
+                    <span className="arrow">
+                      <ChevronDown />
+                    </span>
+                  </button>
+
+                  <div className="collapse" id={"ambiente" + ambiente.id}>
                     <div className="row">
                       <div className="col">
-                        <span>Disponibilidade:</span>
-                        <p>{ambiente.status}</p>
-                        <span>Tipo de ambiente:</span>
-                        <p>{ambiente.tipo}</p>
-                        <span>Dias das semana disponíveis:</span>
-                        <p>Lorem ipsum dolor sit amet consectetur</p>
-                        <span>Dias das semana indisponiveis:</span>
-                        <p>Lorem ipsum dolor sit amet consectetur</p>
-                        <span>Capacidade:</span>
-                        <p>{ambiente.capacidade}</p>
-                        <span>Equipamentos:</span>
-                        <p>{ambiente.equipamentos}</p>
+                        <button
+                          className="botaoEditar btn float-end"
+                          onClick={() => handleEditar(ambiente)}
+                        >
+                          Editar
+                        </button>
+                        <button
+                          className="botaoExcluir btn float-end"
+                          onClick={() => {
+                            setAmbienteExcluir(ambiente);
+                            setShowModal(true);
+                          }}
+                        >
+                          Excluir
+                        </button>
                       </div>
-                      <div className="col">
-                        <span>Localidade:</span>
-                        <p>{ambiente.localizacao}</p>
-                        <span>Horário:</span>
-                        <p>{ambiente.turno}</p>
-                        <span>Ambientes disponíveis</span>
-                        <p>{renderDiasDisponiveis(ambiente.diasDisponiveis)}</p>
+                    </div>
+                    <div className="card card-body">
+                      <div className="row">
+                        <div className="col">
+                          <span>Disponibilidade:</span>
+                          <p>{ambiente.status}</p>
+                          <span>Tipo de ambiente:</span>
+                          <p>{ambiente.tipo}</p>
+                          <span>Dias das semana disponíveis:</span>
+                          <p>Lorem ipsum dolor sit amet consectetur</p>
+                          <span>Dias das semana indisponiveis:</span>
+                          <p>Lorem ipsum dolor sit amet consectetur</p>
+                          <span>Capacidade:</span>
+                          <p>{ambiente.capacidade}</p>
+                          <span>Equipamentos:</span>
+                          <p>{ambiente.equipamentos}</p>
+                        </div>
+                        <div className="col">
+                          <span>Localidade:</span>
+                          <p>{ambiente.localizacao}</p>
+                          <span>Horário:</span>
+                          <p>{ambiente.turno}</p>
+                          <span>Ambientes disponíveis</span>
+                          <p>{renderDiasDisponiveis(ambiente.diasDisponiveis)}</p>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-             </div>
-            ))}
-          </section>
-        </main>
-      </SidebarProvider>
-    </div>
+              </div>
+              ))}
+            </section>
+          </main>
+        </SidebarProvider>
+      </div>
+    </PrivateRoute>
   );
 }

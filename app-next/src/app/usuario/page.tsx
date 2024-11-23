@@ -190,19 +190,21 @@ export default function Usuarios() {
                 <form onSubmit={handleSubmit} className="formulario">
                   {erro && <p className="erro">{erro}</p>}
                   <input
+                    type="text"
+                    placeholder="Nome"
+                    value={nome}
+                    onChange={(e) => setNome(e.target.value)}
+                    className="input"
+                  />
+
+                  <input
                     type="email"
                     placeholder="Email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     className="input"
                   />
-                  <input
-                    type="password"
-                    placeholder="Senha"
-                    value={senha}
-                    onChange={(e) => setSenha(e.target.value)}
-                    className="input"
-                  />
+
                   <select
                     value={cargo}
                     onChange={(e) => setCargo(e.target.value)}

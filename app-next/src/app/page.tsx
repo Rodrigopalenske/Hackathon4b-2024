@@ -36,7 +36,7 @@ export default function Login() {
       localStorage.setItem('email', usuarioEmail);
       localStorage.setItem('cargo', usuarioCargo);
 
-      router.push('/usuario')
+      router.push('/dashboard')
     })
     .catch((error) => {
       setSenha('')

@@ -23,6 +23,20 @@ class AuthController extends Controller
         ], 200);
     }
 
+    public function show(string $id)
+    {
+        $usuario = User::find($id);
+        if (!$usuario) {
+            return response()->json([
+                'usuario' => null,
+                'mensagem' => 'Usuário não encontrado'
+            ], 200);
+        }
+        return response()->json([
+            'usuario' => $usuario
+        ], 200);
+    }
+
     public function register(Request $request)
     {
         $validacao = Validator::make($request->all(), [
@@ -139,11 +153,18 @@ class AuthController extends Controller
 
     public function logout(Request $request)
     {
-        $request->user()->tokens()->delete();
+        try {
+            $request->user()->tokens()->delete();
 
-        return response()->json([
-            'mensagem' => 'Logout realizado com sucesso!'
-        ]);
+            return response()->json([
+                'mensagem' => 'Logout realizado com sucesso!'
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'mensagem' => 'Erro ao realizar logout'
+            ], 400);
+        }
+        
     }
 
     public function user(Request $request)
