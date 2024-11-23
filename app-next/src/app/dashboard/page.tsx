@@ -26,22 +26,10 @@ export default function Dashboard() {
   ]);
 
   const {
-    nome,
-    setNome,
-    capacidade,
-    setCapacidade,
-    equipamentos,
-    setEquipamentos,
     pesquisa,
     setPesquisa,
     handleKeyDown,
     handlePesquisar,
-    handleSubmit,
-    handleEditar,
-    handleExcluir,
-    setAmbienteExcluir,
-    setShowModal,
-    showModal,
     renderDiasDisponiveis,
     ambientesFiltradosMemo,
   } = useAmbienteHandlers();
@@ -161,7 +149,7 @@ export default function Dashboard() {
               />
             ))
           } */}
-          
+
         </main>
       </SidebarProvider>
     </div>
