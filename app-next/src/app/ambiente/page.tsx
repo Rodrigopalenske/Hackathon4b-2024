@@ -54,7 +54,7 @@ export default function Ambientes() {
                 onKeyDown={handleKeyDown}
                 className="pesquisaInput w-100"
               />
-              <button className="pesquisaBtn btn" onClick={handlePesquisar}>
+              <button className="pesquisaBtn btn btn-primary" onClick={handlePesquisar}>
                 Pesquisar
               </button>
 
