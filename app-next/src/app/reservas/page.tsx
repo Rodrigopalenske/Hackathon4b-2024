@@ -6,10 +6,11 @@ import "./reserva.css";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { Sidebar } from "@/components/Menu/Sidebar";
 import Header from "@/components/Menu/Header";
+import api from "@/utils/api";
+import PrivateRoute from "@/components/PrivateRoute";
 
 export default function ReservasPage() {
   const [dataSelecionada, setDataSelecionada] = useState<Date | null>(null);
-  const [usuarios, setUsuarios] = useState<any[]>([]);
   const [ambientes, setAmbientes] = useState<any[]>([
     {
       id: 1,
@@ -29,7 +30,6 @@ export default function ReservasPage() {
     null
   );
   const [formulario, setFormulario] = useState({
-    usuarioId: "",
     ambienteId: "",
     data: "",
     horarioInicio: "",
@@ -39,10 +39,6 @@ export default function ReservasPage() {
 
   // Simular fetch de usuários
   useEffect(() => {
-    setUsuarios([
-      { id: 1, nome: "João Silva" },
-      { id: 2, nome: "Maria Oliveira" },
-    ]);
     setAmbientesDisponiveis(ambientes);
   }, []);
 
@@ -75,10 +71,18 @@ export default function ReservasPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    await api.post('/reserva', {
+      'ambiente_id': ambienteSelecionado,
+      'data': dataSelecionada,
+      'horario_inicio': formulario.horarioInicio,
+      'horario_fim': formulario.horarioFim,
+      'status': 1,
+  })
     alert("Reserva criada com sucesso!");
   };
 
   return (
+    <PrivateRoute requiredPermissions={['admin', 'professor']}>
     <div>
       <SidebarProvider>
         <div className="hidden md:flex min-w-[300px] border-r min-h-screen">
@@ -112,31 +116,10 @@ export default function ReservasPage() {
                   <h2>Formulário de Reserva</h2>
 
                   <form onSubmit={handleSubmit}>
-
                     <div className="row">
-                      <div className="col-6">
-
-                        <label htmlFor="usuarioId">Usuario:</label>
-
-                        <select id="usuarioId"
-                          name="usuarioId"
-                          className="input padronizado"
-                          value={formulario.usuarioId}
-                          onChange={handleChange}
-                        >
-                          <option value="">Selecione um Usuário</option>
-                          {usuarios.map((usuario) => (
-                            <option key={usuario.id} value={usuario.id}>
-                              {usuario.nome}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-
-                      <div className="col-6">
-
+                      <div className="col-12">
                         <label htmlFor="ambientId">Ambiente:</label>
-
+                        
                         <select id="ambienteId"
                           name="ambienteId"
                           className="input padronizado"
@@ -153,10 +136,8 @@ export default function ReservasPage() {
                       </div>
                     </div>
 
-
                     <div className="row">
                       <div className="col-6">
-
                         <label htmlFor="horarioInicio">Horário inicio:</label>
 
                         <input id="horarioInicio"
@@ -167,11 +148,9 @@ export default function ReservasPage() {
                           onChange={handleChange}
                           required
                         />
-
                       </div>
 
                       <div className="col-6">
-
                         <label htmlFor="horarioFim">Horário fim:</label>
 
                         <input id="horarioFim"
@@ -184,7 +163,6 @@ export default function ReservasPage() {
                         />
                       </div>
                     </div>
-
 
                     <button type="submit" className="botao padronizado">
                       Criar Reserva
@@ -207,10 +185,9 @@ export default function ReservasPage() {
               </div>
             )}
           </div>
-        </main>
-
+          </main>
       </SidebarProvider >
     </div>
-
+    </PrivateRoute>
   );
 }

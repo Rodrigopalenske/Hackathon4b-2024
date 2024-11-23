@@ -12,7 +12,13 @@ export default function Login() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
+      router.push('/dashboard')
+    })
+    .catch((error) => {
+      setSenha('')
+      setErro(error.response.data.mensagem)
+    })
+    
     // Simulação de login (substitua por lógica real de login)
     if (email === 'admin@gmail.com' && senha === '123456') {
       // Armazenando um token fictício para simulação de autenticação

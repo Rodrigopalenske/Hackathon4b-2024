@@ -63,7 +63,7 @@ class DiaIndisponivelController extends Controller
                 ], 201);
             } catch (Exception $e) {
                 return response()->json([
-                    'erros' => '',
+                    'erros' => 'Erro inesperado',
                     'mensagem' => 'Erro inesperado'
                 ], 400);
             }

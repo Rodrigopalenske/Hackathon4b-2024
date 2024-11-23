@@ -63,9 +63,9 @@ class HorarioDisponivelController extends Controller
             ], 201);
         } catch (Exception $e) {
             return response()->json([
-                'erros' => $e,
-                'mensagem' => "Credênciais inválidas"
-            ], 400);
+                'erros' => 'Erro inesperado',
+                'mensagem' => "Erro inesperado"
+            ], 500);
         }
     }
 
