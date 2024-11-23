@@ -116,48 +116,53 @@ export default function ReservasPage() {
                   <h2>Formulário de Reserva</h2>
 
                   <form onSubmit={handleSubmit}>
-                    <label>
-                      Ambiente:
-                      <select
-                        name="ambienteId"
-                        className="input padronizado"
-                        value={formulario.ambienteId}
-                        onChange={handleChange}
-                      >
-                        <option value="">Selecione um Ambiente</option>
-                        {ambientesDisponiveis.map((ambiente) => (
-                          <option key={ambiente.id} value={ambiente.id}>
-                            {ambiente.nome}
-                          </option>
-                        ))}
-                      </select>
-                    </label>
+                    <div className="row">
+                      <div className="col-12">
+                        <label htmlFor="ambientId">Ambiente:</label>
+                        
+                        <select id="ambienteId"
+                          name="ambienteId"
+                          className="input padronizado"
+                          value={formulario.ambienteId}
+                          onChange={handleChange}
+                        >
+                          <option value="">Selecione um Ambiente</option>
+                          {ambientesDisponiveis.map((ambiente) => (
+                            <option key={ambiente.id} value={ambiente.id}>
+                              {ambiente.nome}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
 
-                    <label>
-                      Horário Início:
-                      <input
-                        type="time"
-                        name="horarioInicio"
-                        className="input padronizado"
-                        value={formulario.horarioInicio}
-                        onChange={handleChange}
-                        required
-                        disabled={!formulario.ambienteId}
-                      />
-                    </label>
+                    <div className="row">
+                      <div className="col-6">
+                        <label htmlFor="horarioInicio">Horário inicio:</label>
 
-                    <label>
-                      Horário Fim:
-                      <input
-                        type="time"
-                        name="horarioFim"
-                        className="input padronizado"
-                        value={formulario.horarioFim}
-                        onChange={handleChange}
-                        required
-                        disabled={!formulario.ambienteId}
-                      />
-                    </label>
+                        <input id="horarioInicio"
+                          type="time"
+                          name="horarioInicio"
+                          className="input padronizado"
+                          value={formulario.horarioInicio}
+                          onChange={handleChange}
+                          required
+                        />
+                      </div>
+
+                      <div className="col-6">
+                        <label htmlFor="horarioFim">Horário fim:</label>
+
+                        <input id="horarioFim"
+                          type="time"
+                          name="horarioFim"
+                          className="input padronizado"
+                          value={formulario.horarioFim}
+                          onChange={handleChange}
+                          required
+                        />
+                      </div>
+                    </div>
 
                     <button type="submit" className="botao padronizado">
                       Criar Reserva
@@ -181,10 +186,8 @@ export default function ReservasPage() {
             )}
           </div>
           </main>
-
       </SidebarProvider >
     </div>
     </PrivateRoute>
-
   );
 }

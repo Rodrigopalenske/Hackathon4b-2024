@@ -10,7 +10,6 @@ import api from '@/utils/api';
 import PrivateRoute from '@/components/PrivateRoute';
 
 export default function Usuarios() {
-
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [cargo, setCargo] = useState('');
@@ -26,11 +25,6 @@ export default function Usuarios() {
 
   // Simulação de dados dos usuários (substitua por requisições à API)
   useEffect(() => {
-    // Simulação de dados (substitua isso por uma requisição à API para buscar os usuários)
-    /* const usuariosSimulados = [
-      { id: 1, email: 'admin@gmail.com', cargo: 'admin' },
-      { id: 2, email: 'user@gmail.com', cargo: 'user' },
-    ]; */
     api.get('/usuarios')
     .then((response) => {
       console.log(response.data.usuarios)
@@ -40,8 +34,6 @@ export default function Usuarios() {
     .catch((error) => {
       console.log("Usuários não encontrados")
     })
-
-    
   }, []);
 
   useEffect(() => {
@@ -90,9 +82,10 @@ export default function Usuarios() {
         setErro(error.response.data.mensagem);
         console.error('Erro inesperado:', error);
       });
-      
     } else {
       // Criar novo usuário (substitua pela lógica de API)
+      if (email && senha && cargo) {
+        // Criar novo usuário (substitua pela lógica de API)
       if (email && nome && cargo) {
         setErro('')
         await api.post('/register', {
@@ -126,7 +119,6 @@ export default function Usuarios() {
           console.error('Erro inesperado:', error);
         });
       } else {
-        
         setErro('Todos os campos são obrigatórios.');
       }
     }
@@ -137,8 +129,8 @@ export default function Usuarios() {
   };
 
   const handleEdit = (usuario: any) => {
-    setNome(usuario.name);
     setEmail(usuario.email);
+    setNome(usuario.name);
     setCargo(usuario.cargo);
     setEditando(true);
     setUsuarioEditado(usuario);
@@ -149,7 +141,7 @@ export default function Usuarios() {
     setShowModal(true); // Abre o modal
   };
 
-  const confirmDelete = async () => {
+  const confirmDelete = () => {
     if (usuarioExcluir) {
       try {
         // Faz a requisição para deletar apenas o usuário selecionado
@@ -190,13 +182,12 @@ export default function Usuarios() {
                 <form onSubmit={handleSubmit} className="formulario">
                   {erro && <p className="erro">{erro}</p>}
                   <input
-                    type="text"
-                    placeholder="Nome"
-                    value={nome}
-                    onChange={(e) => setNome(e.target.value)}
-                    className="input"
-                  />
-
+                      type="text"
+                      placeholder="Nome"
+                      value={nome}
+                      onChange={(e) => setNome(e.target.value)}
+                      className="input"
+                    />
                   <input
                     type="email"
                     placeholder="Email"
@@ -204,7 +195,6 @@ export default function Usuarios() {
                     onChange={(e) => setEmail(e.target.value)}
                     className="input"
                   />
-
                   <select
                     value={cargo}
                     onChange={(e) => setCargo(e.target.value)}
@@ -284,6 +274,5 @@ export default function Usuarios() {
 
         </SidebarProvider >
       </div>
-    </PrivateRoute>
   );
 }

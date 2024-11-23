@@ -65,7 +65,7 @@ class HorarioDisponivelController extends Controller
             return response()->json([
                 'erros' => 'Erro inesperado',
                 'mensagem' => "Erro inesperado"
-            ], 400);
+            ], 500);
         }
     }
 

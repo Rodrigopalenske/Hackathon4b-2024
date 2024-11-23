@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DiaDisponivelController;
 use App\Http\Controllers\DiaHorarioDisponivelController;
 use App\Http\Controllers\ReservaController;
+use App\Http\Controllers\NotificacaoController;
 use App\Models\DiaIndisponivel;
 use App\Models\HorarioDisponivel;
 use App\Models\User;
@@ -27,10 +28,6 @@ Route::get('/csrf-token', function () {
 });
 
 
-// admin(adicionar no midware para apenas o admin ter acesso)
-
-
-
 Route::get('/first', function() {
     User::create([
         'name' => 'first',
@@ -48,27 +45,21 @@ Route::middleware(['auth:sanctum', 'api'])->group(function () {
 
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/register', [AuthController::class, 'register']);
-    
 
     Route::get('/usuarios', [AuthController::class, 'index']);
     Route::get('/user', [AuthController::class, 'user']);
 
     //reservas
     Route::get('/reserva', [ReservaController::class, 'index'])->name('reserva.index');
-
     Route::get('/reserva/usuario/{usuarioId}', [ReservaController::class, 'indexUsuario'])->name('reserva.indexUsuario');
-
     Route::post('/reserva/editar/{id}', [ReservaController::class, 'update'])->name('reserva.update');
-
     Route::post('/reserva/{id}', [ReservaController::class, 'show'])->name('reserva.show');
-
     Route::post('/reserva', [ReservaController::class, 'store'])->name('reserva.store');
 
-
-    
-
-        
-    
+    // notificação
+    Route::get('/notificacao/{reservaId}', [NotificacaoController::class,'index'])->name('notificacao.index');
+    Route::post('/notificacao', [NotificacaoController::class,'store'])->name('notificacao.store');
+    Route::post('/notificacao/{id}', [NotificacaoController::class,'update'])->name('notificacao.update');
 
     Route::middleware(['isAdmin'])->group(function () {
         // usuario
@@ -80,25 +71,26 @@ Route::middleware(['auth:sanctum', 'api'])->group(function () {
         Route::get('/admin/ambiente/{id}', [AmbienteController::class, 'show'])->name('ambiente.show');
         Route::post('/admin/ambiente', [AmbienteController::class, 'store'])->name('ambiente.store');
 
-        
-    
+        // dia horário
         Route::get('/admin/dia-horario-disponivel/ambiente/{ambienteId}', [DiaHorarioDisponivelController::class, 'index'])->name('diaHorarioDisponivel.index');
         Route::get('/admin/dia-horario-disponivel/{id}', [DiaHorarioDisponivelController::class, 'show'])->name('diaHorarioDisponivel.show');
         Route::post('/admin/dia-horario-disponivel/{ambienteId}', [DiaHorarioDisponivelController::class, 'store'])->name('diaHorarioDisponivel.store');
         Route::post('/admin/dia-horario-disponivel', [DiaHorarioDisponivelController::class, 'valida'])->name('diaHorarioDisponivel.valida');
-    
+      
+        // dia disponível
         Route::get('/admin/dia-disponivel/{id}', [DiaDisponivelController::class, 'show'])->name('diaDisponivel.show');
         Route::get('/admin/dia-disponivel/ambiente/{id}', [DiaDisponivelController::class, 'show'])->name('diaDisponivel.index');
         Route::post('/admin/dia-disponivel', [DiaDisponivelController::class, 'indexNome'])->name('diaDisponivel.indexNome');
         Route::post('/admin/dia-disponivel/criar', [DiaDisponivelController::class, 'store'])->name('diaDisponivel.store');
     
+        // horário disponível
         Route::get('/admin/horario-disponivel/ambiente/{id}', [HorarioDisponivel::class, 'index'])->name('horarioDisponivel.index');
         Route::get('/admin/horario-disponivel/{id}', [HorarioDisponivel::class, 'show'])->name('horarioDisponivel.show');
         Route::post('/admin/horario-disponivel/{ambienteId}', [HorarioDisponivel::class, 'store'])->name('horarioDisponivel.store');
     
+        // dia indisponível
         Route::get('/admin/dia-indisponivel/{id}', [DiaIndisponivel::class, 'show'])->name('diaIndisponivel.show');
         Route::post('/admin/dia-indisponivel/{ambienteId}', [DiaIndisponivel::class, 'store'])->name('diaIndisponivel.store');
         Route::post('/admin/dia-indisponivel', [DiaIndisponivel::class, 'valida'])->name('diaIndisponivel.valida');
     });
 });
-
