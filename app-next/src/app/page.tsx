@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import api from '@/utils/api';
 
 
 export default function Login() {
@@ -12,12 +13,29 @@ export default function Login() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-      router.push('/dashboard')
+    const response = await api.post('/login', {
+      'email': email,
+      'senha': senha
     })
-    .catch((error) => {
+    .then((response) => {
+      console.log(response)
+      const token = response.data.token;
+      const usuarioNome = response.data.usuario['nome'];
+      const usuarioEmail = response.data.usuario['email'];
+      const usuarioCargo = response.data.usuario['cargo'];
+      setErro('')
       setSenha('')
-      setErro(error.response.data.mensagem)
-    })
+      localStorage.setItem('auth_token', token);
+      localStorage.setItem('nome', usuarioNome);
+      localStorage.setItem('email', usuarioEmail);
+      localStorage.setItem('cargo', usuarioCargo);
+
+      router.push('/dashboard')
+      })
+      .catch((error) => {
+        setSenha('')
+        setErro(error.response.data.mensagem)
+      })
     
     // Simulação de login (substitua por lógica real de login)
     if (email === 'admin@gmail.com' && senha === '123456') {
