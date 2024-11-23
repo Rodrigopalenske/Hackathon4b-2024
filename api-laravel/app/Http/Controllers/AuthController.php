@@ -6,9 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Exception;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\ValidationException;
 use Illuminate\Validation\Rule;
 
 
@@ -65,10 +63,9 @@ class AuthController extends Controller
 
     public function adminUpdate(Request $request, string $id)
     {
-        
         $validacao = Validator::make($request->all(), [
             'nome' => 'required|string|max:255',
-            'email' => ['required', 'string', 'email', Rule::unique('users')->ignore($id)],
+            'email' => ['required', 'string', 'email', Rule::unique('users', 'email')->ignore($id)],
             'cargo' => 'required|string',
         ], 
         [
@@ -94,7 +91,7 @@ class AuthController extends Controller
             'cargo' => $request->cargo,
         ]);
 
-        return response()->json(['mensagem' => 'Usuário editado com sucesso'], 201);
+        return response()->json(['mensagem' => 'Usuário editado com sucesso'], 200);
     }
 
     public function login(Request $request)
@@ -117,7 +114,7 @@ class AuthController extends Controller
         }
 
         $user = User::where('email', $request->email)->first();
-        if (! $user || ! Hash::check($request->senha, $user->password)) {
+        if (!$user || !Hash::check($request->senha, $user->password)) {
             return response()->json([
                 'erros' => 'usuário ou senha incorretos',
                 'mensagem' => "Usuário ou senha incorretos"
@@ -134,7 +131,7 @@ class AuthController extends Controller
                 'cargo' => $user->cargo,
                 'email' => $user->email,
             ],
-        ]);
+        ], 200);
     }
 
     public function logout(Request $request)
