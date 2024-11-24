@@ -28,7 +28,7 @@
 
 .calendario {
   width: 100%;
-  max-width: 400px;
+  max-width: 550px; 
 }
 
 .react-calendar {
@@ -37,6 +37,7 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   font-family: Arial, sans-serif;
   width: 100%;
+  text-align: center;
 }
 
 .react-calendar__tile {
@@ -140,4 +141,19 @@
 
 .botao:hover {
   background-color: #005bb5;
+}
+
+#botaoEditarReservas {
+  background-color: #0070f3; 
+  color: #ffffff; 
+  border: none; 
+  padding: 10px 20px; 
+  border-radius: 5px; 
+  font-size: 16px; 
+  cursor: pointer; 
+  
+}
+
+#botaoEditarReservas:hover {
+  background-color: #005bb5; 
 }

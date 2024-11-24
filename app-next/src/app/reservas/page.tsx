@@ -6,9 +6,9 @@ import "./reserva.css";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { Sidebar } from "@/components/Menu/Sidebar";
 import Header from "@/components/Menu/Header";
+import { useRouter } from "next/navigation";
 import api from "@/utils/api";
 import PrivateRoute from "@/components/PrivateRoute";
-
 export default function ReservasPage() {
   const [dataSelecionada, setDataSelecionada] = useState<Date | null>(null);
   const [ambientes, setAmbientes] = useState<any[]>([
@@ -37,7 +37,8 @@ export default function ReservasPage() {
   });
   const [isClient, setIsClient] = useState(false);
 
-  // Simular fetch de usuários
+  const router = useRouter();
+
   useEffect(() => {
     setAmbientesDisponiveis(ambientes);
   }, []);
@@ -71,7 +72,6 @@ export default function ReservasPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(ambienteSelecionado)
     if (ambienteSelecionado) {
       await api.post('/reserva', {
         'ambiente_id': ambienteSelecionado,
@@ -80,14 +80,18 @@ export default function ReservasPage() {
         'horario_fim': formulario.horarioFim,
         'status': 1,
     })
-    .then((resposta) => {
+    .then((response) => {
+      api.post("/historico/reserva", {
+        'reserva_id': response.data.reserva['id'],
+        'alteracao': response.data.alteracao,
+        'tipo': 'Confirmação de reserva',
+      })
       console.log(resposta.data.reserva['id'])
       api.post('/notificacao',{
         'reserva_id': resposta.data.reserva['id'],
         'mensagem':'oi',
         'tipo':'reserva',
       });
-      
       alert("Reserva criada com sucesso!");
     })
     .catch((error) => {
@@ -97,6 +101,14 @@ export default function ReservasPage() {
       alert("Preencha todos os campos");
     }
     
+  };
+
+  const handleHistoricoClick = () => {
+    router.push("/reservas/historico-reservas");
+  };
+
+  const handleEditarReservasClick = () => {
+    router.push("/reservas/editar-reservas");
   };
 
   return (
@@ -111,6 +123,23 @@ export default function ReservasPage() {
 
           <div className="container">
             <h1 className="titulo">Reservar Ambiente</h1>
+            <hr className="linha" />
+
+            <div className="w-100">
+              <button
+                className="btn btn-primary float-start p-3 w-22"
+                onClick={handleHistoricoClick}
+              >
+                Histórico
+              </button>
+
+              <button id="botaoEditarReservas"
+                className="btn btn-secondary float-end p-3 w-22" 
+                onClick={handleEditarReservasClick}
+              >
+                Editar Reservas
+              </button>
+            </div>
 
             {/* Calendário */}
             <div className="calendario-container">
@@ -119,8 +148,8 @@ export default function ReservasPage() {
                   <Calendar
                     onChange={handleDiaSelecionado}
                     value={dataSelecionada}
-                    minDate={new Date()} // Data mínima: hoje
-                    maxDate={new Date(new Date().setFullYear(new Date().getFullYear() + 1))} // Data máxima: um ano a partir de hoje
+                    minDate={new Date()}
+                    maxDate={new Date(new Date().setFullYear(new Date().getFullYear() + 1))}
                   />
                 )}
               </div>
@@ -137,7 +166,6 @@ export default function ReservasPage() {
                     <div className="row">
                       <div className="col-12">
                         <label htmlFor="ambientId">Ambiente:</label>
-                        
                         <select id="ambienteId"
                           name="ambienteId"
                           className="input padronizado"
@@ -156,8 +184,8 @@ export default function ReservasPage() {
 
                     <div className="row">
                       <div className="col-6">
+                        
                         <label htmlFor="horarioInicio">Horário inicio:</label>
-
                         <input id="horarioInicio"
                           type="time"
                           name="horarioInicio"
@@ -171,8 +199,8 @@ export default function ReservasPage() {
 
                       <div className="col-6">
                         <label htmlFor="horarioFim">Horário fim:</label>
-
-                        <input id="horarioFim"
+                        <input
+                          id="horarioFim"
                           type="time"
                           name="horarioFim"
                           className="input padronizado"

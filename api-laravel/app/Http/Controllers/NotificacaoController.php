@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Notificacao;
+use Exception;
+use Illuminate\Http\Request;
+
 use App\Models\Reserva;
 use Carbon\Carbon;
 use Exception;
@@ -16,6 +19,7 @@ class NotificacaoController extends Controller
     /**
      * Display a listing of the resource.
      */
+
     public function index()
     {
         // mostra as notificacao
@@ -113,6 +117,7 @@ class NotificacaoController extends Controller
 
         ]);
         if ($validacao->fails()) {
+
             return response()->json([
                 'erros' => $validacao->errors(),
                 'mensagem' => "Credências inválidas"
@@ -158,6 +163,7 @@ class NotificacaoController extends Controller
      */
     public function update(Request $request, string $id)
     {
+
         $validacao = Validator::make($request->all(), [
             'status' => 'required|boolean',
         ], [
@@ -181,7 +187,8 @@ class NotificacaoController extends Controller
             }
             $notificacao->update([
                 'status' => $request->status,
-            ]);
+            ]);            
+
             return response()->json([
                 'notificacao' => $notificacao,
                 'mensagem' => "Notificação Atualizada com sucesso"

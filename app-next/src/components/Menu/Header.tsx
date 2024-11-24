@@ -10,50 +10,26 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { NavBarLink } from "./style";
 import api from "@/utils/api";
 import { useRouter } from "next/navigation";
 
 export default function Header() {
+
   // Mensagem que apareceram nas notificações
   const router = useRouter();
-  const [notificacoes, setNotificacoes] = useState<any>([
-    /* {
-      text: "Mensagem 1: Lorem ipsum dolor sit amet consectetur.",
-      date: "02/01/2015",
-      read: true,
+  const [usuario, setUsuario] = useState('');
+  const [notificacoes, setNotificacoes] = useState<any>([{}]);
+
+  useEffect(() => {
+    api.get('/user')
+    .then((response) => {
+      setUsuario(response.data['name'])
+    })
+    .catch((errors) => {
+      setUsuario('Usuário');
     },
-    {
-      text: "Mensagem 2: Lorem ipsum dolor sit amet consectetur.",
-      date: "02/01/2015",
-      read: false,
-    },
-    {
-      text: "Mensagem 3: Lorem ipsum dolor sit amet consectetur.",
-      date: "02/01/2015",
-      read: true,
-    },
-    {
-      text: "Mensagem 4: Lorem ipsum dolor sit amet consectetur.",
-      date: "02/01/2015",
-      read: false,
-    },
-    {
-      text: "Mensagem 5: Lorem ipsum dolor sit amet consectetur.",
-      date: "02/01/2015",
-      read: true,
-    },
-    {
-      text: "Mensagem 6: Lorem ipsum dolor sit amet consectetur.",
-      date: "02/01/2015",
-      read: true,
-    },
-    {
-      text: "Mensagem 7: Lorem ipsum dolor sit amet consectetur.",
-      date: "02/01/2015",
-      read: false,
-    }, */
   ]);
   useEffect(() => {
     api.get('/notificacao')
@@ -146,7 +122,7 @@ export default function Header() {
           >
             <DropdownMenuLabel>Minha conta</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem className="w-100 d-inline-block text-center">Usuario</DropdownMenuItem>
+            <DropdownMenuItem className="w-100 d-inline-block text-center">{usuario}</DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem className="itemMenuHeader">
               <NavBarLink href={'/senha'} className="botaoNavAltSenha">

@@ -17,7 +17,7 @@ export default function Login() {
       'email': email,
       'senha': senha
     })
-    .then((response) => { 
+    .then((response) => {
       console.log(response)
       const token = response.data.token;
       const usuarioNome = response.data.usuario['nome'];
