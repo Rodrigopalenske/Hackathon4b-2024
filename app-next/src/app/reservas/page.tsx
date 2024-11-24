@@ -6,6 +6,7 @@ import "./reserva.css";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { Sidebar } from "@/components/Menu/Sidebar";
 import Header from "@/components/Menu/Header";
+import { useRouter } from "next/navigation";
 
 export default function ReservasPage() {
   const [dataSelecionada, setDataSelecionada] = useState<Date | null>(null);
@@ -37,7 +38,8 @@ export default function ReservasPage() {
   });
   const [isClient, setIsClient] = useState(false);
 
-  // Simular fetch de usuários
+  const router = useRouter();
+
   useEffect(() => {
     setUsuarios([
       { id: 1, nome: "João Silva" },
@@ -78,6 +80,14 @@ export default function ReservasPage() {
     alert("Reserva criada com sucesso!");
   };
 
+  const handleHistoricoClick = () => {
+    router.push("/reservas/historico-reservas");
+  };
+
+  const handleEditarReservasClick = () => {
+    router.push("/reservas/editar-reservas");
+  };
+
   return (
     <div>
       <SidebarProvider>
@@ -89,6 +99,23 @@ export default function ReservasPage() {
 
           <div className="container">
             <h1 className="titulo">Reservar Ambiente</h1>
+            <hr className="linha" />
+
+            <div className="w-100">
+              <button
+                className="btn btn-primary float-start p-3 w-22"
+                onClick={handleHistoricoClick}
+              >
+                Histórico
+              </button>
+
+              <button id="botaoEditarReservas"
+                className="btn btn-secondary float-end p-3 w-22" 
+                onClick={handleEditarReservasClick}
+              >
+                Editar Reservas
+              </button>
+            </div>
 
             {/* Calendário */}
             <div className="calendario-container">
@@ -97,8 +124,8 @@ export default function ReservasPage() {
                   <Calendar
                     onChange={handleDiaSelecionado}
                     value={dataSelecionada}
-                    minDate={new Date()} // Data mínima: hoje
-                    maxDate={new Date(new Date().setFullYear(new Date().getFullYear() + 1))} // Data máxima: um ano a partir de hoje
+                    minDate={new Date()}
+                    maxDate={new Date(new Date().setFullYear(new Date().getFullYear() + 1))}
                   />
                 )}
               </div>
@@ -107,18 +134,15 @@ export default function ReservasPage() {
             {/* Exibir o formulário apenas se uma data for selecionada */}
             {dataSelecionada && (
               <div className="formulario-detalhes">
-                {/* Formulário de reserva */}
                 <div className="card formulario">
                   <h2>Formulário de Reserva</h2>
 
                   <form onSubmit={handleSubmit}>
-
                     <div className="row">
                       <div className="col-6">
-
-                        <label htmlFor="usuarioId">Usuario:</label>
-
-                        <select id="usuarioId"
+                        <label htmlFor="usuarioId">Usuário:</label>
+                        <select
+                          id="usuarioId"
                           name="usuarioId"
                           className="input padronizado"
                           value={formulario.usuarioId}
@@ -134,10 +158,9 @@ export default function ReservasPage() {
                       </div>
 
                       <div className="col-6">
-
-                        <label htmlFor="ambientId">Ambiente:</label>
-
-                        <select id="ambienteId"
+                        <label htmlFor="ambienteId">Ambiente:</label>
+                        <select
+                          id="ambienteId"
                           name="ambienteId"
                           className="input padronizado"
                           value={formulario.ambienteId}
@@ -153,13 +176,11 @@ export default function ReservasPage() {
                       </div>
                     </div>
 
-
                     <div className="row">
                       <div className="col-6">
-
-                        <label htmlFor="horarioInicio">Horário inicio:</label>
-
-                        <input id="horarioInicio"
+                        <label htmlFor="horarioInicio">Horário início:</label>
+                        <input
+                          id="horarioInicio"
                           type="time"
                           name="horarioInicio"
                           className="input padronizado"
@@ -167,14 +188,12 @@ export default function ReservasPage() {
                           onChange={handleChange}
                           required
                         />
-
                       </div>
 
                       <div className="col-6">
-
                         <label htmlFor="horarioFim">Horário fim:</label>
-
-                        <input id="horarioFim"
+                        <input
+                          id="horarioFim"
                           type="time"
                           name="horarioFim"
                           className="input padronizado"
@@ -185,32 +204,40 @@ export default function ReservasPage() {
                       </div>
                     </div>
 
-
                     <button type="submit" className="botao padronizado">
                       Criar Reserva
                     </button>
                   </form>
                 </div>
 
-                {/* Detalhes do ambiente */}
                 {ambienteSelecionado && (
                   <div className="detalhes-ambiente">
                     <h3>Detalhes do Ambiente</h3>
-                    <p><strong>Nome:</strong> {ambienteSelecionado.nome}</p>
-                    <p><strong>Capacidade:</strong> {ambienteSelecionado.capacidade}</p>
-                    <p><strong>Equipamentos:</strong> {ambienteSelecionado.equipamentos}</p>
-                    <p><strong>Turno:</strong> {ambienteSelecionado.turno}</p>
-                    <p><strong>Localização:</strong> {ambienteSelecionado.localizacao}</p>
-                    <p><strong>Tipo:</strong> {ambienteSelecionado.tipo}</p>
+                    <p>
+                      <strong>Nome:</strong> {ambienteSelecionado.nome}
+                    </p>
+                    <p>
+                      <strong>Capacidade:</strong> {ambienteSelecionado.capacidade}
+                    </p>
+                    <p>
+                      <strong>Equipamentos:</strong> {ambienteSelecionado.equipamentos}
+                    </p>
+                    <p>
+                      <strong>Turno:</strong> {ambienteSelecionado.turno}
+                    </p>
+                    <p>
+                      <strong>Localização:</strong> {ambienteSelecionado.localizacao}
+                    </p>
+                    <p>
+                      <strong>Tipo:</strong> {ambienteSelecionado.tipo}
+                    </p>
                   </div>
                 )}
               </div>
             )}
           </div>
         </main>
-
-      </SidebarProvider >
+      </SidebarProvider>
     </div>
-
   );
 }
