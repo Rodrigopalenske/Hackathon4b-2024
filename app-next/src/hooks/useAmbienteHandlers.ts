@@ -32,7 +32,7 @@ export const useAmbienteHandlers = () => {
         nome: "Sala de Reuniões A",
         capacidade: "10",
         equipamentos: "Projetor, TV",
-        turno: "Manhã",
+        turno: "Inicio: 08:40 Fim: 11:30, Inicio: 20:40 Fim: 22:30",
         localizacao: "Bloco A",
         tipo: "Sala",
         status: "Disponível",
@@ -44,12 +44,24 @@ export const useAmbienteHandlers = () => {
         nome: "Auditório",
         capacidade: "50",
         equipamentos: "Microfone, Telão",
-        turno: "Tarde",
+        turno: "Inicio: 08:40 Fim: 11:30, Inicio: 13:40 Fim: 22:30",
         localizacao: "Bloco B",
         tipo: "Auditório",
         status: "Indisponível",
         diasDisponiveis: ["segunda", "terça", "quarta", "quinta"],
         diasIndisponiveis: ['domingo'],
+      },
+      {
+        id: 3,
+        nome: "AlphaLab",
+        capacidade: "35",
+        equipamentos: "Microfone, Telão, Notebooks",
+        turno: "Inicio: 13:40 Fim: 15:30",
+        localizacao: "Bloco C",
+        tipo: "Laboratório",
+        status: "Em manutenção",
+        diasDisponiveis: ["segunda", "terça", "quarta", "quinta", "sexta"],
+        diasIndisponiveis: ['sabado', 'domingo'],
       },
     ];
     setAmbientes(ambientesSimulados);
@@ -188,7 +200,7 @@ export const useAmbienteHandlers = () => {
 
    // Memoriza a lista filtrada para evitar cálculos desnecessários
   const ambientesFiltradosMemo = useMemo(() => {
-    return ambientes.filter((ambiente) => {
+    const filtrados = ambientes.filter((ambiente) => {
       // Converte o texto da pesquisa para minúsculas
       const pesquisaLower = pesquisa.toLowerCase();
       // Verifica se a pesquisa está incluída em alguma propriedade do ambiente
@@ -210,6 +222,9 @@ export const useAmbienteHandlers = () => {
           )
       );
     });
+
+    // Ordena os ambientes filtrados em ordem alfabética pelo nome
+    return filtrados.sort((a, b) => a.nome.localeCompare(b.nome));
   }, [pesquisa, ambientes]);  // Só será recalculado se 'pesquisa' ou 'ambientes' mudarem.
 
    // Retorna todos os estados e funções necessários para o gerenciamento de ambientes.

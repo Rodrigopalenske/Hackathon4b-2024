@@ -127,7 +127,7 @@ export default function Ambientes() {
                         <p>{ambiente.equipamentos}</p>
                         <span>Localidade:</span>
                         <p>{ambiente.localizacao}</p>
-                        <span>Horário:</span>
+                        <span>Horários:</span>
                         <p>{ambiente.turno}</p>
                       </div>
                     </div>
