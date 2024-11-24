@@ -37,14 +37,6 @@ export default function Login() {
         setErro(error.response.data.mensagem)
       })
     
-    // Simulação de login (substitua por lógica real de login)
-    if (email === 'admin@gmail.com' && senha === '123456') {
-      // Armazenando um token fictício para simulação de autenticação
-      localStorage.setItem('auth_token', 'some_token');
-      router.push('/dashboard'); // Redireciona para a página inicial após o login
-    } else {
-      setErro('Credenciais inválidas.');
-    }
   };
 
   return (

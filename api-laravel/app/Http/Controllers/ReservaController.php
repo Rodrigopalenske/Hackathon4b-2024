@@ -199,6 +199,11 @@ class ReservaController extends Controller
         }
     }
 
+    public function cancel(string $id)
+    {
+        //
+    }
+
     /**
      * Remove the specified resource from storage.
      */

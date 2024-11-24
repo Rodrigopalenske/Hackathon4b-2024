@@ -53,8 +53,7 @@ class NotificacaoController extends Controller
             ], 400);
         }
         try {
-
-            $notificacao =Notificacao::create([
+            $notificacao = Notificacao::create([
                 'mensagem' => $request->mensagem,
                 'status' => $request->status,
                 'tipo' => $request->tipo,
