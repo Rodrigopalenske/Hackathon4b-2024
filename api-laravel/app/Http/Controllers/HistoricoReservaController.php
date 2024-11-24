@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Validator;
 
 use function PHPUnit\Framework\isEmpty;
 
+
 class HistoricoReservaController extends Controller
 {
     /**
@@ -107,7 +108,6 @@ class HistoricoReservaController extends Controller
                 'mensagem' => 'Erro inesperado'
             ], 500);
         }
-
     }
 
     /**

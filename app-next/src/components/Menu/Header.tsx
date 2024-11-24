@@ -20,43 +20,7 @@ export default function Header() {
   // Mensagem que apareceram nas notificações
   const router = useRouter();
   const [usuario, setUsuario] = useState('');
-  const [notificacoes, setNotificacoes] = useState<any>([
-    {
-      text: "Mensagem 1: Lorem ipsum dolor sit amet consectetur.",
-      date: "02/01/2015",
-      read: true,
-    },
-    {
-      text: "Mensagem 2: Lorem ipsum dolor sit amet consectetur.",
-      date: "02/01/2015",
-      read: false,
-    },
-    {
-      text: "Mensagem 3: Lorem ipsum dolor sit amet consectetur.",
-      date: "02/01/2015",
-      read: true,
-    },
-    {
-      text: "Mensagem 4: Lorem ipsum dolor sit amet consectetur.",
-      date: "02/01/2015",
-      read: false,
-    },
-    {
-      text: "Mensagem 5: Lorem ipsum dolor sit amet consectetur.",
-      date: "02/01/2015",
-      read: true,
-    },
-    {
-      text: "Mensagem 6: Lorem ipsum dolor sit amet consectetur.",
-      date: "02/01/2015",
-      read: true,
-    },
-    {
-      text: "Mensagem 7: Lorem ipsum dolor sit amet consectetur.",
-      date: "02/01/2015",
-      read: false,
-    },
-  ]);
+  const [notificacoes, setNotificacoes] = useState<any>([{}]);
 
   useEffect(() => {
     api.get('/user')
@@ -65,6 +29,18 @@ export default function Header() {
     })
     .catch((errors) => {
       setUsuario('Usuário');
+    },
+  ]);
+  useEffect(() => {
+    api.get('/notificacao')
+    .then((response) => {
+      console.log(response.data.notificacoes)
+      setNotificacoes(response.data.notificacoes);
+
+    })
+    .catch((error) => {
+      console.log("Usuários não encontrados")
+      console.log(error)
     })
   }, []);
 
@@ -78,7 +54,6 @@ export default function Header() {
         console.log(error)
       })
   };
-
   // Header com botão de notificação e perfil
   return (
     <div className="grid gap-4 p-2 border-b relative header">
@@ -112,15 +87,15 @@ export default function Header() {
                   key={key}
                   className="flex flex-col py-2 px-3 hover:bg-neutral-200 transition flex-items-start gap-2"
                 >
-                  <p className="text-sm">{item.text}</p>
+                  <p className="text-sm">{item.mensagem}</p>
                   <p className="text-xs text-gray-500">
-                    {item.date}
+                    {item.data}
                     <span
                       className={`pl-5 font-bold text-xs ${
-                        item.read ? "text-green-500" : "text-gray-500"
+                        item.status ? "text-green-500" : "text-gray-500"
                       }`}
                     >
-                      {item.read ? "Lido" : "Não lido"}
+                      {item.status ? "Lido" : "Não lido"}
                     </span>
                   </p>
                 </DropdownMenuItem>

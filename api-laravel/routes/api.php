@@ -63,7 +63,8 @@ Route::middleware(['auth:sanctum', 'api'])->group(function () {
     Route::post('/historico/reserva', [HistoricoReservaController::class, 'store'])->name('reserva.historico.store');
 
     // notificação
-    Route::get('/notificacao/{reservaId}', [NotificacaoController::class,'index'])->name('notificacao.index');
+    Route::get('/notificacao', [NotificacaoController::class,'index'])->name('notificacao.index');
+    Route::get('/notificacao/{id}', [NotificacaoController::class,'cancel'])->name('notificacao.cancel');
     Route::post('/notificacao', [NotificacaoController::class,'store'])->name('notificacao.store');
     Route::post('/notificacao/{id}', [NotificacaoController::class,'update'])->name('notificacao.update');
 

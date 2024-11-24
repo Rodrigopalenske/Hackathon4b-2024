@@ -10,6 +10,5 @@ class Reserva extends Model
     {
         return $this->belongsTo(Ambiente::class, 'ambiente_id');
     }
-    
     protected $fillable = ['usuario_id', 'ambiente_id', 'data', 'horario_inicio', 'horario_fim', 'status'];
 }

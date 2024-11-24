@@ -20,7 +20,7 @@ return new class extends Migration
             $table->foreignId('reserva_id')->constrained('reservas')->onDelete('cascade');
             $table->text('mensagem');
             $table->string('tipo', 100);
-            $table->boolean('status');
+            $table->boolean('status')->default(0);
             $table->timestamps();
         });
     }

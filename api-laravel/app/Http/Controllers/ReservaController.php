@@ -55,6 +55,7 @@ class ReservaController extends Controller
                 'mensagem' => 'Erro inesperado'
             ], 400);
         }
+
     }
 
     /**
@@ -110,7 +111,7 @@ class ReservaController extends Controller
             "status.required" => 'O campo de status da reserva deve ser preenchido',
             "status.boolean" => 'O campo status da reserva deve ser verdadeiro ou falso',
         ]);
-        
+
         if ($validate->failed()) {
             return response()->json([
                 'erros' => $validate->errors(),
@@ -135,6 +136,7 @@ class ReservaController extends Controller
                 'mensagem' => 'Reserva realizada com sucesso',
                 'reserva' => $reserva,
                 'alteracao' => ['Reserva feita']
+
             ], 201);
         } catch (Exception $e) {
             return response()->json([
@@ -190,11 +192,13 @@ class ReservaController extends Controller
             'data' => 'required|date',
             'horario_inicio' => 'required',
             'horario_fim' => 'required',
+
         ], [
             "data.required" => 'O campo data deve ser obrigatório',
             "data.date" => 'O campo data deve ser uma data',
             "horario_inicio.required" => 'O campo horário de início deve ser preenchido',
             "horario_fim.required" => 'O campo horário de finalização deve ser preenchido',
+
         ]);
         if ($validate->fails()) {
             return response()->json([
@@ -216,6 +220,7 @@ class ReservaController extends Controller
                 if ($request->horario_fim != $reserva->horario_fim) {
                     $alteracoes[] = 'horário de finalização foi alterada de: ' . $reserva->horario_fim .' para: ' . $request->horario_fim;
                 }
+
                 $reserva->update([
                     'data' => $request->data,
                     'horario_inicio' => $request->horario_inicio,
@@ -225,6 +230,7 @@ class ReservaController extends Controller
                     'mensagem' => 'Registro realizado com sucesso',
                     'alteracao' => $alteracoes
                 ], 200);
+
             }
             return response()->json([
                 'erros' => 'Erro ao cadastrar a reserva',

@@ -9,6 +9,7 @@ use App\Models\HorarioDisponivel;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Validator;
 
@@ -92,6 +93,7 @@ class AmbienteController extends Controller
                     Http::withHeaders([
                         'X-CSRF-TOKEN' => csrf_token(),
                     ])->post(route('diaIndisponivel.valida'), [
+
                         'dias_indisponiveis' => $request->dias_indisponiveis
                     ]);
                     if ($response->successful()) {
