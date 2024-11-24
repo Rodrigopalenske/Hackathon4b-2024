@@ -167,6 +167,7 @@ export default function Usuarios() {
   };
 
   return (
+
     <PrivateRoute requiredPermissions={['admin']}>
       <div>
         <SidebarProvider>
@@ -176,7 +177,7 @@ export default function Usuarios() {
           <main className="grid w-full h-full">
             <Header />
 
-            <div className="container">
+            <div className="containerUser">
               <div className="card">
                 <h1 className="titulo">{editando ? 'Editar Usuário' : 'Cadastrar Novo Usuário'}</h1>
                 <form onSubmit={handleSubmit} className="formulario">
