@@ -113,21 +113,19 @@ export default function Dashboard() {
                         <span>Tipo de ambiente:</span>
                         <p>{ambiente.tipo}</p>
                         <span>Dias das semana disponíveis:</span>
-                        <p>Lorem ipsum dolor sit amet consectetur</p>
+                        <p>{renderDiasDisponiveis(ambiente.diasDisponiveis)}</p>
                         <span>Dias das semana indisponiveis:</span>
-                        <p>Lorem ipsum dolor sit amet consectetur</p>
-                        <span>Capacidade:</span>
-                        <p>{ambiente.capacidade}</p>
+                        <p>{renderDiasDisponiveis(ambiente.diasIndisponiveis)}</p>
                       </div>
                       <div className="col">
+                        <span>Capacidade:</span>
+                        <p>{ambiente.capacidade}</p>
                         <span>Equipamentos:</span>
                         <p>{ambiente.equipamentos}</p>
                         <span>Localidade:</span>
                         <p>{ambiente.localizacao}</p>
                         <span>Horário:</span>
                         <p>{ambiente.turno}</p>
-                        <span>Ambientes disponíveis</span>
-                        <p>{renderDiasDisponiveis(ambiente.diasDisponiveis)}</p>
                       </div>
                     </div>
                   </div>
