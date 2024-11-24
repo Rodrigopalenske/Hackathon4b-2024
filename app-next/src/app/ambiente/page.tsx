@@ -9,8 +9,6 @@ import { NavBarLink } from "@/components/Menu/style";
 import { useAmbienteHandlers } from "../../hooks/useAmbienteHandlers";
 
 export default function Ambientes() {
-  
-  
   const {
     nome,
     setNome,
@@ -44,29 +42,41 @@ export default function Ambientes() {
           <hr className="linha" />
 
           <section>
-            <div className="inline-block pl-3 w-100 align-item-center">
-              {/* Pesquisa por ambiente */}
-              <input
-                type="text"
-                placeholder="Pesquisar"
-                value={pesquisa}
-                onChange={(e) => setPesquisa(e.target.value)}
-                onKeyDown={handleKeyDown}
-                className="pesquisaInput w-100"
-              />
-              <button className="pesquisaBtn btn btn-primary" onClick={handlePesquisar}>
-                Pesquisar
-              </button>
+            <div className="opcoesAmbiente">
+              <div className="row m-0">
+                <div className="col flex">
+                  {/* Pesquisa por ambiente */}
+                  <input
+                    type="text"
+                    placeholder="Pesquisar"
+                    value={pesquisa}
+                    onChange={(e) => setPesquisa(e.target.value)}
+                    onKeyDown={handleKeyDown}
+                    className="pesquisaInput"
+                  />
+                  <button
+                    className="pesquisaBtn btn btn-primary"
+                    onClick={handlePesquisar}
+                  >
+                    Pesquisar
+                  </button>
+                </div>
 
-              {/* Adicionar novo ambiente */}
-              <NavBarLink href={"/ambiente/adicionar"}className="botaoAdicionar">
-              <button
-                className="btn btn-success float-end mr-3"
-                onClick={handlePesquisar}
-              >
-                  Adicionar ambiente
-              </button>
-                </NavBarLink>
+                <div className="col-sm-12 col-md-6 block text-end text-sm-center">
+                  {/* Adicionar novo ambiente */}
+                  <NavBarLink
+                    href={"/ambiente/adicionar"}
+                    className="botaoAdicionar"
+                  >
+                    <button
+                      className="btn btn-success float-end mr-3"
+                      onClick={handlePesquisar}
+                    >
+                      Adicionar ambiente
+                    </button>
+                  </NavBarLink>
+                </div>
+              </div>
             </div>
 
             {/* ambiente */}
@@ -98,7 +108,7 @@ export default function Ambientes() {
                       >
                         Excluir
                       </button>
-                      <NavBarLink href={'/ambiente/editar'}>
+                      <NavBarLink href={"/ambiente/editar"}>
                         <button
                           className="botaoEditar btn float-end"
                           onClick={() => handleEditar(ambiente)}
@@ -118,7 +128,9 @@ export default function Ambientes() {
                         <span>Dias das semana disponíveis:</span>
                         <p>{renderDiasDisponiveis(ambiente.diasDisponiveis)}</p>
                         <span>Dias das semana indisponiveis:</span>
-                        <p>{renderDiasDisponiveis(ambiente.diasIndisponiveis)}</p>
+                        <p>
+                          {renderDiasDisponiveis(ambiente.diasIndisponiveis)}
+                        </p>
                       </div>
                       <div className="col">
                         <span>Capacidade:</span>
@@ -141,10 +153,16 @@ export default function Ambientes() {
               <div className="modal">
                 <div className="modalConteudo">
                   <h4>Tem certeza de que deseja excluir este ambiente?</h4>
-                  <button className="btn btn-primary m-1" onClick={() => setShowModal(false)}>
+                  <button
+                    className="btn btn-primary m-1"
+                    onClick={() => setShowModal(false)}
+                  >
                     Cancelar
                   </button>
-                  <button className="btn btn-danger m-1" onClick={handleExcluir}>
+                  <button
+                    className="btn btn-danger m-1"
+                    onClick={handleExcluir}
+                  >
                     Sim, Excluir
                   </button>
                 </div>

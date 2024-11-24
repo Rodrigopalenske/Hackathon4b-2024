@@ -62,29 +62,35 @@ export default function Dashboard() {
           <hr className="linha" />
 
           <section>
-            <div className="inline-block pl-3 w-100 align-item-center">
-              {/* Pesquisa por ambiente */}
-              <input
-                type="text"
-                placeholder="Pesquisar"
-                value={pesquisa}
-                onChange={(e) => setPesquisa(e.target.value)}
-                onKeyDown={handleKeyDown}
-                className="pesquisaInput w-100"
-              />
-              <button
-                className="pesquisaBtn btn btn-primary"
-                onClick={handlePesquisar}
-              >
-                Pesquisar
-              </button>
+            <div className="opcoesAmbiente">
+              <div className="row m-0">
+                <div className="col flex">
+                  {/* Pesquisa por ambiente */}
+                  <input
+                    type="text"
+                    placeholder="Pesquisar"
+                    value={pesquisa}
+                    onChange={(e) => setPesquisa(e.target.value)}
+                    onKeyDown={handleKeyDown}
+                    className="pesquisaInput"
+                  />
+                  <button
+                    className="pesquisaBtn btn btn-primary"
+                    onClick={handlePesquisar}
+                  >
+                    Pesquisar
+                  </button>
+                </div>
 
-              {/* Enviando para página reservas */}
-              <NavBarLink href={"/reservas"} className="float-end">
-                <button type="button" className="btn btn-success mr-3 p-2">
-                  Faça a sua reserva!
-                </button>
-              </NavBarLink>
+                <div className="col-sm-12 col-md-6 block text-end text-sm-center">
+                  {/* Enviando para página reservas */}
+                  <NavBarLink href={"/reservas"} className="float-end">
+                    <button type="button" className="btn btn-success p-2">
+                      Faça a sua reserva!
+                    </button>
+                  </NavBarLink>
+                </div>
+              </div>
             </div>
 
             {/* ambiente */}
@@ -115,7 +121,9 @@ export default function Dashboard() {
                         <span>Dias das semana disponíveis:</span>
                         <p>{renderDiasDisponiveis(ambiente.diasDisponiveis)}</p>
                         <span>Dias das semana indisponiveis:</span>
-                        <p>{renderDiasDisponiveis(ambiente.diasIndisponiveis)}</p>
+                        <p>
+                          {renderDiasDisponiveis(ambiente.diasIndisponiveis)}
+                        </p>
                       </div>
                       <div className="col">
                         <span>Capacidade:</span>
@@ -147,7 +155,6 @@ export default function Dashboard() {
               />
             ))
           } */}
-
         </main>
       </SidebarProvider>
     </div>
