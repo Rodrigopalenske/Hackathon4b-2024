@@ -60,7 +60,7 @@ class AmbienteController extends Controller
             'localizacao' => 'required|max:100',
             'status' => 'required|max:100',
         ], [
-            'nome.rquired' => 'O campo nome é obrigatório',
+            'nome.required' => 'O campo nome é obrigatório',
             'nome.max' => 'O campo nome deve ter no máximo 100 caracteres',
             'nome.unique' => 'Já existe um ambiente com esse nome',
             'capacidade.required' => 'O campo capacidade máxima é obrigatório',
@@ -152,8 +152,7 @@ class AmbienteController extends Controller
             ]);
         }
         return response()->json([
-            'ambiente' => null,
-            'mensagem' => 'ambiente não encontrado'
+            'ambiente' => []
         ], 400);
     }
 

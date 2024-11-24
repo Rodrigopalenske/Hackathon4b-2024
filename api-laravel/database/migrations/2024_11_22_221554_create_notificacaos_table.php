@@ -11,12 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('dia_horario_disponivels', function (Blueprint $table) {
+        Schema::create('noticacaos', function (Blueprint $table) {
             $table->id();
-            $table->integer("ambiente_id")->constrained('ambientes')->onDelete('cascade');
-            $table->integer("dia_id");
-            $table->integer("horario_id");
+            $table->foreignId('reserva_id')->constrained('reservas')->onDelete('cascade');
+            $table->text('mensagem');
+            $table->string('tipo', 100);
+            $table->boolean('status');
             $table->timestamps();
+            
+
         });
     }
 
@@ -25,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('dia_horario_disponivels');
+        Schema::dropIfExists('noticacaos');
     }
 };

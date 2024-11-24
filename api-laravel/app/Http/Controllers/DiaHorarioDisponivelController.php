@@ -79,7 +79,7 @@ class DiaHorarioDisponivelController extends Controller
             $validacao = Validator::make($diaHorarioDisponivel->all(), [
                 'dia_disponivel' => 'required|max:100',
             ], [
-                'dia_disponivel.rquired' => 'O campo dia da semana é obrigatório',
+                'dia_disponivel.required' => 'O campo dia da semana é obrigatório',
                 'dia_disponivel.max' => 'O campo dia da semana deve ter no máximo 100 caracteres',
             ]);
             if ($validacao->fails()) {

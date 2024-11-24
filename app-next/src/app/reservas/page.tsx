@@ -7,10 +7,12 @@ import { SidebarProvider } from "@/components/ui/sidebar";
 import { Sidebar } from "@/components/Menu/Sidebar";
 import Header from "@/components/Menu/Header";
 import { useRouter } from "next/navigation";
+import api from "@/utils/api";
+import PrivateRoute from "@/components/PrivateRoute";
+
 
 export default function ReservasPage() {
   const [dataSelecionada, setDataSelecionada] = useState<Date | null>(null);
-  const [usuarios, setUsuarios] = useState<any[]>([]);
   const [ambientes, setAmbientes] = useState<any[]>([
     {
       id: 1,
@@ -30,7 +32,6 @@ export default function ReservasPage() {
     null
   );
   const [formulario, setFormulario] = useState({
-    usuarioId: "",
     ambienteId: "",
     data: "",
     horarioInicio: "",
@@ -41,10 +42,6 @@ export default function ReservasPage() {
   const router = useRouter();
 
   useEffect(() => {
-    setUsuarios([
-      { id: 1, nome: "João Silva" },
-      { id: 2, nome: "Maria Oliveira" },
-    ]);
     setAmbientesDisponiveis(ambientes);
   }, []);
 
@@ -77,7 +74,26 @@ export default function ReservasPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    alert("Reserva criada com sucesso!");
+    console.log(ambienteSelecionado)
+    if (ambienteSelecionado) {
+      await api.post('/reserva', {
+        'ambiente_id': ambienteSelecionado,
+        'data': dataSelecionada,
+        'horario_inicio': formulario.horarioInicio,
+        'horario_fim': formulario.horarioFim,
+        'status': 1,
+    })
+    .then((resposta) => {
+      console.log(resposta)
+      alert("Reserva criada com sucesso!");
+    })
+    .catch((error) => {
+      console.log(error)
+    })
+    } else {
+      alert("Preencha todos os campos");
+    }
+    
   };
 
   const handleHistoricoClick = () => {
@@ -89,6 +105,7 @@ export default function ReservasPage() {
   };
 
   return (
+    <PrivateRoute requiredPermissions={['admin', 'professor']}>
     <div>
       <SidebarProvider>
         <div className="hidden md:flex min-w-[300px] border-r min-h-screen">
@@ -139,6 +156,7 @@ export default function ReservasPage() {
 
                   <form onSubmit={handleSubmit}>
                     <div className="row">
+
                       <div className="col-6">
                         <label htmlFor="usuarioId">Usuário:</label>
                         <select
@@ -161,12 +179,13 @@ export default function ReservasPage() {
                         <label htmlFor="ambienteId">Ambiente:</label>
                         <select
                           id="ambienteId"
+
                           name="ambienteId"
                           className="input padronizado"
                           value={formulario.ambienteId}
                           onChange={handleChange}
                         >
-                          <option value="">Selecione um Ambiente</option>
+                          <option disabled value="">Selecione um Ambiente</option>
                           {ambientesDisponiveis.map((ambiente) => (
                             <option key={ambiente.id} value={ambiente.id}>
                               {ambiente.nome}
@@ -178,15 +197,17 @@ export default function ReservasPage() {
 
                     <div className="row">
                       <div className="col-6">
-                        <label htmlFor="horarioInicio">Horário início:</label>
-                        <input
-                          id="horarioInicio"
+
+                        <label htmlFor="horarioInicio">Horário inicio:</label>
+
+                        <input id="horarioInicio"
                           type="time"
                           name="horarioInicio"
                           className="input padronizado"
                           value={formulario.horarioInicio}
                           onChange={handleChange}
                           required
+                          disabled={!formulario.ambienteId}
                         />
                       </div>
 
@@ -200,6 +221,7 @@ export default function ReservasPage() {
                           value={formulario.horarioFim}
                           onChange={handleChange}
                           required
+                          disabled={!formulario.ambienteId}
                         />
                       </div>
                     </div>
@@ -236,8 +258,9 @@ export default function ReservasPage() {
               </div>
             )}
           </div>
-        </main>
-      </SidebarProvider>
+          </main>
+      </SidebarProvider >
     </div>
+    </PrivateRoute>
   );
 }
