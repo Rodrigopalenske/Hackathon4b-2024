@@ -69,7 +69,7 @@ export default function Ambientes() {
                     className="botaoAdicionar"
                   >
                     <button
-                      className="btn btn-success float-end mr-3"
+                      className="btn btn-success p-2 float-end"
                       onClick={handlePesquisar}
                     >
                       Adicionar ambiente

@@ -12,6 +12,14 @@ import { Sidebar } from "@/components/Menu/Sidebar";
 import Header from "@/components/Menu/Header";
 import { NavBarLink } from "@/components/Menu/style";
 import { useAmbienteHandlers } from "@/hooks/useAmbienteHandlers";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 interface IReqAmbiente {
   data: Array<IAmbiente>;
@@ -89,6 +97,26 @@ export default function Dashboard() {
                       Faça a sua reserva!
                     </button>
                   </NavBarLink>
+
+                  <Dialog>
+                    <DialogTrigger className="btn bg-transparent border p-2 w-15 float-end mr-2">Ajuda</DialogTrigger>
+                    <DialogContent>
+                      <DialogHeader>
+                        <DialogTitle>Ajuda:</DialogTitle>
+                        <DialogDescription> <strong>Pesquisa: </strong>
+                          Ao fazer uma busca todos as informações do ambiente serão puxadas, podendo assim escrever: TV, Sabado, tipo, que será mostrado o ambiente que deseja.
+                        </DialogDescription>
+                        <DialogDescription> <strong>Ambientes: </strong>
+                          Os ambientes estão compactados e  organizados em ordem alfabética, clique no ambiente que deseja para mostrar detalhes do mesmo.
+                        </DialogDescription>
+                        <DialogDescription> <strong>Reservas: </strong>
+                          Caso queira fazer sua reserva, clique no botão verde ao lado escrito "Faça a sua reserva!", ou vá pelo menu do lado esquerdo
+                        </DialogDescription>
+                      </DialogHeader>
+                    </DialogContent>
+                  </Dialog>
+
+                  
                 </div>
               </div>
             </div>
