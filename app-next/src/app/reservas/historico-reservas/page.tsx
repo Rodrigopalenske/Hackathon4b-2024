@@ -6,14 +6,49 @@ import { useRouter } from "next/navigation"; // Importa o hook useRouter
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { Sidebar } from "@/components/Menu/Sidebar";
 import Header from "@/components/Menu/Header";
+import api from "@/utils/api";
 
 export default function HistoricoReservas() {
   const [reservas, setReservas] = useState<any[]>([]);
   const router = useRouter(); // Inicializa o roteador
 
   useEffect(() => {
+    api.get('/historico/reserva')
+    .then((response) => {
+      let historicosAtualizados:any[] = []
+      response.data.historico_reserva.forEach(element => {
+        /* let ambiente = api.get('/historico/reserva')
+        .then((response) => {
+
+        })
+        .catch((error) => {
+          
+        }) */
+        
+        let ambienteNome = "mudar"
+        let horarioInicio = element.reserva.horario_inicio
+        let horarioFim = element.reserva.horario_fim
+        let data = element.reserva.data
+        if (Array.isArray(element.historicos) && element.historicos.length > 0) {
+          let historicosComAmbiente = element.historicos.map(historico => ({
+            ...historico,
+            ambiente: ambienteNome,
+            horario_inicio: horarioInicio,
+            horario_fim: horarioFim,
+            data: data,
+          }));
+
+          historicosAtualizados = [...historicosAtualizados, ...historicosComAmbiente];
+        }
+      });
+      setReservas(historicosAtualizados)
+    })
+    .catch((error) => {
+      console.log(error.response.data)
+    })
+    
     // Simula fetch de reservas feitas
-    setReservas([
+    /* setReservas([
       {
         id: 1,
         usuario: "João Silva",
@@ -30,7 +65,7 @@ export default function HistoricoReservas() {
         horarioInicio: "14:00",
         horarioFim: "16:00",
       },
-    ]);
+    ]); */
   }, []);
 
   const handleVoltar = () => {
@@ -60,23 +95,19 @@ export default function HistoricoReservas() {
             <table>
               <thead>
                 <tr>
-                  <th>ID</th>
-                  <th>Usuário</th>
                   <th>Ambiente</th>
-                  <th>Data</th>
-                  <th>Horário</th>
+                  <th>Alteração</th>
+                  <th>Data de alteração</th>
+                  <th>Tipo de alteração</th>
                 </tr>
               </thead>
               <tbody>
                 {reservas.map((reserva) => (
                   <tr key={reserva.id}>
-                    <td>{reserva.id}</td>
-                    <td>{reserva.usuario}</td>
                     <td>{reserva.ambiente}</td>
-                    <td>{reserva.data}</td>
-                    <td>
-                      {reserva.horarioInicio} - {reserva.horarioFim}
-                    </td>
+                    <td>{reserva.alteracao}</td>
+                    <td>{reserva.data_criacao}</td>
+                    <td>{reserva.tipo}</td>
                   </tr>
                 ))}
               </tbody>

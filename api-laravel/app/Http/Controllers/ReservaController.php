@@ -21,10 +21,40 @@ class ReservaController extends Controller
         return response()->json(['reservas' => $reservas], 200);
     }
 
-    public function indexUsuario(string $usuarioId)
+    public function indexUsuario()
     {
-        $reservas = Reserva::when('usuario_id', $usuarioId)->get();
-        return response()->json(['reservas' => $reservas], 200);
+        try {
+            $user = Auth::user();
+            $usuarioId = $user->id;
+            $reservas = Reserva::where('usuario_id', $usuarioId)->with('ambiente')->get();
+            $reservasFormatadas = $reservas->map(function ($reserva) {
+                $data = $reserva->data;
+                $dataAtual = Carbon::today();
+                $editavel = 0;
+                if ($data > $dataAtual) {
+                    $editavel = 1;
+                }
+                return [
+                    'id' => $reserva->id,
+                    'usuario_id' => $reserva->usuario_id,
+                    'ambiente_nome' => $reserva->ambiente ? $reserva->ambiente->nome : null,
+                    'data' => $reserva->data,
+                    'horario_inicio' => $reserva->horario_inicio,
+                    'horario_fim' => $reserva->horario_fim,
+                    'status' => $reserva->status,
+                    'editavel' => $editavel
+                ];
+            });
+
+        return response()->json([
+            'reservas' => $reservasFormatadas,
+        ], 200);
+        } catch (Exception $e) {
+            return response()->json([
+                'erros' => $e,
+                'mensagem' => 'Erro inesperado'
+            ], 400);
+        }
     }
 
     /**
@@ -93,7 +123,7 @@ class ReservaController extends Controller
             $horarioInicio = Carbon::createFromFormat('H:i', $request->horario_inicio)->format('H:i');
             $horarioFim = Carbon::createFromFormat('H:i', $request->horario_fim)->format('H:i');
 
-            Reserva::create([
+            $reserva = Reserva::create([
                 'usuario_id' => $usuarioId,
                 'ambiente_id' => $ambienteId,
                 'data' => $data,
@@ -102,7 +132,9 @@ class ReservaController extends Controller
                 'status' => $request->status,
             ]);
             return response()->json([
-                'mensagem' => 'Registro realizado com sucesso'
+                'mensagem' => 'Reserva realizada com sucesso',
+                'reserva' => $reserva,
+                'alteracao' => ['Reserva feita']
             ], 201);
         } catch (Exception $e) {
             return response()->json([
@@ -120,10 +152,9 @@ class ReservaController extends Controller
         $reserva = Reserva::find($id);
         $data = $reserva->data;
         $dataAtual = Carbon::today();
-        
-        $editavel = false;
+        $editavel = 0;
         if ($data > $dataAtual) {
-            $editavel = !$editavel;
+            $editavel = 1;
         }
         if (!$reserva) {
             return response()->json([
@@ -152,22 +183,18 @@ class ReservaController extends Controller
     public function update(Request $request, string $id)
     {
         if (!$request->editavel) {
-            return response()->json(['mensagem' => 'Você deve cancelar ou editar uma reserva com um dia de antecedência']);
+            return response()->json(['mensagem' => 'Você deve cancelar ou editar uma reserva com um dia de antecedência'], 400);
         }
+
         $validate = Validator::make($request->all(), [
             'data' => 'required|date',
-            'horario_inicio' => 'required|time',
-            'horario_fim' => 'required|time',
-            'status' => 'required|boolean'
+            'horario_inicio' => 'required',
+            'horario_fim' => 'required',
         ], [
             "data.required" => 'O campo data deve ser obrigatório',
             "data.date" => 'O campo data deve ser uma data',
             "horario_inicio.required" => 'O campo horário de início deve ser preenchido',
-            "horario_inicio.time" => 'O campo horário de início deve ser uma hora válida',
             "horario_fim.required" => 'O campo horário de finalização deve ser preenchido',
-            "horario_fim.time" => 'O campo horário de finalização deve ser uma hora válida',
-            "status.required" => 'O campo de status da reserva deve ser preenchido',
-            "status.boolean" => 'O campo status da reserva deve ser verdadeiro ou falso',
         ]);
         if ($validate->fails()) {
             return response()->json([
@@ -177,15 +204,27 @@ class ReservaController extends Controller
         }
         try {
             $reserva = Reserva::find($id);
+            $alteracoes = [];
+            
             if ($reserva) {
+                if ($request->data != $reserva->data) {
+                    $alteracoes[] = 'data foi alterada de: ' . $reserva->data .' para: ' . $request->data;
+                }
+                if ($request->horario_inicio != $reserva->horario_inicio) {
+                    $alteracoes[] = 'horário de início foi alterada de: ' . $reserva->horario_inicio .' para: ' . $request->horario_inicio;
+                }
+                if ($request->horario_fim != $reserva->horario_fim) {
+                    $alteracoes[] = 'horário de finalização foi alterada de: ' . $reserva->horario_fim .' para: ' . $request->horario_fim;
+                }
                 $reserva->update([
                     'data' => $request->data,
                     'horario_inicio' => $request->horario_inicio,
                     'horario_fim' => $request->horario_fim
                 ]);
                 return response()->json([
-                    'mensagem' => 'Registro realizado com sucesso'
-                ], 201);
+                    'mensagem' => 'Registro realizado com sucesso',
+                    'alteracao' => $alteracoes
+                ], 200);
             }
             return response()->json([
                 'erros' => 'Erro ao cadastrar a reserva',
@@ -193,7 +232,7 @@ class ReservaController extends Controller
             ], 400);
         } catch (Exception $e) {
             return response()->json([
-                'erros' => 'Erro ao cadastrar a reserva',
+                'erros' => $e,
                 'mensagem' => 'Erro inesperado'
             ], 400);
         }
@@ -201,7 +240,30 @@ class ReservaController extends Controller
 
     public function cancel(string $id)
     {
-        //
+
+        $reserva = Reserva::find($id);
+        
+        if (!$reserva) {
+            return response()->json([
+                'erros' => 'Erro ao cancelar a reserva',
+                'mensagem' => 'Reserva não existe'
+            ], 400);
+        }
+        if (!$reserva->status) {
+            return response()->json([
+                'erros' => 'Erro ao cancelar a reserva',
+                'mensagem' => 'Reserva já cancelada'
+            ], 400);
+        }
+
+        $reserva->update([
+            'status' => 0
+        ]);
+        $alteracao = ['Reserva para ' . $reserva['nome'] . 'cancelada'];
+        return response()->json([
+            'alteracao' => $alteracao,
+            'mensagem' => 'Reserva cancelada com sucesso'
+        ], 200);
     }
 
     /**

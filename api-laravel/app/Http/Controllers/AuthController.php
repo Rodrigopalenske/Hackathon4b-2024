@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Exception;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -18,6 +19,14 @@ class AuthController extends Controller
 
         return response()->json([
             'usuarios' => $usuarios
+        ], 200);
+    }
+    public function show()
+    {
+        $usuario = Auth::user();
+
+        return response()->json([
+            'usuario' => $usuario
         ], 200);
     }
 

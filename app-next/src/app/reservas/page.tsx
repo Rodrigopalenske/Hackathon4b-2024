@@ -74,7 +74,6 @@ export default function ReservasPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(ambienteSelecionado)
     if (ambienteSelecionado) {
       await api.post('/reserva', {
         'ambiente_id': ambienteSelecionado,
@@ -83,8 +82,12 @@ export default function ReservasPage() {
         'horario_fim': formulario.horarioFim,
         'status': 1,
     })
-    .then((resposta) => {
-      console.log(resposta)
+    .then((response) => {
+      api.post("/historico/reserva", {
+        'reserva_id': response.data.reserva['id'],
+        'alteracao': response.data.alteracao,
+        'tipo': 'Confirmação de reserva',
+      })
       alert("Reserva criada com sucesso!");
     })
     .catch((error) => {
@@ -157,25 +160,7 @@ export default function ReservasPage() {
                   <form onSubmit={handleSubmit}>
                     <div className="row">
 
-                      <div className="col-6">
-                        <label htmlFor="usuarioId">Usuário:</label>
-                        <select
-                          id="usuarioId"
-                          name="usuarioId"
-                          className="input padronizado"
-                          value={formulario.usuarioId}
-                          onChange={handleChange}
-                        >
-                          <option value="">Selecione um Usuário</option>
-                          {usuarios.map((usuario) => (
-                            <option key={usuario.id} value={usuario.id}>
-                              {usuario.nome}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-
-                      <div className="col-6">
+                      <div className="col-12">
                         <label htmlFor="ambienteId">Ambiente:</label>
                         <select
                           id="ambienteId"

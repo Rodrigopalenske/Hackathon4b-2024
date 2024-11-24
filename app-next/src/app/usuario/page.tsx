@@ -27,7 +27,6 @@ export default function Usuarios() {
   useEffect(() => {
     api.get('/usuarios')
     .then((response) => {
-      console.log(response.data.usuarios)
       setUsuarios(response.data.usuarios);
       setUsuariosFiltrados(response.data.usuarios); // Inicialmente, mostra todos os usuários
     })
@@ -57,7 +56,6 @@ export default function Usuarios() {
         // Valida se o registro foi bem-sucedido (status 201 ou mensagem esperada)
         if (response.status === 200) {
           
-          console.log('Usuário editado com sucesso:', response.data);
           setEmail('');
           setNome('');
           setCargo('');
@@ -65,7 +63,6 @@ export default function Usuarios() {
           return api.get('/usuarios');
         } else {
           setErro(response.data.mensagem)
-          console.log('Erro:', response.data);
           throw new Error('Edição não foi concluída.');
         }
       })

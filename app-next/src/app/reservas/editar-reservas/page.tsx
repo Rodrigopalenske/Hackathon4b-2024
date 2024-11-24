@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { Sidebar } from "@/components/Menu/Sidebar";
 import Header from "@/components/Menu/Header";
+import api from "@/utils/api";
 
 export default function HistoricoReservas() {
   const [reservas, setReservas] = useState<any[]>([]);
@@ -14,25 +15,26 @@ export default function HistoricoReservas() {
   const [modalConfirmarCancelamento, setModalConfirmarCancelamento] = useState<any | null>(null); // Novo estado para o modal de confirmação
   const router = useRouter();
 
+  const coletaReservas = () => {
+    api.get('/usuario/reserva')
+    .then((response) => {
+      /* let ambiente = api.get('/historico/reserva')
+        .then((response) => {
+
+        })
+        .catch((error) => {
+          
+      }) */
+      setReservas(response.data.reservas)
+
+    })
+    .catch((error) => {
+      error.data
+    })
+  };
+
   useEffect(() => {
-    setReservas([
-      {
-        id: 1,
-        usuario: "João Silva",
-        ambiente: "Sala de Reuniões A",
-        data: "2024-11-23",
-        horarioInicio: "09:00",
-        horarioFim: "11:00",
-      },
-      {
-        id: 2,
-        usuario: "Maria Oliveira",
-        ambiente: "Sala de Reuniões B",
-        data: "2024-11-25",
-        horarioInicio: "14:00",
-        horarioFim: "16:00",
-      },
-    ]);
+    coletaReservas()
   }, []);
 
   const handleVoltar = () => {
@@ -50,13 +52,28 @@ export default function HistoricoReservas() {
   };
 
   const salvarEdicao = () => {
-    setReservas((prevReservas) =>
-      prevReservas.map((reserva) =>
-        reserva.id === reservaEditando.id ? reservaEditando : reserva
-      )
-    );
+    api.post("/reserva/editar/" + reservaEditando.id, {
+      'data': reservaEditando.data,
+      'horario_inicio': reservaEditando.horario_inicio,
+      'horario_fim': reservaEditando.horario_fim,
+      'status': reservaEditando.status,
+      'editavel': reservaEditando.editavel
+    })
+    .then((response) => {
+      alert(response.data.mensagem);
+      api.post("/historico/reserva", {
+        'reserva_id': reservaEditando.id,
+        'alteracao': response.data.alteracao,
+        'tipo': 'Edição de reserva',
+      })
+    })
+    .catch((error) => {
+      alert(error);
+
+    })
+    
     fecharModal();
-    alert("Reserva atualizada com sucesso!");
+    
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -72,9 +89,21 @@ export default function HistoricoReservas() {
   };
 
   const confirmarCancelamento = (id: number) => {
-    setReservas(reservas.filter((reserva) => reserva.id !== id));
+    api.get('/reserva/cancelar/'+id)
+    .then((response) => {
+      api.post("/historico/reserva", {
+        'reserva_id': reservaEditando.id,
+        'alteracao': response.data.alteracao,
+        'tipo': 'Cancelamento de reserva',
+      })
+      coletaReservas()
+      alert(response.data.mensagem);
+    })
+    .catch((error) => {
+      alert(error.data.mensagem);
+    })
+
     setModalConfirmarCancelamento(null); // Fecha o modal após confirmar
-    alert("Reserva cancelada com sucesso!");
   };
 
   const cancelarCancelamento = () => {
@@ -105,32 +134,33 @@ export default function HistoricoReservas() {
             <table>
               <thead>
                 <tr>
-                  <th>ID</th>
-                  <th>Usuário</th>
                   <th>Ambiente</th>
                   <th>Data</th>
                   <th>Horário</th>
+                  <th>Status</th>
                   <th>Ações</th>
                 </tr>
               </thead>
               <tbody>
                 {reservas.map((reserva) => (
                   <tr key={reserva.id}>
-                    <td>{reserva.id}</td>
-                    <td>{reserva.usuario}</td>
-                    <td>{reserva.ambiente}</td>
+                    <td>{reserva.ambiente_nome}</td>
                     <td>{reserva.data}</td>
+                    
                     <td>
-                      {reserva.horarioInicio} - {reserva.horarioFim}
+                      {reserva.horario_inicio} - {reserva.horario_fim}
                     </td>
+                    <td>{reserva.status ?"registrado":"cancelado"}</td>
                     <td>
                       <button
+                        disabled={!reserva.editavel || !reserva.status}
                         className="botao-editar"
                         onClick={() => abrirModalEdicao(reserva)}
                       >
                         Editar
                       </button>
                       <button
+                        disabled={!reserva.editavel || !reserva.status}
                         className="botao-cancelar"
                         onClick={() => handleCancelar(reserva.id)}
                       >
@@ -149,20 +179,6 @@ export default function HistoricoReservas() {
           <div className="modal">
             <div className="modal-conteudo">
               <h2>Editar Reserva</h2>
-              <label>Usuário:</label>
-              <input
-                type="text"
-                name="usuario"
-                value={reservaEditando.usuario}
-                onChange={handleInputChange}
-              />
-              <label>Ambiente:</label>
-              <input
-                type="text"
-                name="ambiente"
-                value={reservaEditando.ambiente}
-                onChange={handleInputChange}
-              />
               <label>Data:</label>
               <input
                 type="date"
@@ -173,15 +189,15 @@ export default function HistoricoReservas() {
               <label>Horário de Início:</label>
               <input
                 type="time"
-                name="horarioInicio"
-                value={reservaEditando.horarioInicio}
+                name="horario_inicio"
+                value={reservaEditando.horario_inicio}
                 onChange={handleInputChange}
               />
               <label>Horário de Fim:</label>
               <input
                 type="time"
-                name="horarioFim"
-                value={reservaEditando.horarioFim}
+                name="horario_fim"
+                value={reservaEditando.horario_fim}
                 onChange={handleInputChange}
               />
               <div className="modal-acoes">
