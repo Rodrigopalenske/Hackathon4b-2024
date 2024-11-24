@@ -33,7 +33,7 @@ export const Ambiente = (props: IAmbiente) => {
           <span>Localidade:</span>
           <p>{props.localizacao}</p>
           <span>Disponibilidade:</span>
-          <p>{props.disponibilidade}</p>
+          <p>{props.status}</p>
         </div>
       </div>
     </div>
