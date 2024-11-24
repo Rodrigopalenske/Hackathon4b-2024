@@ -12,9 +12,12 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useState } from "react";
 import { NavBarLink } from "./style";
+import api from "@/utils/api";
+import { useRouter } from "next/navigation";
 
 export default function Header() {
   // Mensagem que apareceram nas notificações
+  const router = useRouter();
   const [notificacoes, setNotificacoes] = useState<any>([
     {
       text: "Mensagem 1: Lorem ipsum dolor sit amet consectetur.",
@@ -53,6 +56,16 @@ export default function Header() {
     },
   ]);
 
+  const handleLogout = async () => {
+      const response = await api.post('/logout', {})
+      .then((response) => {
+        localStorage.clear()
+        router.push('/')
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  };
   // Header com botão de notificação e perfil
   return (
     <div className="grid gap-4 p-2 border-b relative header">
@@ -130,10 +143,10 @@ export default function Header() {
               </NavBarLink>
             </DropdownMenuItem>
             <DropdownMenuItem className="itemMenuHeader">
-              <NavBarLink href={'/logout'} className="botaoNav">
-                <LogOut className="mr-2 w-4 h-4 align-items-center text-center"/>
+              <button onClick={handleLogout} className="botaoNav">
+                <LogOut className="mr-2 w-4 h-4 align-items-center text-center" />
                 Sair
-              </NavBarLink>
+              </button>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('dia_horario_disponivels', function (Blueprint $table) {
             $table->id();
-            $table->integer("ambiente_id")->constrained('ambientes')->onDelete('cascade');;
+            $table->integer("ambiente_id")->constrained('ambientes')->onDelete('cascade');
             $table->integer("dia_id");
             $table->integer("horario_id");
             $table->timestamps();

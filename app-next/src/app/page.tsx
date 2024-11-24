@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import api from '@/utils/api';
 
@@ -11,17 +11,11 @@ export default function Login() {
   const [erro, setErro] = useState<string | null>(null);
   const router = useRouter();
 
-  useEffect(() => {
-    if (localStorage.getItem('auth_token')) {
-      router.push('/dashboard')
-    }
-  }, []);
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const response = await api.post('/login', {
-        'email': email,
-        'senha': senha
+      'email': email,
+      'senha': senha
     })
     .then((response) => {
       console.log(response)
@@ -29,28 +23,20 @@ export default function Login() {
       const usuarioNome = response.data.usuario['nome'];
       const usuarioEmail = response.data.usuario['email'];
       const usuarioCargo = response.data.usuario['cargo'];
-      setErro(null)
+      setErro('')
       setSenha('')
       localStorage.setItem('auth_token', token);
       localStorage.setItem('nome', usuarioNome);
       localStorage.setItem('email', usuarioEmail);
       localStorage.setItem('cargo', usuarioCargo);
 
-      router.push('/usuario')
-    })
-    .catch((error) => {
-      setSenha('')
-      setErro(error.response.data.mensagem)
-    })
+      router.push('/dashboard')
+      })
+      .catch((error) => {
+        setSenha('')
+        setErro(error.response.data.mensagem)
+      })
     
-    // Simulação de login (substitua por lógica real de login)
-    /* if (email === 'admin@gmail.com' && senha === '123456') {
-      // Armazenando um token fictício para simulação de autenticação
-      localStorage.setItem('auth_token', 'some_token');
-      router.push('/dashboard'); // Redireciona para a página inicial após o login
-    } else {
-      setErro('Credenciais inválidas.');
-    } */
   };
 
   return (
@@ -90,7 +76,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     alignItems: 'center',
     justifyContent: 'center',
     height: '100vh',
-    backgroundColor: '#f7f7f7', // Fundo claro
+    backgroundColor: '#f7f7f7', 
   },
   card: {
     backgroundColor: '#fff',
@@ -98,17 +84,17 @@ const styles: { [key: string]: React.CSSProperties } = {
     width: '100%',
     maxWidth: '420px',
     borderRadius: '15px',
-    boxShadow: '0 20px 40px rgba(0, 0, 0, 0.1)', // Sombra forte para dar a impressão de flutuação
-    transform: 'translateY(-10px)', // Levanta o cartão um pouco
-    transition: 'transform 0.3s ease, box-shadow 0.3s ease', // Transição suave para hover
-    textAlign: 'center', // Garantir que o texto no card esteja centralizado
+    boxShadow: '0 20px 40px rgba(0, 0, 0, 0.1)', 
+    transform: 'translateY(-10px)', 
+    transition: 'transform 0.3s ease, box-shadow 0.3s ease', 
+    textAlign: 'center', 
   },
   titulo: {
     fontSize: '2.5rem',
     color: '#0070f3',
     marginBottom: '1.5rem',
     fontWeight: '700',
-    textAlign: 'center', // Garantir que o título esteja centralizado
+    textAlign: 'center', 
   },
   formulario: {
     display: 'flex',
@@ -121,13 +107,13 @@ const styles: { [key: string]: React.CSSProperties } = {
     borderRadius: '8px',
     border: '1px solid #ddd',
     outline: 'none',
-    color: '#333', // Cor do texto dentro do campo de entrada
-    backgroundColor: '#f9f9f9', // Cor de fundo do campo de entrada
+    color: '#333', 
+    backgroundColor: '#f9f9f9', 
     transition: 'border-color 0.3s ease, background-color 0.3s ease',
   },
   inputFocus: {
-    borderColor: '#0070f3', // Cor do foco no campo de entrada
-    backgroundColor: '#eaf4ff', // Mudança de cor de fundo quando em foco
+    borderColor: '#0070f3', 
+    backgroundColor: '#eaf4ff', 
   },
   botao: {
     padding: '1rem',
@@ -140,7 +126,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     transition: 'background-color 0.3s ease',
   },
   botaoHover: {
-    backgroundColor: '#005bb5', // Cor mais escura no hover
+    backgroundColor: '#005bb5', 
   },
   erro: {
     color: '#ff0000',
@@ -157,6 +143,6 @@ const styles: { [key: string]: React.CSSProperties } = {
     transition: 'color 0.3s ease',
   },
   esqueceuSenhaHover: {
-    color: '#005bb5', // Cor mais escura ao passar o mouse
+    color: '#005bb5', 
   },
 };

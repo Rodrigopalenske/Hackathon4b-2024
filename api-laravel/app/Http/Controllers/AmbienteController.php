@@ -152,8 +152,7 @@ class AmbienteController extends Controller
             ]);
         }
         return response()->json([
-            'ambiente' => null,
-            'mensagem' => 'ambiente não encontrado'
+            'ambiente' => []
         ], 400);
     }
 

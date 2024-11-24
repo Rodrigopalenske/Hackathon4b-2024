@@ -1,0 +1,132 @@
+.historico-botao {
+    background-color: #0070f3;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    margin-bottom: 1.5rem;
+  }
+  
+  .historico-botao:hover {
+    background-color: #0070f3;
+   
+  }
+  
+  .historico-botao:focus {
+    outline: none;
+    box-shadow: 0 0 5px #0070f3;
+  }
+  .table-container {
+    margin-top: 1rem;
+    width: 90%;
+    max-width: 800px;
+    margin: 0 auto;
+    overflow-x: auto;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    font-family: Arial, sans-serif;
+  }
+  
+  table th, table td {
+    border: 1px solid #ddd;
+    text-align: left;
+    padding: 0.8rem;
+    font-size: 0.9rem;
+  }
+  
+  table th {
+    background-color: #0070f3;
+    color: white;
+    font-weight: bold;
+  }
+  
+  table tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  table tr:hover {
+    background-color: #f1f1f1;
+  }
+  
+  table td {
+    color: #333;
+  }
+  .titulo {
+    text-align: center;
+    margin-top: 1rem;
+    margin-bottom: 1.5rem;
+    font-size: 2.5rem;
+    color: #0070f3;
+  }
+  
+  h2, h3 {
+    font-size: 1.5rem;
+    color: #005bb5;
+    margin-bottom: 1rem;
+  }
+  
+  h1 {
+    font-size: 2.2rem;
+    color: #0070f3;
+  }
+  .formulario {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .row {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  
+  .col-6 {
+    flex: 1;
+  }
+  
+  .input {
+    font-size: 1rem;
+    padding: 0.6rem;
+  }
+  
+  .input:focus {
+    border: 2px solid #0070f3;
+  }
+  
+  .botao {
+    padding: 0.8rem 1.2rem;
+    font-size: 1.1rem;
+    font-weight: bold;
+  }
+  .botao-voltar {
+    background-color: #0070f3;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    margin-bottom: 1.5rem;
+  }
+  
+  .botao-voltar:hover {
+    background-color: #0070f3;
+  
+  }
+  
+  .botao-voltar:focus {
+    outline: none;
+    box-shadow: 0 0 5px #0070f3;
+  }
+  

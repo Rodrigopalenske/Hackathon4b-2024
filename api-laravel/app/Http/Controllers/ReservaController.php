@@ -6,6 +6,7 @@ use App\Models\Reserva;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Validator;
 
@@ -17,14 +18,12 @@ class ReservaController extends Controller
     public function index()
     {
         $reservas = Reserva::get();
-
         return response()->json(['reservas' => $reservas], 200);
     }
 
     public function indexUsuario(string $usuarioId)
     {
         $reservas = Reserva::when('usuario_id', $usuarioId)->get();
-
         return response()->json(['reservas' => $reservas], 200);
     }
 
@@ -41,24 +40,38 @@ class ReservaController extends Controller
      */
     public function store(Request $request)
     {
+        try {
+            $user = Auth::user();
 
-        $usuario = Http::get('usuario.show', $request->usuario_id);
-        $ambiente = Http::get('ambiente.show', $request->ambiente_id);
+            $usuarioId = $user->id;
+        } catch (Exception $e) {
+            return response()->json([
+                'mensagem' => 'Erro inesperado'
+            ], 500);
+        }
 
-        if (!$usuario || !$ambiente) {
+
+        //precisa de ambiente para funcionar
+        /* if (!$usuarioId || !$ambienteId) {
             return response()->json([
                 'erros' => 'usuário ou ambiente inválido',
                 'mensagem' => 'Erro inesperado'
             ], 400);
-        }
+        } */
+        /* return response()->json([
+            'erros' => [$usuarioId, $ambienteId, $data, $request->horario_inicio, $request->horario_fim, $request->status],
+            'mensagem' => 'Erro inesperado'
+        ], 400); */
 
         $validate = Validator::make($request->all(), [
+            'ambiente_id' => 'required',
             'data' => 'required|date',
             'horario_inicio' => 'required|time',
             'horario_fim' => 'required|time',
             'status' => 'required|boolean'
         ], [
-            "data.required" => 'O campo data deve ser obrigatório',
+            "ambiente_id.required" => 'O campo de ambiente é obrigatório',
+            "data.required" => 'O campo data é obrigatório',
             "data.date" => 'O campo data deve ser uma data',
             "horario_inicio.required" => 'O campo horário de início deve ser preenchido',
             "horario_inicio.time" => 'O campo horário de início deve ser uma hora válida',
@@ -67,30 +80,36 @@ class ReservaController extends Controller
             "status.required" => 'O campo de status da reserva deve ser preenchido',
             "status.boolean" => 'O campo status da reserva deve ser verdadeiro ou falso',
         ]);
-
-        if ($validate->fails()) {
+        
+        if ($validate->failed()) {
             return response()->json([
                 'erros' => $validate->errors(),
                 'mensagem' => 'Credênciais inválidas'
             ], 400);
         }
-
         try {
+            $ambienteId = $request->ambiente_id['id'];
+            $data = Carbon::parse($request->data)->format('Y-m-d');
+            $horarioInicio = Carbon::createFromFormat('H:i', $request->horario_inicio)->format('H:i');
+            $horarioFim = Carbon::createFromFormat('H:i', $request->horario_fim)->format('H:i');
 
-            $dados = $request->except('_token');
-            Reserva::create($dados);
-
+            Reserva::create([
+                'usuario_id' => $usuarioId,
+                'ambiente_id' => $ambienteId,
+                'data' => $data,
+                'horario_inicio' => $horarioInicio,
+                'horario_fim' => $horarioFim,
+                'status' => $request->status,
+            ]);
             return response()->json([
                 'mensagem' => 'Registro realizado com sucesso'
             ], 201);
-
         } catch (Exception $e) {
             return response()->json([
                 'erros' => 'Erro ao cadastrar a reserva',
                 'mensagem' => 'Erro inesperado'
-            ], 400);
+            ], 500);
         }
-
     }
 
     /**
@@ -99,24 +118,19 @@ class ReservaController extends Controller
     public function show(string $id)
     {
         $reserva = Reserva::find($id);
-
         $data = $reserva->data;
-
         $dataAtual = Carbon::today();
         
         $editavel = false;
-
         if ($data > $dataAtual) {
             $editavel = !$editavel;
         }
-
         if (!$reserva) {
             return response()->json([
                 'erros' => 'Erro ao cadastrar a reserva',
                 'mensagem' => 'Erro inesperado'
             ], 400);
         }
-
         return response()->json([
             'reserva' => $reserva,
             'mensagem' => 'Reserva encontrada',
@@ -155,16 +169,13 @@ class ReservaController extends Controller
             "status.required" => 'O campo de status da reserva deve ser preenchido',
             "status.boolean" => 'O campo status da reserva deve ser verdadeiro ou falso',
         ]);
-
         if ($validate->fails()) {
             return response()->json([
                 'erros' => $validate->errors(),
                 'mensagem' => 'Credênciais inválidas'
             ], 400);
         }
-
         try {
-
             $reserva = Reserva::find($id);
             if ($reserva) {
                 $reserva->update([
@@ -180,13 +191,17 @@ class ReservaController extends Controller
                 'erros' => 'Erro ao cadastrar a reserva',
                 'mensagem' => 'Reserva não encontrada'
             ], 400);
-
         } catch (Exception $e) {
             return response()->json([
                 'erros' => 'Erro ao cadastrar a reserva',
                 'mensagem' => 'Erro inesperado'
             ], 400);
         }
+    }
+
+    public function cancel(string $id)
+    {
+        //
     }
 
     /**

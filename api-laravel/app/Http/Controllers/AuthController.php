@@ -6,9 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Exception;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\ValidationException;
 use Illuminate\Validation\Rule;
 
 
@@ -20,20 +18,6 @@ class AuthController extends Controller
 
         return response()->json([
             'usuarios' => $usuarios
-        ], 200);
-    }
-
-    public function show(string $id)
-    {
-        $usuario = User::find($id);
-        if (!$usuario) {
-            return response()->json([
-                'usuario' => null,
-                'mensagem' => 'Usuário não encontrado'
-            ], 200);
-        }
-        return response()->json([
-            'usuario' => $usuario
         ], 200);
     }
 
@@ -79,10 +63,9 @@ class AuthController extends Controller
 
     public function adminUpdate(Request $request, string $id)
     {
-        
         $validacao = Validator::make($request->all(), [
             'nome' => 'required|string|max:255',
-            'email' => ['required', 'string', 'email', Rule::unique('users')->ignore($id)],
+            'email' => ['required', 'string', 'email', Rule::unique('users', 'email')->ignore($id)],
             'cargo' => 'required|string',
         ], 
         [
@@ -108,7 +91,7 @@ class AuthController extends Controller
             'cargo' => $request->cargo,
         ]);
 
-        return response()->json(['mensagem' => 'Usuário editado com sucesso'], 201);
+        return response()->json(['mensagem' => 'Usuário editado com sucesso'], 200);
     }
 
     public function login(Request $request)
@@ -131,7 +114,7 @@ class AuthController extends Controller
         }
 
         $user = User::where('email', $request->email)->first();
-        if (! $user || ! Hash::check($request->senha, $user->password)) {
+        if (!$user || !Hash::check($request->senha, $user->password)) {
             return response()->json([
                 'erros' => 'usuário ou senha incorretos',
                 'mensagem' => "Usuário ou senha incorretos"
@@ -148,16 +131,23 @@ class AuthController extends Controller
                 'cargo' => $user->cargo,
                 'email' => $user->email,
             ],
-        ]);
+        ], 200);
     }
 
     public function logout(Request $request)
     {
-        $request->user()->tokens()->delete();
+        try {
+            $request->user()->tokens()->delete();
 
-        return response()->json([
-            'mensagem' => 'Logout realizado com sucesso!'
-        ]);
+            return response()->json([
+                'mensagem' => 'Logout realizado com sucesso!'
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'mensagem' => 'Erro ao realizar logout'
+            ], 400);
+        }
+        
     }
 
     public function user(Request $request)
