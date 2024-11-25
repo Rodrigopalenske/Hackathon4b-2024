@@ -16,43 +16,42 @@ import api from "@/utils/api";
 import { useRouter } from "next/navigation";
 
 export default function Header() {
-
   // Mensagem que apareceram nas notificações
   const router = useRouter();
-  const [usuario, setUsuario] = useState('');
+  const [usuario, setUsuario] = useState("");
   const [notificacoes, setNotificacoes] = useState<any>([{}]);
 
   useEffect(() => {
-    api.get('/user')
-    .then((response) => {
-      setUsuario(response.data['name'])
-    })
-    .catch((errors) => {
-      setUsuario('Usuário');
-    },
-  ]);
+    api.get("/user")
+      .then((response) => {
+        setUsuario(response.data["name"]);
+      })
+      .catch((errors) => {
+        setUsuario("Usuário");
+      });
+  });
   useEffect(() => {
-    api.get('/notificacao')
-    .then((response) => {
-      console.log(response.data.notificacoes)
-      setNotificacoes(response.data.notificacoes);
-
-    })
-    .catch((error) => {
-      console.log("Usuários não encontrados")
-      console.log(error)
-    })
+    api.get("/notificacao")
+      .then((response) => {
+        console.log(response.data.notificacoes);
+        setNotificacoes(response.data.notificacoes);
+      })
+      .catch((error) => {
+        console.log("Usuários não encontrados");
+        console.log(error);
+      });
   }, []);
 
   const handleLogout = async () => {
-      const response = await api.post('/logout', {})
+    const response = await api
+      .post("/logout", {})
       .then((response) => {
-        localStorage.clear()
-        router.push('/')
+        localStorage.clear();
+        router.push("/");
       })
       .catch((error) => {
-        console.log(error)
-      })
+        console.log(error);
+      });
   };
   // Header com botão de notificação e perfil
   return (
@@ -61,7 +60,7 @@ export default function Header() {
       {/* <SidebarTrigger className="w-10 h-10" /> */}
 
       {/* Pesquisa */}
-      
+
       {/* Notificações e Perfil */}
       <div className="flex items-center justify-end relative z-50">
         {/* Notificações */}
@@ -77,7 +76,8 @@ export default function Header() {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent
-            className="max-w-sm max-h-96 overflow-auto z-[9999] shadow-lg bg-white" align="end" 
+            className="max-w-sm max-h-96 overflow-auto z-[9999] shadow-lg bg-white"
+            align="end"
           >
             <DropdownMenuLabel>Notificações</DropdownMenuLabel>
             <DropdownMenuSeparator />
@@ -122,11 +122,13 @@ export default function Header() {
           >
             <DropdownMenuLabel>Minha conta</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem className="w-100 d-inline-block text-center">{usuario}</DropdownMenuItem>
+            <DropdownMenuItem className="w-100 d-inline-block text-center">
+              {usuario}
+            </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem className="itemMenuHeader">
-              <NavBarLink href={'/senha'} className="botaoNavAltSenha">
-                <KeyRound className="mr-2 w-4 h-4 align-items-center text-center"/>
+              <NavBarLink href={"/senha"} className="botaoNavAltSenha">
+                <KeyRound className="mr-2 w-4 h-4 align-items-center text-center" />
                 Alterar senha
               </NavBarLink>
             </DropdownMenuItem>
