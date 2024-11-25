@@ -1,0 +1,38 @@
+/* Centraliza o spinner e o texto */
+.loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #f9f9f9;
+}
+
+/* Estiliza o spinner */
+.loading-spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid #e0e0e0;
+    border-top: 5px solid #0070f3;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 10px;
+}
+
+/* Animação de rotação */
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Texto de carregamento */
+.loading-text {
+    font-size: 18px;
+    color: #555;
+    font-family: Arial, sans-serif;
+    margin-top: 10px;
+}

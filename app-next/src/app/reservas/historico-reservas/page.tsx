@@ -9,14 +9,43 @@ import Header from "@/components/Menu/Header";
 import api from "@/utils/api";
 
 export default function HistoricoReservas() {
-  const [reservas, setReservas] = useState<any[]>([]);
+  const [reservas, setReservas] = useState<{
+    id: number;
+    tipo: string;
+    alteracao: string;
+    data_criacao: string;
+    ambiente: string;
+    horario_inicio: string;
+    horario_fim: string;
+    data: string;
+  }[]>([]);
+  
   const router = useRouter(); // Inicializa o roteador
 
+  type Historico = {
+    id: number; // ID único do histórico
+    tipo: string; // Tipo de alteração (ex.: "criação", "edição")
+    data_criacao: string; // Data da alteração
+    alteracao: string; // Detalhes da alteração
+  };
+  
+  type Reserva = {
+    reserva: {
+      horario_inicio: string;
+      horario_fim: string;
+      data: string;
+    };
+    historicos: Historico[]; // Lista de históricos relacionados
+  };
+  type HistoricoReservaResponse = {
+    historico_reserva: Reserva[];
+  };
   useEffect(() => {
     api.get('/historico/reserva')
     .then((response) => {
       let historicosAtualizados:any[] = []
-      response.data.historico_reserva.forEach(element => {
+      response.data.historico_reserva.forEach((element: Reserva) => {
+
         /* let ambiente = api.get('/historico/reserva')
         .then((response) => {
 
@@ -26,16 +55,17 @@ export default function HistoricoReservas() {
         }) */
         
         let ambienteNome = "mudar"
-        let horarioInicio = element.reserva.horario_inicio
-        let horarioFim = element.reserva.horario_fim
+
+        let horario_inicio = element.reserva.horario_inicio
+        let horario_fim = element.reserva.horario_fim
         let data = element.reserva.data
         if (Array.isArray(element.historicos) && element.historicos.length > 0) {
-          let historicosComAmbiente = element.historicos.map(historico => ({
+          const historicosComAmbiente = element.historicos.map((historico: Historico) => ({
             ...historico,
             ambiente: ambienteNome,
-            horario_inicio: horarioInicio,
-            horario_fim: horarioFim,
-            data: data,
+            horario_inicio,
+            horario_fim,
+            data,
           }));
 
           historicosAtualizados = [...historicosAtualizados, ...historicosComAmbiente];

@@ -16,8 +16,10 @@ import api from "@/utils/api";
 import { useRouter } from "next/navigation";
 
 export default function Header() {
+
   // Mensagem que apareceram nas notificações
   const router = useRouter();
+
   const [usuario, setUsuario] = useState("");
   const [notificacoes, setNotificacoes] = useState<any>([{}]);
 
@@ -53,6 +55,7 @@ export default function Header() {
         console.log(error);
       });
   };
+
   // Header com botão de notificação e perfil
   return (
     <div className="grid gap-4 p-2 border-b relative header">
@@ -122,9 +125,11 @@ export default function Header() {
           >
             <DropdownMenuLabel>Minha conta</DropdownMenuLabel>
             <DropdownMenuSeparator />
+
             <DropdownMenuItem className="w-100 d-inline-block text-center">
               {usuario}
             </DropdownMenuItem>
+
             <DropdownMenuSeparator />
             <DropdownMenuItem className="itemMenuHeader">
               <NavBarLink href={"/senha"} className="botaoNavAltSenha">

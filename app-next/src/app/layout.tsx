@@ -4,7 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import BootstrapClient from "../components/Bootstrap/BootstrapClient";
 
 export const metadata: Metadata = {
-  title: "Hackathon",  // Título da guia
+  title: "AlfaPlanner",  // Título da guia
   description: "Projeto Hackathon",  // Descrição
   icons: {
     icon: "/icons/favicon.ico",  // Caminho para o novo ícone

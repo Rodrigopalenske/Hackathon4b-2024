@@ -55,6 +55,7 @@ export default function Usuarios() {
       .then((response) => {
         // Valida se o registro foi bem-sucedido (status 201 ou mensagem esperada)
         if (response.status === 200) {
+
           setEmail('');
           setNome('');
           setCargo('');
