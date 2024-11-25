@@ -10,7 +10,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useState } from "react";
+import { use, useEffect, useState } from "react";
 import { NavBarLink } from "./style";
 import api from "@/utils/api";
 import { useRouter } from "next/navigation";
@@ -18,53 +18,40 @@ import { useRouter } from "next/navigation";
 export default function Header() {
   // Mensagem que apareceram nas notificações
   const router = useRouter();
-  const [notificacoes, setNotificacoes] = useState<any>([
-    {
-      text: "Mensagem 1: Lorem ipsum dolor sit amet consectetur.",
-      date: "02/01/2015",
-      read: true,
-    },
-    {
-      text: "Mensagem 2: Lorem ipsum dolor sit amet consectetur.",
-      date: "02/01/2015",
-      read: false,
-    },
-    {
-      text: "Mensagem 3: Lorem ipsum dolor sit amet consectetur.",
-      date: "02/01/2015",
-      read: true,
-    },
-    {
-      text: "Mensagem 4: Lorem ipsum dolor sit amet consectetur.",
-      date: "02/01/2015",
-      read: false,
-    },
-    {
-      text: "Mensagem 5: Lorem ipsum dolor sit amet consectetur.",
-      date: "02/01/2015",
-      read: true,
-    },
-    {
-      text: "Mensagem 6: Lorem ipsum dolor sit amet consectetur.",
-      date: "02/01/2015",
-      read: true,
-    },
-    {
-      text: "Mensagem 7: Lorem ipsum dolor sit amet consectetur.",
-      date: "02/01/2015",
-      read: false,
-    },
-  ]);
+  const [usuario, setUsuario] = useState("");
+  const [notificacoes, setNotificacoes] = useState<any>([{}]);
 
-  const handleLogout = async () => {
-      const response = await api.post('/logout', {})
+  useEffect(() => {
+    api.get("/user")
       .then((response) => {
-        localStorage.clear()
-        router.push('/')
+        setUsuario(response.data["name"]);
+      })
+      .catch((errors) => {
+        setUsuario("Usuário");
+      });
+  });
+  useEffect(() => {
+    api.get("/notificacao")
+      .then((response) => {
+        console.log(response.data.notificacoes);
+        setNotificacoes(response.data.notificacoes);
       })
       .catch((error) => {
-        console.log(error)
+        console.log("Usuários não encontrados");
+        console.log(error);
+      });
+  }, []);
+
+  const handleLogout = async () => {
+    const response = await api
+      .post("/logout", {})
+      .then((response) => {
+        localStorage.clear();
+        router.push("/");
       })
+      .catch((error) => {
+        console.log(error);
+      });
   };
   // Header com botão de notificação e perfil
   return (
@@ -73,7 +60,7 @@ export default function Header() {
       {/* <SidebarTrigger className="w-10 h-10" /> */}
 
       {/* Pesquisa */}
-      
+
       {/* Notificações e Perfil */}
       <div className="flex items-center justify-end relative z-50">
         {/* Notificações */}
@@ -89,7 +76,8 @@ export default function Header() {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent
-            className="max-w-sm max-h-96 overflow-auto z-[9999] shadow-lg bg-white" align="end" 
+            className="max-w-sm max-h-96 overflow-auto z-[9999] shadow-lg bg-white"
+            align="end"
           >
             <DropdownMenuLabel>Notificações</DropdownMenuLabel>
             <DropdownMenuSeparator />
@@ -99,15 +87,15 @@ export default function Header() {
                   key={key}
                   className="flex flex-col py-2 px-3 hover:bg-neutral-200 transition flex-items-start gap-2"
                 >
-                  <p className="text-sm">{item.text}</p>
+                  <p className="text-sm">{item.mensagem}</p>
                   <p className="text-xs text-gray-500">
-                    {item.date}
+                    {item.data}
                     <span
                       className={`pl-5 font-bold text-xs ${
-                        item.read ? "text-green-500" : "text-gray-500"
+                        item.status ? "text-green-500" : "text-gray-500"
                       }`}
                     >
-                      {item.read ? "Lido" : "Não lido"}
+                      {item.status ? "Lido" : "Não lido"}
                     </span>
                   </p>
                 </DropdownMenuItem>
@@ -134,11 +122,13 @@ export default function Header() {
           >
             <DropdownMenuLabel>Minha conta</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem className="w-100 d-inline-block text-center">Usuario</DropdownMenuItem>
+            <DropdownMenuItem className="w-100 d-inline-block text-center">
+              {usuario}
+            </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem className="itemMenuHeader">
-              <NavBarLink href={'/senha'} className="botaoNavAltSenha">
-                <KeyRound className="mr-2 w-4 h-4 align-items-center text-center"/>
+              <NavBarLink href={"/senha"} className="botaoNavAltSenha">
+                <KeyRound className="mr-2 w-4 h-4 align-items-center text-center" />
                 Alterar senha
               </NavBarLink>
             </DropdownMenuItem>

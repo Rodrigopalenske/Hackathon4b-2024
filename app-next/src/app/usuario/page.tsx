@@ -27,7 +27,6 @@ export default function Usuarios() {
   useEffect(() => {
     api.get('/usuarios')
     .then((response) => {
-      console.log(response.data.usuarios)
       setUsuarios(response.data.usuarios);
       setUsuariosFiltrados(response.data.usuarios); // Inicialmente, mostra todos os usuários
     })
@@ -56,8 +55,6 @@ export default function Usuarios() {
       .then((response) => {
         // Valida se o registro foi bem-sucedido (status 201 ou mensagem esperada)
         if (response.status === 200) {
-          
-          console.log('Usuário editado com sucesso:', response.data);
           setEmail('');
           setNome('');
           setCargo('');
@@ -65,7 +62,6 @@ export default function Usuarios() {
           return api.get('/usuarios');
         } else {
           setErro(response.data.mensagem)
-          console.log('Erro:', response.data);
           throw new Error('Edição não foi concluída.');
         }
       })
@@ -167,7 +163,6 @@ export default function Usuarios() {
   };
 
   return (
-
     <PrivateRoute requiredPermissions={['admin']}>
       <div>
         <SidebarProvider>
@@ -176,7 +171,6 @@ export default function Usuarios() {
           </div>
           <main className="grid w-full h-full">
             <Header />
-
             <div className="containerUser">
               <div className="card">
                 <h1 className="titulo">{editando ? 'Editar Usuário' : 'Cadastrar Novo Usuário'}</h1>

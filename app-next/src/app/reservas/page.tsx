@@ -9,8 +9,6 @@ import Header from "@/components/Menu/Header";
 import { useRouter } from "next/navigation";
 import api from "@/utils/api";
 import PrivateRoute from "@/components/PrivateRoute";
-
-
 export default function ReservasPage() {
   const [dataSelecionada, setDataSelecionada] = useState<Date | null>(null);
   const [ambientes, setAmbientes] = useState<any[]>([
@@ -74,7 +72,6 @@ export default function ReservasPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(ambienteSelecionado)
     if (ambienteSelecionado) {
       await api.post('/reserva', {
         'ambiente_id': ambienteSelecionado,
@@ -83,8 +80,18 @@ export default function ReservasPage() {
         'horario_fim': formulario.horarioFim,
         'status': 1,
     })
-    .then((resposta) => {
-      console.log(resposta)
+    .then((response) => {
+      api.post("/historico/reserva", {
+        'reserva_id': response.data.reserva['id'],
+        'alteracao': response.data.alteracao,
+        'tipo': 'Confirmação de reserva',
+      })
+      console.log(resposta.data.reserva['id'])
+      api.post('/notificacao',{
+        'reserva_id': resposta.data.reserva['id'],
+        'mensagem':'oi',
+        'tipo':'reserva',
+      });
       alert("Reserva criada com sucesso!");
     })
     .catch((error) => {
@@ -151,35 +158,15 @@ export default function ReservasPage() {
             {/* Exibir o formulário apenas se uma data for selecionada */}
             {dataSelecionada && (
               <div className="formulario-detalhes">
+                {/* Formulário de reserva */}
                 <div className="card formulario">
                   <h2>Formulário de Reserva</h2>
 
                   <form onSubmit={handleSubmit}>
                     <div className="row">
-
-                      <div className="col-6">
-                        <label htmlFor="usuarioId">Usuário:</label>
-                        <select
-                          id="usuarioId"
-                          name="usuarioId"
-                          className="input padronizado"
-                          value={formulario.usuarioId}
-                          onChange={handleChange}
-                        >
-                          <option value="">Selecione um Usuário</option>
-                          {usuarios.map((usuario) => (
-                            <option key={usuario.id} value={usuario.id}>
-                              {usuario.nome}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-
-                      <div className="col-6">
-                        <label htmlFor="ambienteId">Ambiente:</label>
-                        <select
-                          id="ambienteId"
-
+                      <div className="col-12">
+                        <label htmlFor="ambientId">Ambiente:</label>
+                        <select id="ambienteId"
                           name="ambienteId"
                           className="input padronizado"
                           value={formulario.ambienteId}
@@ -197,9 +184,8 @@ export default function ReservasPage() {
 
                     <div className="row">
                       <div className="col-6">
-
+                        
                         <label htmlFor="horarioInicio">Horário inicio:</label>
-
                         <input id="horarioInicio"
                           type="time"
                           name="horarioInicio"
@@ -232,27 +218,16 @@ export default function ReservasPage() {
                   </form>
                 </div>
 
+                {/* Detalhes do ambiente */}
                 {ambienteSelecionado && (
                   <div className="detalhes-ambiente">
                     <h3>Detalhes do Ambiente</h3>
-                    <p>
-                      <strong>Nome:</strong> {ambienteSelecionado.nome}
-                    </p>
-                    <p>
-                      <strong>Capacidade:</strong> {ambienteSelecionado.capacidade}
-                    </p>
-                    <p>
-                      <strong>Equipamentos:</strong> {ambienteSelecionado.equipamentos}
-                    </p>
-                    <p>
-                      <strong>Turno:</strong> {ambienteSelecionado.turno}
-                    </p>
-                    <p>
-                      <strong>Localização:</strong> {ambienteSelecionado.localizacao}
-                    </p>
-                    <p>
-                      <strong>Tipo:</strong> {ambienteSelecionado.tipo}
-                    </p>
+                    <p><strong>Nome:</strong> {ambienteSelecionado.nome}</p>
+                    <p><strong>Capacidade:</strong> {ambienteSelecionado.capacidade}</p>
+                    <p><strong>Equipamentos:</strong> {ambienteSelecionado.equipamentos}</p>
+                    <p><strong>Turno:</strong> {ambienteSelecionado.turno}</p>
+                    <p><strong>Localização:</strong> {ambienteSelecionado.localizacao}</p>
+                    <p><strong>Tipo:</strong> {ambienteSelecionado.tipo}</p>
                   </div>
                 )}
               </div>

@@ -11,6 +11,16 @@ import { SidebarProvider } from "@/components/ui/sidebar";
 import { Sidebar } from "@/components/Menu/Sidebar";
 import Header from "@/components/Menu/Header";
 import PrivateRoute from "@/components/PrivateRoute";
+import { NavBarLink } from "@/components/Menu/style";
+import { useAmbienteHandlers } from "@/hooks/useAmbienteHandlers";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 interface IReqAmbiente {
   data: Array<IAmbiente>;
@@ -23,6 +33,15 @@ export default function Dashboard() {
     { id: 2, message: "Atualização do sistema disponível." },
     { id: 3, message: "Novo recurso de segurança ativado." },
   ]);
+
+  const {
+    pesquisa,
+    setPesquisa,
+    handleKeyDown,
+    handlePesquisar,
+    renderDiasDisponiveis,
+    ambientesFiltradosMemo,
+  } = useAmbienteHandlers();
 
   // Simulação de autenticação (substitua com a lógica real)
   const isAuthenticated =
@@ -38,7 +57,7 @@ export default function Dashboard() {
   // const {data}: IAmbiente = await axios.get()
 
   return (
-    <PrivateRoute requiredPermissions={['admin', 'professor']}>
+    <PrivateRoute requiredPermissions={["admin", "professor"]}>
       <div>
         <SidebarProvider>
           <div className="hidden md:flex min-w-[300px] border-r min-h-screen">
@@ -51,8 +70,123 @@ export default function Dashboard() {
               Ambientes disponíveis e suas informações
             </h1>
             <hr className="linha" />
-            <section className="ambientes">
-              {/* {
+
+            <section>
+              <div className="opcoesAmbiente">
+                <div className="row m-0">
+                  <div className="col flex">
+                    {/* Pesquisa por ambiente */}
+                    <input
+                      type="text"
+                      placeholder="Pesquisar"
+                      value={pesquisa}
+                      onChange={(e) => setPesquisa(e.target.value)}
+                      onKeyDown={handleKeyDown}
+                      className="pesquisaInput"
+                    />
+                    <button
+                      className="pesquisaBtn btn btn-primary"
+                      onClick={handlePesquisar}
+                    >
+                      Pesquisar
+                    </button>
+                  </div>
+
+                  <div className="col-sm-12 col-md-6 block text-end text-sm-center">
+                    {/* Enviando para página reservas */}
+                    <NavBarLink href={"/reservas"} className="float-end">
+                      <button type="button" className="btn btn-success p-2">
+                        Faça a sua reserva!
+                      </button>
+                    </NavBarLink>
+
+                    <Dialog>
+                      <DialogTrigger className="btn bg-transparent border p-2 w-15 float-end mr-2">
+                        Ajuda
+                      </DialogTrigger>
+                      <DialogContent>
+                        <DialogHeader>
+                          <DialogTitle>Ajuda:</DialogTitle>
+                          <DialogDescription>
+                            {" "}
+                            <strong>Pesquisa: </strong>
+                            Ao fazer uma busca todos as informações do ambiente
+                            serão puxadas, podendo assim escrever: TV, Sabado,
+                            tipo, que será mostrado o ambiente que deseja.
+                          </DialogDescription>
+                          <DialogDescription>
+                            {" "}
+                            <strong>Ambientes: </strong>
+                            Os ambientes estão compactados e organizados em
+                            ordem alfabética, clique no ambiente que deseja para
+                            mostrar detalhes do mesmo.
+                          </DialogDescription>
+                          <DialogDescription>
+                            {" "}
+                            <strong>Reservas: </strong>
+                            Caso queira fazer sua reserva, clique no botão verde
+                            ao lado escrito "Faça a sua reserva!", ou vá pelo
+                            menu do lado esquerdo
+                          </DialogDescription>
+                        </DialogHeader>
+                      </DialogContent>
+                    </Dialog>
+                  </div>
+                </div>
+              </div>
+
+              {/* ambiente */}
+              {ambientesFiltradosMemo.map((ambiente) => (
+                <div key={ambiente.id} className="ambiente">
+                  <button
+                    className="botaoAmbiente"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target={`#ambiente${ambiente.id}`}
+                    aria-expanded="false"
+                    aria-controls={`ambiente${ambiente.id}`}
+                  >
+                    <h2>{ambiente.nome}</h2>
+                    <span className="arrow">
+                      <ChevronDown />
+                    </span>
+                  </button>
+
+                  <div className="collapse" id={"ambiente" + ambiente.id}>
+                    <div className="card card-body">
+                      <div className="row">
+                        <div className="col">
+                          <span>Disponibilidade:</span>
+                          <p>{ambiente.status}</p>
+                          <span>Tipo de ambiente:</span>
+                          <p>{ambiente.tipo}</p>
+                          <span>Dias das semana disponíveis:</span>
+                          <p>
+                            {renderDiasDisponiveis(ambiente.diasDisponiveis)}
+                          </p>
+                          <span>Dias das semana indisponiveis:</span>
+                          <p>
+                            {renderDiasDisponiveis(ambiente.diasIndisponiveis)}
+                          </p>
+                        </div>
+                        <div className="col">
+                          <span>Capacidade:</span>
+                          <p>{ambiente.capacidade}</p>
+                          <span>Equipamentos:</span>
+                          <p>{ambiente.equipamentos}</p>
+                          <span>Localidade:</span>
+                          <p>{ambiente.localizacao}</p>
+                          <span>Horário:</span>
+                          <p>{ambiente.turno}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </section>
+
+            {/* {
             data.map((ambiente) => (
               <Ambiente 
                 key={ambiente.id}
@@ -65,111 +199,6 @@ export default function Dashboard() {
               />
             ))
           } */}
-
-              {/* Exemplos descartável */}
-              <div className="ambiente">
-                <button
-                  className="botaoAmbiente"
-                  type="button"
-                  data-bs-toggle="collapse"
-                  data-bs-target="#ambiente1"
-                  aria-expanded="false"
-                  aria-controls="ambiente1"
-                >
-                  <h2>Auditório</h2>
-                  <span className="arrow">
-                    <ChevronDown />
-                  </span>
-                </button>
-                <div className="collapse" id="ambiente1">
-                  <div className="card card-body">
-                    <div className="row">
-                      <div className="col">
-                        <span>Disponibilidade:</span>
-                        <p>Lorem ipsum dolor sit amet</p>
-                        <span>Tipo de ambiente:</span>
-                        <p>
-                          Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                          Assumenda aliquid
-                        </p>
-                        <span>Dias das semana disponíveis:</span>
-                        <p>Lorem ipsum dolor sit amet consectetur</p>
-                        <span>Dias das semana indisponiveis:</span>
-                        <p>Lorem ipsum dolor sit amet consectetur</p>
-                        <span>Capacidade:</span>
-                        <p>Lorem ipsum dolor sit amet consectetur</p>
-                        <span>Equipamentos:</span>
-                        <p>
-                          Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                          Assumenda aliquid architecto rem dolor excepturi
-                          veritatis autem amet doloremque? Enim voluptatibus
-                          voluptate nemo illum eaque qui dolorum dolores vitae
-                          ipsa! Harum!
-                        </p>
-                      </div>
-                      <div className="col">
-                        <span>Localidade:</span>
-                        <p>
-                          Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda aliquid architecto rem dolor excepturi veritatis autem
-                        </p>
-                        <span>Horário:</span>
-                        <p>
-                          Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda 
-                        </p>
-                        <span>Ambientes disponíveis:</span>
-                        <p>
-                          Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda 
-                        </p>
-                        
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Exemplos descartável */}
-              <div className="ambiente">
-                <button
-                  className="botaoAmbiente"
-                  type="button"
-                  data-bs-toggle="collapse"
-                  data-bs-target="#ambiente2"
-                  aria-expanded="false"
-                  aria-controls="ambiente2"
-                >
-                  <h2>AlphaLab</h2>
-                  <span className="arrow">
-                    <ChevronDown />
-                  </span>
-                </button>
-                <div className="collapse" id="ambiente2">
-                  <div className="card card-body">
-                    <span>Disponibilidade:</span>
-                    <p>Lorem ipsum dolor sit amet</p>
-                    <span>Tipo de ambiente:</span>
-                    <p>
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Assumenda aliquid
-                    </p>
-                    <span>Capacidade:</span>
-                    <p>Lorem ipsum dolor sit amet consectetur</p>
-                    <span>Equipamentos:</span>
-                    <p>
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Assumenda aliquid architecto rem dolor excepturi veritatis
-                      autem amet doloremque? Enim voluptatibus voluptate nemo
-                      illum eaque qui dolorum dolores vitae ipsa! Harum!
-                    </p>
-                    <span>Localidade:</span>
-                    <p>
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Assumenda aliquid architecto rem dolor excepturi veritatis
-                      autem
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </section>
           </main>
         </SidebarProvider>
       </div>
