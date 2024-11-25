@@ -6,7 +6,10 @@ use App\Models\Ambiente;
 use App\Models\DiaHorarioDisponivel;
 use App\Models\DiaIndisponivel;
 use App\Models\HorarioDisponivel;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Validator;
 
@@ -21,19 +24,20 @@ class AmbienteController extends Controller
         $ambientes = Ambiente::get();
         $ambientesCompletos = [];
         // Coleta os dias e horários apartir do id ambientes
-        foreach ($ambientes as $ambiente) {
-            $diaIndisponivelResponse = Http::get(route('diaIndisponivel.index', $ambiente['id']));
-            $diaHorarioDisponivelResponse = Http::get(route('diaHorarioDisponivel.index', $ambiente['id']));
+        /* foreach ($ambientes as $ambiente) {
+            
+            //$diaIndisponivelResponse = Http::get(route('diaIndisponivel.index', $ambiente['id']));
+            //$diaHorarioDisponivelResponse = Http::get(route('diaHorarioDisponivel.index', $ambiente['id']));
             // cria um ambiente junto com suas informações
             $ambientesCompletos[] = [
                 'ambiente_id' => $ambiente['id'],
                 'diaIndisponivel' => $diaIndisponivelResponse->json(),
                 'diaHorarioDisponivel' => $diaHorarioDisponivelResponse->json(),
             ];
-        }
+        } */
         // Envia os ambientes
         return response()->json([
-            'ambientes' => $ambientesCompletos
+            'ambientes' => $ambientes
         ], 200);
     }
 
@@ -87,7 +91,10 @@ class AmbienteController extends Controller
                 if ($response->successful()) {
                     $diasHorariosTratados = $response->json()['dias_horarios_tratados'];
                     // Valida os campos de dias indisponíveis para o ambiente
-                    $response = Http::post(route('diaIndisponivel.valida'), [
+                    Http::withHeaders([
+                        'X-CSRF-TOKEN' => csrf_token(),
+                    ])->post(route('diaIndisponivel.valida'), [
+
                         'dias_indisponiveis' => $request->dias_indisponiveis
                     ]);
                     if ($response->successful()) {
