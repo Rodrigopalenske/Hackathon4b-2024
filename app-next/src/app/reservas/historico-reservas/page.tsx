@@ -6,14 +6,77 @@ import { useRouter } from "next/navigation"; // Importa o hook useRouter
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { Sidebar } from "@/components/Menu/Sidebar";
 import Header from "@/components/Menu/Header";
+import api from "@/utils/api";
 
 export default function HistoricoReservas() {
-  const [reservas, setReservas] = useState<any[]>([]);
+  const [reservas, setReservas] = useState<{
+    id: number;
+    tipo: string;
+    alteracao: string;
+    data_criacao: string;
+    ambiente: string;
+    horario_inicio: string;
+    horario_fim: string;
+    data: string;
+  }[]>([]);
+  
   const router = useRouter(); // Inicializa o roteador
 
+  type Historico = {
+    id: number; // ID único do histórico
+    tipo: string; // Tipo de alteração (ex.: "criação", "edição")
+    data_criacao: string; // Data da alteração
+    alteracao: string; // Detalhes da alteração
+  };
+  
+  type Reserva = {
+    reserva: {
+      horario_inicio: string;
+      horario_fim: string;
+      data: string;
+    };
+    historicos: Historico[]; // Lista de históricos relacionados
+  };
+  type HistoricoReservaResponse = {
+    historico_reserva: Reserva[];
+  };
   useEffect(() => {
+    api.get('/historico/reserva')
+    .then((response) => {
+      let historicosAtualizados:any[] = []
+      response.data.historico_reserva.forEach((element: Reserva) => {
+        /* let ambiente = api.get('/historico/reserva')
+        .then((response) => {
+
+        })
+        .catch((error) => {
+          
+        }) */
+        
+        let ambienteNome = "mudar"
+        let horario_inicio = element.reserva.horario_inicio
+        let horario_fim = element.reserva.horario_fim
+        let data = element.reserva.data
+        if (Array.isArray(element.historicos) && element.historicos.length > 0) {
+          const historicosComAmbiente = element.historicos.map((historico: Historico) => ({
+            ...historico,
+            ambiente: ambienteNome,
+            horario_inicio,
+            horario_fim,
+            data,
+          }));
+
+          historicosAtualizados = [...historicosAtualizados, ...historicosComAmbiente];
+        }
+      });
+      setReservas(historicosAtualizados)
+    })
+    .catch((error) => {
+      console.log(error.response.data)
+    })
+    
     // Simula fetch de reservas feitas
-    setReservas([
+    /* setReservas([
       {
         id: 1,
         usuario: "João Silva",
@@ -30,7 +93,7 @@ export default function HistoricoReservas() {
         horarioInicio: "14:00",
         horarioFim: "16:00",
       },
-    ]);
+    ]); */
   }, []);
 
   const handleVoltar = () => {
@@ -60,23 +123,19 @@ export default function HistoricoReservas() {
             <table>
               <thead>
                 <tr>
-                  <th>ID</th>
-                  <th>Usuário</th>
                   <th>Ambiente</th>
-                  <th>Data</th>
-                  <th>Horário</th>
+                  <th>Alteração</th>
+                  <th>Data de alteração</th>
+                  <th>Tipo de alteração</th>
                 </tr>
               </thead>
               <tbody>
                 {reservas.map((reserva) => (
                   <tr key={reserva.id}>
-                    <td>{reserva.id}</td>
-                    <td>{reserva.usuario}</td>
                     <td>{reserva.ambiente}</td>
-                    <td>{reserva.data}</td>
-                    <td>
-                      {reserva.horarioInicio} - {reserva.horarioFim}
-                    </td>
+                    <td>{reserva.alteracao}</td>
+                    <td>{reserva.data_criacao}</td>
+                    <td>{reserva.tipo}</td>
                   </tr>
                 ))}
               </tbody>
