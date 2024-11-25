@@ -4,6 +4,7 @@ use App\Http\Controllers\AmbienteController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DiaDisponivelController;
 use App\Http\Controllers\DiaHorarioDisponivelController;
+use App\Http\Controllers\HistoricoReservaController;
 use App\Http\Controllers\ReservaController;
 use App\Http\Controllers\NotificacaoController;
 use App\Models\DiaIndisponivel;
@@ -47,16 +48,23 @@ Route::middleware(['auth:sanctum', 'api'])->group(function () {
 
     Route::get('/usuarios', [AuthController::class, 'index']);
     Route::get('/user', [AuthController::class, 'user']);
+    Route::get('/usuario', [AuthController::class, 'show']);
 
     //reservas
     Route::get('/reserva', [ReservaController::class, 'index'])->name('reserva.index');
-    Route::get('/reserva/usuario/{usuarioId}', [ReservaController::class, 'indexUsuario'])->name('reserva.indexUsuario');
+    Route::get('/usuario/reserva', [ReservaController::class, 'indexUsuario'])->name('reserva.indexUsuario');
+    Route::get('/reserva/{id}', [ReservaController::class, 'show'])->name('reserva.show');
     Route::post('/reserva/editar/{id}', [ReservaController::class, 'update'])->name('reserva.update');
-    Route::post('/reserva/{id}', [ReservaController::class, 'show'])->name('reserva.show');
     Route::post('/reserva', [ReservaController::class, 'store'])->name('reserva.store');
+    Route::get('/reserva/cancelar/{id}', [ReservaController::class, 'cancel'])->name('reserva.cancel');
+
+    Route::get('/historico/reserva', [HistoricoReservaController::class, 'index'])->name('reserva.historico.index');
+
+    Route::post('/historico/reserva', [HistoricoReservaController::class, 'store'])->name('reserva.historico.store');
 
     // notificação
-    Route::get('/notificacao/{reservaId}', [NotificacaoController::class,'index'])->name('notificacao.index');
+    Route::get('/notificacao', [NotificacaoController::class,'index'])->name('notificacao.index');
+    Route::get('/notificacao/{id}', [NotificacaoController::class,'cancel'])->name('notificacao.cancel');
     Route::post('/notificacao', [NotificacaoController::class,'store'])->name('notificacao.store');
     Route::post('/notificacao/{id}', [NotificacaoController::class,'update'])->name('notificacao.update');
 

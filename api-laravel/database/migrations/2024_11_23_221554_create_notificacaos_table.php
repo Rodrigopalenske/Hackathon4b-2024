@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('noticacaos', function (Blueprint $table) {
+        Schema::create('notificacaos', function (Blueprint $table) {
             if (!Schema::hasTable('reservas')) {
                 throw new Exception('A tabela "reservas" não foi criada ainda.');
             }
@@ -20,7 +20,7 @@ return new class extends Migration
             $table->foreignId('reserva_id')->constrained('reservas')->onDelete('cascade');
             $table->text('mensagem');
             $table->string('tipo', 100);
-            $table->boolean('status');
+            $table->boolean('status')->default(0);
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('noticacaos');
+        Schema::dropIfExists('notificacaos');
     }
 };

@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('historico_reservas', function (Blueprint $table) {
             $table->id();
             $table->foreignId('reserva_id')->constrained('reservas')->onDelete('cascade');
-            $table->string('alteração', 200);
-            $table->dateTime('data_alteracao');
+            $table->string('alteracao', 200);
+            $table->string('tipo', 100);
             $table->timestamps();
         });
     }

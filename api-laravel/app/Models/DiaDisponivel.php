@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class DiaDisponivel extends Model
 {
-    //
+    protected $fillable = ['nome'];
 }

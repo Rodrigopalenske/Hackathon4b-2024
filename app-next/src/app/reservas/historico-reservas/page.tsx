@@ -45,6 +45,7 @@ export default function HistoricoReservas() {
     .then((response) => {
       let historicosAtualizados:any[] = []
       response.data.historico_reserva.forEach((element: Reserva) => {
+
         /* let ambiente = api.get('/historico/reserva')
         .then((response) => {
 
@@ -54,6 +55,7 @@ export default function HistoricoReservas() {
         }) */
         
         let ambienteNome = "mudar"
+
         let horario_inicio = element.reserva.horario_inicio
         let horario_fim = element.reserva.horario_fim
         let data = element.reserva.data

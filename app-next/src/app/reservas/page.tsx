@@ -83,6 +83,12 @@ export default function ReservasPage() {
         'alteracao': response.data.alteracao,
         'tipo': 'Confirmação de reserva',
       })
+      console.log(resposta.data.reserva['id'])
+      api.post('/notificacao',{
+        'reserva_id': resposta.data.reserva['id'],
+        'mensagem':'oi',
+        'tipo':'reserva',
+      });
       alert("Reserva criada com sucesso!");
     })
     .catch((error) => {
@@ -132,6 +138,7 @@ export default function ReservasPage() {
                   Editar Reservas
                 </button>
               </div>
+
 
               {/* Calendário */}
               <div className="calendario-container">
@@ -224,6 +231,7 @@ export default function ReservasPage() {
                 </div>
               )}
             </div>
+
           </main>
         </SidebarProvider>
       </div>

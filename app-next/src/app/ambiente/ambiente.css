@@ -1,9 +1,4 @@
 /* Estilos Gerais */
-.container {
-    padding: 20px;
-    background: #f4f4f9;
-    justify-content: center;
-}
 .cardAmbiente {
     background-color: white;
     padding: 15px; /* Reduz o padding */
@@ -81,20 +76,6 @@ label {
     max-width: 600px; /* Define uma largura máxima para a pesquisa */
     margin: 0 auto; /* Centraliza o container */
 }
-.pesquisaInput {
-    max-width: 400px; /* Limita a largura máxima do campo */
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-.pesquisaBtn {
-    margin-left: 10px;
-    padding: 8px 12px;
-    font-size: 1rem;
-    background-color: #007bff;
-    color: white;
-    border-radius: 5px;
-}
 .pesquisaBtn:hover {
     background-color: #0056b3;
     color: #fff;
@@ -108,34 +89,6 @@ label {
 .adicionarBtn:hover {
     background-color: rgba(38, 144, 32, 0.815);
     color: #fff;
-}
-
-/* Tabela */
-.tabela {
-    overflow-x: auto;
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 15px;
-    border-collapse: collapse;
-    background-color: #fff !important; 
-}
-.tabela th,
-.tabela td {
-    border: 1px solid #ddd;
-    margin-bottom: 3px;
-    padding: 8px 10px; 
-    text-align: center;
-    font-size: 1rem;
-}
-.tabelaTrEven {
-    background-color: #f9f9f9;
-}
-.tabelaTrOdd {
-    background-color: #fff;
-}
-.acoesColuna {
-    display: inline-grid;
-    justify-content: center;
 }
 .botaoEditar,
 .botaoExcluir {
@@ -280,22 +233,6 @@ label {
     }
 }
 
-/* Título da tabela */
-.tituloTabela {
-    font-size: 1.5rem;
-    font-weight: bold;
-    margin-bottom: 1rem;
-    color: #0070f3;
-    text-align: center;
-    padding: 10px 0;
-}
-
-/* Ajuste para a tabela e o layout de pesquisa */
-.tabelaContainer {
-    width: 100%;
-    margin-top: 20px;
-}
-
 /* Modal de Confirmação */
 .modal {
     position: fixed;
@@ -330,5 +267,109 @@ label {
     margin-top: 20px;
 }
 
-
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    padding: 0 2rem;
+    background: none;
+    margin: -30px 0;
+  }
+  .titulo {
+    font-size: 2.5rem;
+    color: #0070f3 !important;
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+    text-align: center;
+  }
+   .formulario {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .input {
+    padding: 12px;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    outline: none;
+    color: #333 !important; 
+    background-color: #f9f9f9;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+  }
+  .botao {
+    padding: 1rem;
+    font-size: 1.1rem;
+    color: #fff;
+    background-color: #0070f3;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  .botaoVoltar{
+      color: #fff;
+  }
+  .erro {
+    color: #ff0000 !important; 
+    text-align: center;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+  }
+  .esqueceuSenha {
+    display: block;
+    margin-top: 1rem;
+    font-size: 1rem;
+    color: #0070f3 !important; 
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  .esqueceuSenha:hover {
+    color: #005bb5 !important; 
+  } 
+  
+  
+  /* Responsividade */
+  @media (max-width: 768px) {
+    .container {
+      padding: 0 1rem;
+    }
+    .card {
+      padding: 2rem;
+      width: 100%;
+      max-width: 100%;
+    }
+    .titulo {
+      font-size: 2rem;
+    }
+    .input {
+      font-size: 1rem;
+      padding: 0.9rem;
+    }
+    .botao {
+      font-size: 1rem;
+      padding: 0.9rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .card {
+      padding: 1.5rem;
+      width: 100%;
+      max-width: 100%;
+    }
+    .titulo {
+      font-size: 1.5rem;
+    }
+    .input {
+      font-size: 0.9rem;
+      padding: 0.8rem;
+    }
+    .botao {
+      font-size: 1rem;
+      padding: 0.8rem;
+    }
+  } 
 

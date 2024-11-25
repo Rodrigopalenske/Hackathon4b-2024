@@ -55,7 +55,7 @@ export default function Usuarios() {
       .then((response) => {
         // Valida se o registro foi bem-sucedido (status 201 ou mensagem esperada)
         if (response.status === 200) {
-          
+
           setEmail('');
           setNome('');
           setCargo('');
@@ -164,7 +164,6 @@ export default function Usuarios() {
   };
 
   return (
-
     <PrivateRoute requiredPermissions={['admin']}>
       <div>
         <SidebarProvider>
@@ -173,7 +172,6 @@ export default function Usuarios() {
           </div>
           <main className="grid w-full h-full">
             <Header />
-
             <div className="containerUser">
               <div className="card">
                 <h1 className="titulo">{editando ? 'Editar Usuário' : 'Cadastrar Novo Usuário'}</h1>
